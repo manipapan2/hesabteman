@@ -1,48 +1,50 @@
 import { Moon, Sun } from "lucide";
-import { useLayoutEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { MorphIcon } from "morphicons/react";
 
 export default function Header() {
-  const [theme, setTheme] = useState<"system" | "dark" | "light">();
-  const [isDark, setIsDark] = useState<boolean>();
-  useLayoutEffect(() => {
+  const [theme, setTheme] = useState<"dark" | "light">(() => {
     const theme = localStorage.getItem("theme");
 
     if (theme) {
-      setTheme(theme as "dark" | "light");
-    } else {
-      setTheme("system");
+      return theme as "dark" | "light";
     }
-  }, []);
 
-  useLayoutEffect(() => {
-    if (theme == "system") {
-      const darkModeMql =
-        window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)");
+    const darkModeMql =
+      window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)");
 
-      setIsDark(darkModeMql && darkModeMql.matches ? true : false);
-    } else if (theme == "dark") {
-      localStorage.setItem("theme", "dark");
-      setIsDark(true);
-    } else if (theme == "light") {
-      localStorage.setItem("theme", "light");
-      setIsDark(false);
-    }
-  }, [theme]);
+    return darkModeMql && darkModeMql.matches ? "dark" : "light";
+  });
+  const isFirstTimeRef = useRef(true);
 
   useLayoutEffect(() => {
     const root = window.document.documentElement;
     root.classList.remove("dark");
-    if (isDark) {
+    if (theme == "dark") {
       root.classList.add("dark");
     }
-  }, [isDark]);
+  }, [theme]);
+
+  useEffect(() => {
+    if (isFirstTimeRef.current) {
+      isFirstTimeRef.current = false;
+    } else {
+      if (theme == "dark") {
+        localStorage.setItem("theme", "dark");
+      } else if (theme == "light") {
+        localStorage.setItem("theme", "light");
+      }
+    }
+  }, [theme]);
 
   return (
-    <header className="p-4 bg-secondary  flex justify-between">
-      <h1>حسابداری ساختمان</h1>
-      <button onClick={() => setTheme(() => (isDark ? "light" : "dark"))}>
-        <MorphIcon icon={isDark ? Sun : Moon} />
+    <header className="p-4 bg-secondary flex justify-between">
+      <h1>حسابتمان</h1>
+
+      <button
+        onClick={() => setTheme(() => (theme == "dark" ? "light" : "dark"))}
+      >
+        <MorphIcon icon={theme == "dark" ? Sun : Moon} />
       </button>
     </header>
   );
