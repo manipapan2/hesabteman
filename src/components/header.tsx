@@ -1,11 +1,11 @@
 import { Moon, Sun } from "lucide";
-import { useEffect, useState } from "react";
+import { useLayoutEffect, useState } from "react";
 import { MorphIcon } from "morphicons/react";
 
 export default function Header() {
   const [theme, setTheme] = useState<"system" | "dark" | "light">();
   const [isDark, setIsDark] = useState<boolean>();
-  useEffect(() => {
+  useLayoutEffect(() => {
     const theme = localStorage.getItem("theme");
 
     if (theme) {
@@ -15,7 +15,7 @@ export default function Header() {
     }
   }, []);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (theme == "system") {
       const darkModeMql =
         window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)");
@@ -30,7 +30,7 @@ export default function Header() {
     }
   }, [theme]);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const root = window.document.documentElement;
     root.classList.remove("dark");
     if (isDark) {
