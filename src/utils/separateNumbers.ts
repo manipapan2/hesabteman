@@ -1,4 +1,4 @@
-export default function NumberSeparator(number: string | number): string {
+export default function SeparateNumbers(number: string | number): string {
   const numbersReg = /^\d+$/;
   const stringifiedNumber = number.toString()
   if (stringifiedNumber.length > 0 && stringifiedNumber.match(numbersReg)) {
