@@ -1,0 +1,121 @@
+import { cn } from "@/lib/utils";
+import { Eye, EyeOff } from "lucide";
+import { Download } from "lucide-react";
+import { MorphIcon } from "morphicons/react";
+import { useContext, useEffect, useId, useRef, useState } from "react";
+import * as htmlToImage from "html-to-image";
+import { ApartmantContext } from "@/App";
+import Render from "./render";
+import SelectColors from "./select-colors";
+
+export default function Result() {
+  const apartmantContext = useContext(ApartmantContext);
+  const { apartmantData } = apartmantContext;
+  const [isShown, setIsShown] = useState(false);
+  const [imageUrl, setImageUrl] = useState<string>();
+  const renderDivRef = useRef<HTMLDivElement>(null);
+  const darkSpanId = useId();
+  const lighSpanId = useId();
+  const darkSpan = document.getElementById(darkSpanId);
+  const lightSpan = document.getElementById(lighSpanId);
+
+  useEffect(() => {
+    if (isShown) {
+      document.body.style.overflow = "hidden";
+      handleImage();
+    } else {
+      // change
+      document.body.style.overflow = "auto";
+    }
+
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [isShown]);
+
+  const handleImage = () => {
+    // renderDivRef.current?.classList.remove("hidden");
+
+    htmlToImage.toPng(renderDivRef.current!).then((dataUrl: string) => {
+      setImageUrl(dataUrl);
+
+      // renderDivRef.current?.classList.add("hidden");
+    });
+  };
+
+  return (
+    <>
+      {/* <Render ref={renderDivRef} /> */}
+
+      <div
+        className={cn(
+          "fixed top-0 left-0 z-10 w-full h-full bg-transparent backdrop-blur-3xl flex flex-col gap-3 justify-center items-center transition-all opacity-0 pointer-events-none lg:relative lg:opacity-100 lg:pointer-events-auto",
+          isShown && "opacity-100 pointer-events-auto",
+        )}
+      >
+        <div className="rounded-md w-fit relative flex justify-center items-center scale-40 lg:scale-60">
+          {/* <img alt="test" src={imageUrl} className="w-full rounded-md" /> */}
+          <span id={darkSpanId} className="dark hidden" />
+          <span id={lighSpanId} className="light hidden"></span>
+          <div className="absolute left-0 -top-36 lg:-top-28 max-w-11/12 w-11/12 p-2">
+            {darkSpan && lightSpan && (
+              <SelectColors
+                onColorChange={() => handleImage()}
+                colors={[
+                  {
+                    background: window
+                      .getComputedStyle(darkSpan)
+                      .getPropertyValue("--background"),
+                    backgroundForeground: window
+                      .getComputedStyle(darkSpan)
+                      .getPropertyValue("--background-foreground"),
+                    secondary: window
+                      .getComputedStyle(darkSpan)
+                      .getPropertyValue("--secondary"),
+                    secondaryForeground: window
+                      .getComputedStyle(darkSpan)
+                      .getPropertyValue("--secondary-foreground"),
+                  },
+                  {
+                    background: window
+                      .getComputedStyle(lightSpan)
+                      .getPropertyValue("--background"),
+                    backgroundForeground: window
+                      .getComputedStyle(lightSpan)
+                      .getPropertyValue("--background-foreground"),
+                    secondary: window
+                      .getComputedStyle(lightSpan)
+                      .getPropertyValue("--secondary"),
+                    secondaryForeground: window
+                      .getComputedStyle(lightSpan)
+                      .getPropertyValue("--secondary-foreground"),
+                  },
+                  {
+                    background: "#1C283B",
+                    backgroundForeground: "white",
+                    secondary: "#2347a9",
+                    secondaryForeground: "white",
+                  },
+                ]}
+              />
+            )}
+          </div>
+          <Render ref={renderDivRef} />
+          <a
+            href={imageUrl}
+            download={`فاکتور ساختمان ${apartmantData.month} ${apartmantData.year}`}
+            className="p-3 rounded-full bg-primary text-primary-foreground absolute top-0 right-0 scale-200 lg:scale-170 lg:right-5 lg:top-5 hover:cursor-pointer"
+          >
+            <Download />
+          </a>
+        </div>
+      </div>
+      <button
+        onClick={() => setIsShown((prev) => !prev)}
+        className="bg-muted text-muted-foreground z-10 rounded-full p-4 fixed left-2 bottom-2 lg:hidden"
+      >
+        <MorphIcon icon={isShown ? EyeOff : Eye} />
+      </button>
+    </>
+  );
+}

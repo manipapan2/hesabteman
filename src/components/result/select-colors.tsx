@@ -1,0 +1,90 @@
+import { cn } from "@/lib/utils";
+import { useEffect, useRef, useState } from "react";
+
+interface props {
+  colors: ColorProps[];
+  onColorChange: () => void;
+}
+
+interface ColorProps {
+  background: string;
+  backgroundForeground: string;
+  secondary: string;
+  secondaryForeground: string;
+}
+export default function SelectColors({ colors, onColorChange }: props) {
+  const [selectedColors, setSelectedColors] = useState<ColorProps>(colors[0]);
+  const isFirstTimeRef = useRef(true);
+
+  useEffect(() => {
+    if (isFirstTimeRef.current) {
+      isFirstTimeRef.current = false;
+    } else {
+      document.documentElement.style.setProperty(
+        "--result-background",
+        selectedColors.background,
+      );
+      document.documentElement.style.setProperty(
+        "--result-background-foreground",
+        selectedColors.backgroundForeground,
+      );
+      document.documentElement.style.setProperty(
+        "--result-secondary",
+        selectedColors.secondary,
+      );
+      document.documentElement.style.setProperty(
+        "--result-secondary-foreground",
+        selectedColors.secondaryForeground,
+      );
+      onColorChange();
+    }
+  }, [selectedColors]);
+
+  return (
+    <div
+      dir="ltr"
+      className="flex gap-12 lg:gap-6 justify-start p-2 max-w-full overflow-hidden overflow-x-auto"
+    >
+      {colors.map((element, index) => (
+        <Item
+          key={`${element}-${index}`}
+          onClick={() => setSelectedColors(element)}
+          selectedColors={selectedColors}
+          colors={element}
+        />
+      ))}
+    </div>
+  );
+}
+
+interface ItemProps {
+  colors: ColorProps;
+  selectedColors: ColorProps;
+  onClick: (colors: any) => void;
+}
+
+const Item = ({ colors, selectedColors, onClick }: ItemProps) => {
+  return (
+    <button className="p-1">
+      <div
+        onClick={onClick}
+        className={cn(
+          "relative overflow-hidden min-w-23 lg:min-w-16 aspect-square rounded-full outline-6 outline-muted outline-offset-6 lg:outline-4 lg:outline-offset-4",
+          JSON.stringify(selectedColors) == JSON.stringify(colors) &&
+            "outline-primary",
+        )}
+      >
+        <div className="flex justify-center items-center absolute w-full h-full left-1/2 top-1/2 -translate-1/2 -rotate-45">
+          <div
+            className={`min-w-[200%] flex aspect-square`}
+            style={{ backgroundColor: colors.background }}
+          />
+          <div
+            className={`min-w-[200%] flex aspect-square`}
+            style={{ backgroundColor: colors.secondary }}
+          />
+        </div>
+      </div>
+    </button>
+  );
+};
