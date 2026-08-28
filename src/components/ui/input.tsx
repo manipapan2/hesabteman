@@ -1,6 +1,5 @@
 import * as React from "react";
 import { Input as InputPrimitive } from "@base-ui/react/input";
-
 import { cn } from "@/lib/utils";
 import SeparateNumbers from "@/utils/separateNumbers";
 
@@ -25,6 +24,10 @@ function Input({
   const [inputValue, setInputValue] = React.useState("");
 
   const handleInputValue = (value: string) => {
+    if(props.maxLength && value.length > props.maxLength) {
+      return
+    }
+
     if (separateNumbers) {
       if(value == '') {
         setInputValue('')
