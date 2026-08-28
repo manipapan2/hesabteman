@@ -2,6 +2,7 @@ import { createContext, useEffect, useRef, useState } from "react";
 import DetailSection from "./components/sections/detail";
 import "./global.css";
 import NeighborsSection from "./components/sections/neighbors";
+import CostSection from "./components/sections/costs";
 import Header from "./components/header";
 export interface ApartmantProps {
   year?: string | null;
@@ -130,6 +131,7 @@ function App() {
           <div className="w-fit flex flex-col p-4 max-h-full h-full gap-4 flex-1 overflow-y-auto">
             <DetailSection />
             <NeighborsSection />
+            <CostSection />
           </div>
         </main>
       </div>
