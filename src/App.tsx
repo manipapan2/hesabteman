@@ -4,6 +4,7 @@ import "./global.css";
 import NeighborsSection from "./components/sections/neighbors";
 import CostSection from "./components/sections/costs";
 import Header from "./components/header";
+import MoneyLeftSection from "./components/sections/moneyLeft";
 export interface ApartmantProps {
   year?: string | null;
   month?: string | null;
@@ -72,6 +73,7 @@ function App() {
         apartmantData.neighbors &&
         Object.keys(apartmantData.neighbors).length > 0
       ) {
+        console.log('nisttttt')
         setApartmantData((prevState: ApartmantProps) => {
           const clonedObj = { ...prevState };
 
@@ -132,6 +134,7 @@ function App() {
             <DetailSection />
             <NeighborsSection />
             <CostSection />
+            <MoneyLeftSection />
           </div>
         </main>
       </div>
