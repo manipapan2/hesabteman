@@ -1,6 +1,7 @@
 import { Moon, Sun } from "lucide";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { MorphIcon } from "morphicons/react";
+import AppLogo from "@/../public/web-app-manifest-512x512.png";
 
 export default function Header() {
   const [theme, setTheme] = useState<"dark" | "light">(() => {
@@ -39,8 +40,16 @@ export default function Header() {
 
   return (
     <header className="p-4 bg-secondary flex justify-between">
-      <h1>حسابتمان</h1>
-
+      <div className="flex h-full max-h-full gap-3 items-center">
+        <div className="h-8">
+          <img
+            alt="app logo"
+            src={AppLogo}
+            className="max-h-full h-full  scale-125 aspect-square"
+          />
+        </div>
+        <h1>حسابتمان</h1>
+      </div>
       <button
         onClick={() => setTheme(() => (theme == "dark" ? "light" : "dark"))}
       >
