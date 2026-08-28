@@ -1,6 +1,7 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useRef, useState } from "react";
 import DetailSection from "./components/sections/detail";
 import "./global.css";
+import NeighborsSection from "./components/sections/neighbors";
 import Header from "./components/header";
 export interface ApartmantProps {
   year?: string | null;
@@ -61,15 +62,74 @@ function App() {
       },
     },
   });
+  const floorRef = useRef<number | undefined | null>(undefined);
+  const unitRef = useRef<number | undefined | null>(undefined);
 
+  const calculateNeighbors = () => {
+    if (!apartmantData?.floorCount || !apartmantData?.unitCount) {
+      if (
+        apartmantData.neighbors &&
+        Object.keys(apartmantData.neighbors).length > 0
+      ) {
+        setApartmantData((prevState: ApartmantProps) => {
+          const clonedObj = { ...prevState };
+
+          clonedObj["neighbors"] = {};
+          return clonedObj;
+        });
+      }
+
+      floorRef.current = apartmantData.floorCount;
+      unitRef.current = apartmantData.unitCount;
+      return;
+    }
+
+    if (
+      apartmantData.floorCount == floorRef.current &&
+      apartmantData.unitCount == unitRef.current
+    ) {
+      return;
+    }
+
+    setApartmantData((prevState) => {
+      const clonedObj = { ...prevState };
+      const neighborsObj: NeighborProps = {};
+
+      for (
+        let index = 0;
+        index <
+        (apartmantData.floorCount as number) *
+          (apartmantData.unitCount as number);
+        index++
+      ) {
+        neighborsObj[index] = {
+          name: "",
+          floor: null,
+          unit: null,
+          hasPaidFee: true,
+        };
+      }
+
+      clonedObj["neighbors"] = neighborsObj;
+      return clonedObj;
+    });
+
+    floorRef.current = apartmantData.floorCount;
+    unitRef.current = apartmantData.unitCount;
+  };
+
+  useEffect(() => {
+    calculateNeighbors();
+  }, [apartmantData]);
 
   return (
     <ApartmantContext value={{ apartmantData, setApartmantData }}>
       <div className="flex flex-col w-full h-full max-h-full">
         <Header />
         <main className="flex grow overflow-y-auto">
-          <div className="w-fit flex flex-col p-4 max-h-full h-full flex-1 overflow-y-auto">
+          <div className="w-fit flex flex-col p-4 max-h-full h-full gap-4 flex-1 overflow-y-auto">
             <DetailSection />
+            <NeighborsSection />
           </div>
         </main>
       </div>
