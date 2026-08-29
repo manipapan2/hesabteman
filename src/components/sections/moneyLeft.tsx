@@ -1,4 +1,4 @@
-import { CircleMinus, PlusCircle, User } from "lucide-react";
+import { CircleMinus, PlusCircle, TrendingUp } from "lucide-react";
 import { Button } from "../ui/button";
 import { useContext, useRef } from "react";
 import {
@@ -137,7 +137,7 @@ export default function MoneyLeftSection() {
 
   return (
     <section className="rounded-md bg-secondary p-4 flex flex-col gap-4 items-center justify-center">
-      <User className="text-foreground/40" size={30} />
+      <TrendingUp className="text-foreground/40" size={30} />
       <h2 className="text-foreground/40">سودی وجود ندارد</h2>
       <Button onClick={() => addNewMoneyLeft()}>
         اضافه کردن سود
