@@ -152,4 +152,8 @@
   #root {
     @apply w-full h-full
   }
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
 }
