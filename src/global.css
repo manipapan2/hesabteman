@@ -152,7 +152,7 @@
     @apply bg-background text-foreground m-0 p-0 w-full h-full;
   }
   html {
-    @apply font-vazirmatn m-0 p-0 w-full h-full;
+    @apply font-vazirmatn m-0 p-0 w-full h-full scrollbar-thumb-primary scrollbar-track-secondary;
   }
   #root {
     @apply w-full h-full
