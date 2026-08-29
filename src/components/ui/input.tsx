@@ -39,7 +39,7 @@ function Input({
       }
       const seperatedValue = SeparateNumbers(value.replaceAll(",", ""));
       setInputValue(seperatedValue);
-      onValue(value);
+      onValue(value.replaceAll(',', ''));
 
       return;
     }
