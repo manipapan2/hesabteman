@@ -10,6 +10,7 @@ export default defineConfig({
     react(),
     tailwindcss(),
     VitePWA({
+      registerType: 'autoUpdate',
       injectRegister: "script",
       manifest: {
         name: "حسابتمان",
