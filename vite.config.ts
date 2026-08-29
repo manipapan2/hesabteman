@@ -10,7 +10,7 @@ export default defineConfig({
     react(),
     tailwindcss(),
     VitePWA({
-      injectRegister: 'script',
+      injectRegister: "script",
       manifest: {
         name: "حسابتمان",
         short_name: "حسابتمان",
@@ -30,8 +30,11 @@ export default defineConfig({
             sizes: "512x512",
             type: "image/png",
             purpose: "maskable",
-          },
+          }
         ],
+      },
+      workbox: {
+        skipWaiting: true,
       },
     }),
   ],
