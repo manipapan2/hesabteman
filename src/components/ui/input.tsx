@@ -75,7 +75,7 @@ function Input({
       />
 
       {unit && (
-        <span className="absolute left-0 top-1/2 -translate-y-1/2 rounded-l-sm bg-muted text-muted-foreground h-full px-4">
+        <span className="absolute flex items-center left-0 top-1/2 -translate-y-1/2 rounded-l-sm bg-muted text-muted-foreground h-full px-4">
           {unit}
         </span>
       )}
