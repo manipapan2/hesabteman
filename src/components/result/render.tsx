@@ -214,9 +214,9 @@ export default function Render({ ref }: { ref: React.Ref<HTMLDivElement> }) {
                 <span className="min-w-48 flex justify-center items-center min-h-14">
                   {/* {sumOfPaidFee + 0 - sumOfCosts} */}
 
-                  {sumOfPaidFee &&
-                    sumOfCosts &&
-                    sumOfMoneyLeft &&
+                  {sumOfPaidFee != undefined &&
+                    sumOfCosts != undefined &&
+                    sumOfMoneyLeft != undefined &&
                     SeparateNumbers(sumOfPaidFee + sumOfMoneyLeft - sumOfCosts)}
                 </span>
                 <span className="min-w-48 flex justify-center items-center min-h-14">
