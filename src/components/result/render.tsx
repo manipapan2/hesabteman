@@ -46,7 +46,7 @@ export default function Render({ ref }: { ref: React.Ref<HTMLDivElement> }) {
     <div
       ref={ref}
       dir="ltr"
-      className="bg-result-background p-8 w-fit h-fit min-w-210"
+      className="bg-result-background relative p-8 w-fit h-fit min-w-210"
     >
       <>
         <h2 className="text-xl text-result- mb-5 text-center">
@@ -227,6 +227,7 @@ export default function Render({ ref }: { ref: React.Ref<HTMLDivElement> }) {
           </div>
         </div>
       </>
+      <span className="absolute left-4 bottom-4 text-[0.6rem]">ساخته شده با حسابتمان</span>
     </div>
   );
 }
