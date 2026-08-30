@@ -1,7 +1,7 @@
 import { Moon, Sun } from "lucide";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { MorphIcon } from "morphicons/react";
-import AppLogo from "@/../public/app-logo.png";
+import AppLogo from "@/assets/images/app-logo.png";
 
 export default function Header() {
   const [theme, setTheme] = useState<"dark" | "light">(() => {
