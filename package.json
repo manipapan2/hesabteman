@@ -37,6 +37,7 @@
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^6.0.4",
     "globals": "^17.7.0",
+    "husky": "^9.1.7",
     "oxlint": "^1.82.0",
     "typescript": "~6.0.2",
     "vite": "^8.2.0",
