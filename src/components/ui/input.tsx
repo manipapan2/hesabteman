@@ -1,14 +1,14 @@
 import * as React from "react";
 import { Input as InputPrimitive } from "@base-ui/react/input";
 import { cn } from "@/lib/utils";
-import SeparateNumbers from "@/utils/separateNumbers";
+import separateNumbers from "@/utils/separateNumbers";
 
 type Props = {
   calssName?: string;
   type?: string;
   inputMode?: string;
   unit?: string;
-  separateNumbers?: boolean;
+  isSeparateNumbers?: boolean;
   onValue: (value: string) => void;
 } & React.ComponentProps<"input">;
 
@@ -17,7 +17,7 @@ function Input({
   type,
   inputMode,
   unit,
-  separateNumbers,
+  isSeparateNumbers,
   onValue,
   ...props
 }: Props) {
@@ -28,7 +28,7 @@ function Input({
       return
     }
 
-    if (separateNumbers) {
+    if (isSeparateNumbers) {
       if(value == '') {
         setInputValue('')
         return
@@ -37,7 +37,7 @@ function Input({
       if (!value.match(onlyNumbersAndCommaRegex) || value == ',') {
         return;
       }
-      const seperatedValue = SeparateNumbers(value.replaceAll(",", ""));
+      const seperatedValue = separateNumbers(value.replaceAll(",", ""));
       setInputValue(seperatedValue);
       onValue(value.replaceAll(',', ''));
 
@@ -51,10 +51,10 @@ function Input({
   return (
     <div className="relative">
       <InputPrimitive
-        type={separateNumbers ? "text" : type}
+        type={isSeparateNumbers ? "text" : type}
         data-slot="input"
         inputMode={
-          separateNumbers
+          isSeparateNumbers
             ? "numeric"
             : inputMode
               ? inputMode

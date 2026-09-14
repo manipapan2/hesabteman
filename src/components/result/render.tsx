@@ -1,5 +1,5 @@
 import { ApartmantContext } from "@/App";
-import SeparateNumbers from "@/utils/separateNumbers";
+import separateNumbers from "@/utils/separateNumbers";
 import floorToPersianWord from "@/utils/floorToPersianWord";
 import { useContext, useEffect, useState } from "react";
 
@@ -170,7 +170,7 @@ export default function Render({ ref }: { ref: React.Ref<HTMLDivElement> }) {
             <div className="rounded-md bg-result-secondary text-result-secondary-foreground max-h-fit ml-auto w-fit border-2 border-white border-solid">
               <div className="flex">
                 <span className="min-w-48 flex justify-center items-center min-h-14">
-                  {sumOfPaidFee && SeparateNumbers(sumOfPaidFee)}
+                  {sumOfPaidFee && separateNumbers(sumOfPaidFee)}
                 </span>
                 <span className="min-w-48 flex justify-center items-center min-h-14">
                   جمع کل شارژ ماهایانه
@@ -181,7 +181,7 @@ export default function Render({ ref }: { ref: React.Ref<HTMLDivElement> }) {
                 Object.keys(apartmantData.costs).length > 0 && (
                   <div className="flex">
                     <span className="min-w-48 flex justify-center items-center min-h-14">
-                      {sumOfCosts && SeparateNumbers(sumOfCosts)}
+                      {sumOfCosts && separateNumbers(sumOfCosts)}
                     </span>
                     <span className="min-w-48 flex justify-center items-center min-h-14">
                       جمع کل هزینه ها
@@ -217,7 +217,7 @@ export default function Render({ ref }: { ref: React.Ref<HTMLDivElement> }) {
                   {sumOfPaidFee != undefined &&
                     sumOfCosts != undefined &&
                     sumOfMoneyLeft != undefined &&
-                    SeparateNumbers(sumOfPaidFee + sumOfMoneyLeft - sumOfCosts)}
+                    separateNumbers(sumOfPaidFee + sumOfMoneyLeft - sumOfCosts)}
                 </span>
                 <span className="min-w-48 flex justify-center items-center min-h-14">
                   مانده صندوق

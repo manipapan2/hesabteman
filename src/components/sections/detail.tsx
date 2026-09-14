@@ -64,7 +64,7 @@ export default function DetailSection() {
         <Title>مبلغ شارژ</Title>
         <Input
           unit="تومان"
-          separateNumbers
+          isSeparateNumbers
           onValue={(value) =>
             setApartmantData((prevState: ApartmantProps) => {
               const clonedObj = { ...prevState };

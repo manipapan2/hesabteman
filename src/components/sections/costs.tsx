@@ -100,7 +100,7 @@ export default function CostSection() {
                   <Title>مبلغ هزینه</Title>
                   <Input
                     unit="تومان"
-                    separateNumbers
+                    isSeparateNumbers
                     onValue={(value) =>
                       setApartmantData((prevState: ApartmantProps) => {
                         const clonedObj = { ...prevState };
