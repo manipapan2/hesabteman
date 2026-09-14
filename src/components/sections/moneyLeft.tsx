@@ -42,7 +42,6 @@ export default function MoneyLeftSection() {
       return clonedObj;
     });
 
-   
     setTimeout(() => {
       wrapperRef.current!.scrollIntoView({
         behavior: "smooth",

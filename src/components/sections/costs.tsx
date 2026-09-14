@@ -1,4 +1,4 @@
-import  { useContext, useRef } from "react";
+import { useContext, useRef } from "react";
 import Title from "../title";
 import { Input } from "../ui/input";
 import { ApartmantContext, type ApartmantProps, type CostProps } from "@/App";
@@ -19,8 +19,7 @@ export default function CostSection() {
           Object.keys(apartmantData.costs).length - 1
         ],
       );
-    const newCostId =
-      lastCostId || lastCostId == 0 ? lastCostId + 1 : 0;
+    const newCostId = lastCostId || lastCostId == 0 ? lastCostId + 1 : 0;
 
     if (!apartmantData?.costs) {
       setApartmantData((prevState) => {

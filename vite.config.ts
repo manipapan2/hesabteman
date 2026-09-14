@@ -10,7 +10,7 @@ export default defineConfig({
     react(),
     tailwindcss(),
     VitePWA({
-      registerType: 'autoUpdate',
+      registerType: "autoUpdate",
       injectRegister: "script",
       manifest: {
         name: "حسابتمان",
@@ -31,7 +31,7 @@ export default defineConfig({
             sizes: "512x512",
             type: "image/png",
             purpose: "maskable",
-          }
+          },
         ],
       },
       workbox: {

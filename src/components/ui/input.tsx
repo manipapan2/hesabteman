@@ -24,22 +24,22 @@ function Input({
   const [inputValue, setInputValue] = React.useState("");
 
   const handleInputValue = (value: string) => {
-    if(props.maxLength && value.length > props.maxLength) {
-      return
+    if (props.maxLength && value.length > props.maxLength) {
+      return;
     }
 
     if (isSeparateNumbers) {
-      if(value == '') {
-        setInputValue('')
-        return
+      if (value == "") {
+        setInputValue("");
+        return;
       }
       const onlyNumbersAndCommaRegex = /^[0-9-,]*$/;
-      if (!value.match(onlyNumbersAndCommaRegex) || value == ',') {
+      if (!value.match(onlyNumbersAndCommaRegex) || value == ",") {
         return;
       }
       const seperatedValue = separateNumbers(value.replaceAll(",", ""));
       setInputValue(seperatedValue);
-      onValue(value.replaceAll(',', ''));
+      onValue(value.replaceAll(",", ""));
 
       return;
     }
@@ -64,7 +64,7 @@ function Input({
         }
         className={cn(
           "h-9 w-full min-w-0 rounded-md border border-input bg-transparent px-2.5 py-1 text-lg shadow-xs transition-[color,box-shadow] outline-none file:inline-flex file:h-7 file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground/50 focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 md:text-sm dark:bg-input/30 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40",
-          unit && 'pl-15',
+          unit && "pl-15",
           className,
         )}
         onChange={(e) => {

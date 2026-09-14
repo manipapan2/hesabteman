@@ -55,13 +55,14 @@
   --radius-3xl: calc(var(--radius) * 2.2);
   --radius-4xl: calc(var(--radius) * 2.6);
 
-  --color-result-background:var(--result-background);
-  --color-result-background-foreground:var(--result-background-foreground);
-  --color-result-secondary:var(--result-secondary);
-  --color-result-secondary-foreground:var(--result-secondary-foreground);
+  --color-result-background: var(--result-background);
+  --color-result-background-foreground: var(--result-background-foreground);
+  --color-result-secondary: var(--result-secondary);
+  --color-result-secondary-foreground: var(--result-secondary-foreground);
 }
 
-:root, .light {
+:root,
+.light {
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
   --card: oklch(1 0 0);
@@ -97,10 +98,10 @@
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
 
-  --result-background:var(--background);
-  --result-background-foreground:var(--foreground);
-  --result-secondary:var(--secondary);
-  --result-secondary-foreground:var(--secondary-foreground);
+  --result-background: var(--background);
+  --result-background-foreground: var(--foreground);
+  --result-secondary: var(--secondary);
+  --result-secondary-foreground: var(--secondary-foreground);
 }
 
 .dark {
@@ -139,9 +140,9 @@
   --sidebar-ring: oklch(0.556 0 0);
 
   --result-background: var(--background);
-  --result-background-foreground:var(--foreground);
-  --result-secondary:var(--secondary);
-  --result-secondary-foreground:var(--secondary-foreground);
+  --result-background-foreground: var(--foreground);
+  --result-secondary: var(--secondary);
+  --result-secondary-foreground: var(--secondary-foreground);
 }
 
 @layer base {
@@ -155,7 +156,7 @@
     @apply font-vazirmatn m-0 p-0 w-full h-full scrollbar-thumb-primary scrollbar-track-secondary;
   }
   #root {
-    @apply w-full h-full
+    @apply w-full h-full;
   }
   button:not(:disabled),
   [role="button"]:not(:disabled) {

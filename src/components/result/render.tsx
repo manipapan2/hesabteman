@@ -227,7 +227,9 @@ export default function Render({ ref }: { ref: React.Ref<HTMLDivElement> }) {
           </div>
         </div>
       </>
-      <span className="absolute left-4 bottom-4 text-[0.6rem]">ساخته شده با حسابتمان</span>
+      <span className="absolute left-4 bottom-4 text-[0.6rem]">
+        ساخته شده با حسابتمان
+      </span>
     </div>
   );
 }
