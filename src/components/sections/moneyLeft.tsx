@@ -112,7 +112,7 @@ export default function MoneyLeftSection() {
                   <Input
                     type="number"
                     unit="تومان"
-                    separateNumbers
+                    isSeparateNumbers
                     onValue={(value) =>
                       setApartmantData((prevState: ApartmantProps) => {
                         const clonedObj = { ...prevState };
