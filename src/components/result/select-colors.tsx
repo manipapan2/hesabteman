@@ -3,7 +3,6 @@ import { useEffect, useRef, useState } from "react";
 
 interface props {
   colors: ColorProps[];
-  onColorChange: () => void;
 }
 
 interface ColorProps {
@@ -12,7 +11,7 @@ interface ColorProps {
   secondary: string;
   secondaryForeground: string;
 }
-export default function SelectColors({ colors, onColorChange }: props) {
+export default function SelectColors({ colors }: props) {
   const [selectedColors, setSelectedColors] = useState<ColorProps>(colors[0]);
   const isFirstTimeRef = useRef(true);
 
@@ -36,7 +35,6 @@ export default function SelectColors({ colors, onColorChange }: props) {
         "--result-secondary-foreground",
         selectedColors.secondaryForeground,
       );
-      onColorChange();
     }
   }, [selectedColors]);
 

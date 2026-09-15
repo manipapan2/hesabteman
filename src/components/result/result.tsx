@@ -11,27 +11,24 @@ export default function Result() {
   const apartmantContext = useContext(ApartmantContext);
   const { apartmantData } = apartmantContext;
   const [isShown, setIsShown] = useState(false);
-  const [imageUrl, setImageUrl] = useState<string>();
   const renderDivRef = useRef<HTMLDivElement>(null);
   const darkSpanId = useId();
   const lighSpanId = useId();
   const darkSpan = document.getElementById(darkSpanId);
   const lightSpan = document.getElementById(lighSpanId);
 
-  const handleImage = () => {
-    // renderDivRef.current?.classList.remove("hidden");
-
-    htmlToImage.toPng(renderDivRef.current!).then((dataUrl: string) => {
-      setImageUrl(dataUrl);
-
-      // renderDivRef.current?.classList.add("hidden");
+  const convertToImage = () => {
+    htmlToImage.toPng(renderDivRef.current!).then((imageURL: string) => {
+      const link = document.createElement("a");
+      link.href = imageURL;
+      link.download = `فاکتور ساختمان ${apartmantData.month} ${apartmantData.year}`;
+      link.click();
     });
   };
 
   useEffect(() => {
     if (isShown) {
       document.body.style.overflow = "hidden";
-      handleImage();
     } else {
       // change
       document.body.style.overflow = "auto";
@@ -59,7 +56,6 @@ export default function Result() {
           <div className="absolute left-0 -top-36 lg:-top-28 max-w-11/12 w-11/12 p-2">
             {darkSpan && lightSpan && (
               <SelectColors
-                onColorChange={() => handleImage()}
                 colors={[
                   {
                     background: window
@@ -100,13 +96,12 @@ export default function Result() {
             )}
           </div>
           <Render ref={renderDivRef} />
-          <a
-            href={imageUrl}
-            download={`فاکتور ساختمان ${apartmantData.month} ${apartmantData.year}`}
+          <button
+            onClick={() => convertToImage()}
             className="p-3 rounded-full bg-primary text-primary-foreground absolute top-0 right-0 scale-200 lg:scale-170 lg:right-5 lg:top-5 hover:cursor-pointer"
           >
             <Download />
-          </a>
+          </button>
         </div>
       </div>
       <button
