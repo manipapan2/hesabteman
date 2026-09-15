@@ -1,4 +1,3 @@
-import { useEffect, useRef } from "react";
 import DetailSection from "./components/sections/detail.tsx";
 import "./global.css";
 import NeighborsSection from "./components/sections/neighbors.tsx";
