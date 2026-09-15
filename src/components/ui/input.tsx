@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Input as InputPrimitive } from "@base-ui/react/input";
-import { cn } from "@/lib/utils";
-import separateNumbers from "@/utils/separateNumbers";
+import { cn } from "@/lib/utils.ts";
+import separateNumbers from "@/utils/separateNumbers.ts";
 
 type Props = {
   calssName?: string;
@@ -29,12 +29,12 @@ function Input({
     }
 
     if (isSeparateNumbers) {
-      if (value == "") {
+      if (value === "") {
         setInputValue("");
         return;
       }
-      const onlyNumbersAndCommaRegex = /^[0-9-,]*$/;
-      if (!value.match(onlyNumbersAndCommaRegex) || value == ",") {
+      const onlyNumbersAndCommaRegex = /^[,\-0-9]*$/;
+      if (!value.match(onlyNumbersAndCommaRegex) || value === ",") {
         return;
       }
       const seperatedValue = separateNumbers(value.replaceAll(",", ""));
@@ -58,7 +58,7 @@ function Input({
             ? "numeric"
             : inputMode
               ? inputMode
-              : type == "number"
+              : type === "number"
                 ? "numeric"
                 : inputMode
         }

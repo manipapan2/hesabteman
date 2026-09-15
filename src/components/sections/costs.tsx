@@ -1,10 +1,14 @@
 import { useContext, useRef } from "react";
-import Title from "../title";
-import { Input } from "../ui/input";
-import { ApartmantContext, type ApartmantProps, type CostProps } from "@/App";
-import { Button } from "../ui/button";
+import Title from "../title.tsx";
+import { Input } from "../ui/input.tsx";
+import { Button } from "../ui/button/button.tsx";
 import { CircleDollarSign, CircleMinus, PlusCircle } from "lucide-react";
 import { motion } from "motion/react";
+import type {
+  ApartmantProps,
+  CostProps,
+} from "@/types/apartmant-data-types.ts";
+import ApartmantContext from "@/Context/ApartmantData/ApartmantContext.ts";
 
 export default function CostSection() {
   const apartmantContext = useContext(ApartmantContext);
@@ -18,8 +22,9 @@ export default function CostSection() {
         Object.keys(apartmantData.costs)[
           Object.keys(apartmantData.costs).length - 1
         ],
+        10,
       );
-    const newCostId = lastCostId || lastCostId == 0 ? lastCostId + 1 : 0;
+    const newCostId = lastCostId || lastCostId === 0 ? lastCostId + 1 : 0;
 
     if (!apartmantData?.costs) {
       setApartmantData((prevState) => {
@@ -70,7 +75,7 @@ export default function CostSection() {
                           const newCostsValue = Object.keys(
                             clonedObject.costs!,
                           ).reduce((obj: CostProps, key) => {
-                            if (key != costId) {
+                            if (key !== costId) {
                               obj[key] = clonedObject["costs"]![key];
                             }
                             return obj;
@@ -103,7 +108,10 @@ export default function CostSection() {
                     onValue={(value) =>
                       setApartmantData((prevState: ApartmantProps) => {
                         const clonedObj = { ...prevState };
-                        clonedObj["costs"]![costId]["cost"] = parseInt(value);
+                        clonedObj["costs"]![costId]["cost"] = parseInt(
+                          value,
+                          10,
+                        );
                         return clonedObj;
                       })
                     }

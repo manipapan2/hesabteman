@@ -1,12 +1,12 @@
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/utils.ts";
 import { Eye, EyeOff } from "lucide";
 import { Download } from "lucide-react";
 import { MorphIcon } from "morphicons/react";
 import { useContext, useEffect, useId, useRef, useState } from "react";
 import * as htmlToImage from "html-to-image";
-import { ApartmantContext } from "@/App";
-import Render from "./render";
-import SelectColors from "./select-colors";
+import SelectColors from "./select-colors.tsx";
+import Render from "./render.tsx";
+import ApartmantContext from "@/Context/ApartmantData/ApartmantContext.ts";
 
 export default function Result() {
   const apartmantContext = useContext(ApartmantContext);
@@ -18,6 +18,16 @@ export default function Result() {
   const lighSpanId = useId();
   const darkSpan = document.getElementById(darkSpanId);
   const lightSpan = document.getElementById(lighSpanId);
+
+  const handleImage = () => {
+    // renderDivRef.current?.classList.remove("hidden");
+
+    htmlToImage.toPng(renderDivRef.current!).then((dataUrl: string) => {
+      setImageUrl(dataUrl);
+
+      // renderDivRef.current?.classList.add("hidden");
+    });
+  };
 
   useEffect(() => {
     if (isShown) {
@@ -33,16 +43,6 @@ export default function Result() {
     };
   }, [isShown]);
 
-  const handleImage = () => {
-    // renderDivRef.current?.classList.remove("hidden");
-
-    htmlToImage.toPng(renderDivRef.current!).then((dataUrl: string) => {
-      setImageUrl(dataUrl);
-
-      // renderDivRef.current?.classList.add("hidden");
-    });
-  };
-
   return (
     <>
       {/* <Render ref={renderDivRef} /> */}
@@ -56,7 +56,7 @@ export default function Result() {
         <div className="rounded-md w-fit relative flex justify-center items-center scale-40 lg:scale-60">
           {/* <img alt="test" src={imageUrl} className="w-full rounded-md" /> */}
           <span id={darkSpanId} className="dark hidden" />
-          <span id={lighSpanId} className="light hidden"></span>
+          <span id={lighSpanId} className="light hidden" />
           <div className="absolute left-0 -top-36 lg:-top-28 max-w-11/12 w-11/12 p-2">
             {darkSpan && lightSpan && (
               <SelectColors

@@ -1,6 +1,6 @@
 import { useContext, useEffect } from "react";
-import { Input } from "../ui/input";
-import Title from "../title";
+import { Input } from "../ui/input.tsx";
+import Title from "../title.tsx";
 import {
   Select,
   SelectContent,
@@ -9,8 +9,9 @@ import {
   SelectLabel,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { ApartmantContext, type ApartmantProps } from "@/App";
+} from "@/components/ui/select.tsx";
+import type { ApartmantProps } from "@/types/apartmant-data-types.ts";
+import ApartmantContext from "@/Context/ApartmantData/ApartmantContext.ts";
 
 const persianMonthItems = [
   { label: "فروردین", value: "فروردین" },
@@ -31,16 +32,17 @@ const currentPersianMonth = new Date().toLocaleDateString("fa-IR", {
 });
 
 const convertPersianNumberToEnglish = (s: string) =>
+  // oxlint-disable-next-line regexp/no-obscure-range
   s.replace(/[۰-۹]/g, (d) => "۰۱۲۳۴۵۶۷۸۹".indexOf(d).toString());
 const currentPersianYear = convertPersianNumberToEnglish(
   new Date().toLocaleDateString("fa-IR", { year: "numeric" }),
 );
-let persianYearItems: {
+const persianYearItems: {
   label: string;
   value: null | string;
   // change
 }[] = Array.from({ length: 6 }).map((_, index) => {
-  const calculatedYear = (parseInt(currentPersianYear) - index).toString();
+  const calculatedYear = (parseInt(currentPersianYear, 10) - index).toString();
   return { label: calculatedYear, value: calculatedYear };
 });
 // persianYearItems.unshift({ label: "انتخاب ماه", value: null });
@@ -68,7 +70,7 @@ export default function DetailSection() {
           onValue={(value) =>
             setApartmantData((prevState: ApartmantProps) => {
               const clonedObj = { ...prevState };
-              clonedObj["fee"] = parseInt(value);
+              clonedObj["fee"] = parseInt(value, 10);
               return clonedObj;
             })
           }
@@ -141,7 +143,7 @@ export default function DetailSection() {
             onValue={(value) =>
               setApartmantData((prevState: ApartmantProps) => {
                 const clonedObj = { ...prevState };
-                clonedObj["floorCount"] = parseInt(value);
+                clonedObj["floorCount"] = parseInt(value, 10);
                 return clonedObj;
               })
             }
@@ -153,7 +155,7 @@ export default function DetailSection() {
             onValue={(value) =>
               setApartmantData((prevState: ApartmantProps) => {
                 const clonedObj = { ...prevState };
-                clonedObj["unitCount"] = parseInt(value);
+                clonedObj["unitCount"] = parseInt(value, 10);
                 return clonedObj;
               })
             }

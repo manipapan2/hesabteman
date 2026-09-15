@@ -1,4 +1,4 @@
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/utils.ts";
 import { useEffect, useRef, useState } from "react";
 
 interface props {
@@ -47,7 +47,7 @@ export default function SelectColors({ colors, onColorChange }: props) {
     >
       {colors.map((element, index) => (
         <Item
-          key={`${element}-${index}`}
+          key={index}
           onClick={() => setSelectedColors(element)}
           selectedColors={selectedColors}
           colors={element}
@@ -65,22 +65,21 @@ interface ItemProps {
 
 const Item = ({ colors, selectedColors, onClick }: ItemProps) => {
   return (
-    <button className="p-1">
+    <button aria-label="select theme" className="p-1" onClick={onClick}>
       <div
-        onClick={onClick}
         className={cn(
           "relative overflow-hidden min-w-23 lg:min-w-16 aspect-square rounded-full outline-6 outline-muted outline-offset-6 lg:outline-4 lg:outline-offset-4",
-          JSON.stringify(selectedColors) == JSON.stringify(colors) &&
+          JSON.stringify(selectedColors) === JSON.stringify(colors) &&
             "outline-primary",
         )}
       >
         <div className="flex justify-center items-center absolute w-full h-full left-1/2 top-1/2 -translate-1/2 -rotate-45">
           <div
-            className={`min-w-[200%] flex aspect-square`}
+            className="min-w-[200%] flex aspect-square"
             style={{ backgroundColor: colors.background }}
           />
           <div
-            className={`min-w-[200%] flex aspect-square`}
+            className="min-w-[200%] flex aspect-square"
             style={{ backgroundColor: colors.secondary }}
           />
         </div>

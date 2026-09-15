@@ -5,10 +5,10 @@ import AppLogo from "@/assets/images/app-logo.png";
 
 export default function Header() {
   const [theme, setTheme] = useState<"dark" | "light">(() => {
-    const theme = localStorage.getItem("theme");
+    const savedTheme = localStorage.getItem("theme");
 
-    if (theme) {
-      return theme as "dark" | "light";
+    if (savedTheme) {
+      return savedTheme as "dark" | "light";
     }
 
     const darkModeMql =
@@ -21,7 +21,7 @@ export default function Header() {
   useLayoutEffect(() => {
     const root = window.document.documentElement;
     root.classList.remove("dark");
-    if (theme == "dark") {
+    if (theme === "dark") {
       root.classList.add("dark");
     }
   }, [theme]);
@@ -29,12 +29,10 @@ export default function Header() {
   useEffect(() => {
     if (isFirstTimeRef.current) {
       isFirstTimeRef.current = false;
-    } else {
-      if (theme == "dark") {
-        localStorage.setItem("theme", "dark");
-      } else if (theme == "light") {
-        localStorage.setItem("theme", "light");
-      }
+    } else if (theme === "dark") {
+      localStorage.setItem("theme", "dark");
+    } else if (theme === "light") {
+      localStorage.setItem("theme", "light");
     }
   }, [theme]);
 
@@ -51,9 +49,9 @@ export default function Header() {
         <h1>حسابتمان</h1>
       </div>
       <button
-        onClick={() => setTheme(() => (theme == "dark" ? "light" : "dark"))}
+        onClick={() => setTheme(() => (theme === "dark" ? "light" : "dark"))}
       >
-        <MorphIcon icon={theme == "dark" ? Sun : Moon} />
+        <MorphIcon icon={theme === "dark" ? Sun : Moon} />
       </button>
     </header>
   );

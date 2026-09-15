@@ -1,14 +1,15 @@
 import { CircleMinus, PlusCircle, TrendingUp } from "lucide-react";
-import { Button } from "../ui/button";
+import { Button } from "../ui/button/button.tsx";
 import { useContext, useRef } from "react";
-import {
-  ApartmantContext,
-  type ApartmantProps,
-  type MoneyLeftProps,
-} from "@/App";
+
 import { motion } from "motion/react";
-import Title from "../title";
-import { Input } from "../ui/input";
+import Title from "../title.tsx";
+import { Input } from "../ui/input.tsx";
+import type {
+  ApartmantProps,
+  MoneyLeftProps,
+} from "@/types/apartmant-data-types.ts";
+import ApartmantContext from "@/Context/ApartmantData/ApartmantContext.ts";
 
 export default function MoneyLeftSection() {
   const apartmantContext = useContext(ApartmantContext);
@@ -22,12 +23,13 @@ export default function MoneyLeftSection() {
         Object.keys(apartmantData.moneyLeft)[
           Object.keys(apartmantData.moneyLeft).length - 1
         ],
+        10,
       );
     const newMoneyLeftId =
-      lastmoneyLeftId || lastmoneyLeftId == 0 ? lastmoneyLeftId + 1 : 0;
+      lastmoneyLeftId || lastmoneyLeftId === 0 ? lastmoneyLeftId + 1 : 0;
 
     if (!apartmantData?.moneyLeft) {
-      setApartmantData((prevState) => {
+      setApartmantData((prevState: ApartmantProps) => {
         const clonedObj = { ...prevState };
         clonedObj["moneyLeft"] = {};
         return clonedObj;
@@ -79,7 +81,7 @@ export default function MoneyLeftSection() {
                           const newMoneyleftValue = Object.keys(
                             clonedObject.moneyLeft!,
                           ).reduce((obj: MoneyLeftProps, key) => {
-                            if (key != moneyLeftId) {
+                            if (key !== moneyLeftId) {
                               obj[key] = clonedObject["moneyLeft"]![key];
                             }
                             return obj;
@@ -116,6 +118,7 @@ export default function MoneyLeftSection() {
                         const clonedObj = { ...prevState };
                         clonedObj["moneyLeft"]![moneyLeftId]["cost"] = parseInt(
                           value.replace(",", ""),
+                          10,
                         );
                         return clonedObj;
                       })

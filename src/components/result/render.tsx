@@ -1,12 +1,135 @@
-import { ApartmantContext } from "@/App";
-import separateNumbers from "@/utils/separateNumbers";
-import floorToPersianWord from "@/utils/floorToPersianWord";
-import { useContext, useEffect, useState } from "react";
+import separateNumbers from "@/utils/separateNumbers.ts";
+import floorToPersianWord from "@/utils/floorToPersianWord.ts";
+import { useContext, useEffect, useState, type ReactNode } from "react";
+import ApartmantContext from "@/Context/ApartmantData/ApartmantContext.ts";
+import { cn } from "@/lib/utils.ts";
 
 export default function Render({ ref }: { ref: React.Ref<HTMLDivElement> }) {
   const apartmantContext = useContext(ApartmantContext);
   const { apartmantData } = apartmantContext;
-  const [sumOfPaidFee, setsumOfPaidFee] = useState<number>();
+
+  return (
+    <div
+      ref={ref}
+      dir="ltr"
+      className="bg-result-background relative p-8 pb-16 w-fit h-fit min-w-210"
+    >
+      <h2 className="text-xl text-result- mb-5 text-center">
+        صورت وضعیت شارژ {apartmantData?.month} {apartmantData?.year}
+      </h2>
+
+      <div className="flex gap-10 w-fit m-auto">
+        <FeeTable />
+        <div className="flex flex-col gap-10">
+          <CostsTable />
+          <MoneyLeftTable />
+        </div>
+      </div>
+
+      <span className="absolute right-4 bottom-4 text-[0.7rem]">
+        ساخته شده با حسابتمان
+      </span>
+    </div>
+  );
+}
+
+const FeeTable = () => {
+  return (
+    <div className="rounded-md overflow-hidden h-fit">
+      <table dir="rtl" className="w-full">
+        <Thead>
+          <Tr>
+            <Th className="px-6 py-4">طبقه</Th>
+            <Th className="px-6 py-4">واحد</Th>
+            <Th className="px-6 py-4">نام خانوادگی</Th>
+            <Th className="px-6 py-4">وضعیت شارژ</Th>
+          </Tr>
+        </Thead>
+
+        <tbody>
+          <FeeTableRows />
+        </tbody>
+      </table>
+    </div>
+  );
+};
+
+const FeeTableRows = () => {
+  const apartmantContext = useContext(ApartmantContext);
+  const { apartmantData } = apartmantContext;
+
+  if (
+    apartmantData.neighbors &&
+    Object.keys(apartmantData.neighbors).length > 0
+  ) {
+    return Object.values(apartmantData.neighbors).map(
+      (neighbor: any, index: number) => (
+        <Tr
+          key={index}
+          className="bg-result-secondary even:bg-result-secondary/80"
+        >
+          <Th>{floorToPersianWord(neighbor.floor)}</Th>
+          <Th>{neighbor.unit}</Th>
+          <Th>{neighbor.name}</Th>
+          <Th
+            className={cn(
+              neighbor.hasPaidFee ? "text-green-500" : "text-gray-500",
+            )}
+          >
+            {neighbor.hasPaidFee ? "پرداخت شده" : "در دست پرداخت"}
+          </Th>
+        </Tr>
+      ),
+    );
+  }
+};
+
+const CostsTable = () => {
+  return (
+    <div className="rounded-md overflow-hidden">
+      <table dir="rtl" className="w-full">
+        <Thead>
+          <Tr>
+            <Th className="px-6 py-4">عنوان هزینه</Th>
+            <Th className="px-6 py-4">مبلغ (تومان)</Th>
+          </Tr>
+        </Thead>
+
+        <tbody>
+          <CostsTableRows />
+        </tbody>
+      </table>
+    </div>
+  );
+};
+
+const CostsTableRows = () => {
+  const apartmantContext = useContext(ApartmantContext);
+  const { apartmantData } = apartmantContext;
+
+  if (apartmantData.costs && Object.keys(apartmantData.costs).length > 0) {
+    return Object.values(apartmantData.costs).map(
+      (element: any, index: number) => {
+        if (element.title && element.cost) {
+          return (
+            <Tr
+              key={index}
+              className="bg-result-secondary even:bg-result-secondary/80"
+            >
+              <Th>{element.title}</Th>
+              <Th>{separateNumbers(element.cost)}</Th>
+            </Tr>
+          );
+        }
+      },
+    );
+  }
+};
+
+const MoneyLeftTable = () => {
+  const apartmantContext = useContext(ApartmantContext);
+  const { apartmantData } = apartmantContext;
+  const [sumOfPaidFee, setSumOfPaidFee] = useState<number>();
   const [sumOfCosts, setSumOfCosts] = useState<number>();
   const [sumOfMoneyLeft, setSumOfMoneyLeft] = useState<number>();
 
@@ -22,6 +145,7 @@ export default function Render({ ref }: { ref: React.Ref<HTMLDivElement> }) {
         }
       }
     }
+
     if (apartmantData.costs) {
       for (const element of Object.values(apartmantData.costs)) {
         if (element.title && element.cost) {
@@ -29,6 +153,7 @@ export default function Render({ ref }: { ref: React.Ref<HTMLDivElement> }) {
         }
       }
     }
+
     if (apartmantData.moneyLeft) {
       for (const element of Object.values(apartmantData.moneyLeft)) {
         if (element.title && element.cost) {
@@ -37,199 +162,126 @@ export default function Render({ ref }: { ref: React.Ref<HTMLDivElement> }) {
       }
     }
 
-    setsumOfPaidFee(paidFeeSum);
+    setSumOfPaidFee(paidFeeSum);
     setSumOfCosts(costsSum);
     setSumOfMoneyLeft(moneyLeftSum);
   }, [apartmantData]);
 
   return (
-    <div
-      ref={ref}
-      dir="ltr"
-      className="bg-result-background relative p-8 w-fit h-fit min-w-210"
-    >
-      <>
-        <h2 className="text-xl text-result- mb-5 text-center">
-          صورت وضعیت شارژ {apartmantData?.month} {apartmantData?.year}
-        </h2>
+    <div className="rounded-md overflow-hidden">
+      <table dir="rtl" className="w-full">
+        <Thead>
+          <Tr>
+            <Th>عنوان</Th>
+            <Th>مبلغ (تومان)</Th>
+          </Tr>
+        </Thead>
 
-        <div className="flex w-full justify-between gap-7">
-          <div className="flex justify-around">
-            <div className="rounded-md bg-result-secondary max-h-fit w-fit border-2 border-white border-solid">
-              <div className="text-result-secondary-foreground flex">
-                <span className="p-4 w-32 h-14 text-center">وضعیت شارژ</span>
-                <span className="p-4 w-32 h-14 text-center">نام خانوادگی</span>
-                <span className="pt-2 w-16 h-14 pb-2 p-1 flex justify-center items-center">
-                  واحد
-                </span>
-                <span className="pt-2 w-16 h-14 pb-2 p-1 flex justify-center items-center">
-                  طبقه
-                </span>
-              </div>
-              <div className="text-result-secondary-foreground w-fit h-fit flex">
-                <div>
-                  {apartmantData.neighbors &&
-                    Object.keys(apartmantData.neighbors).length > 0 &&
-                    Object.values(apartmantData.neighbors).map(
-                      (element: any, index: number) => (
-                        <div className="flex" key={index}>
-                          <span
-                            className={`w-32 h-10 flex justify-center items-center ${
-                              element.hasPaidFee
-                                ? "text-green-500"
-                                : "text-gray-500"
-                            }`}
-                          >
-                            {element.hasPaidFee
-                              ? "پرداخت شده"
-                              : "در دست پرداخت"}
-                          </span>
-                          <span className="w-32 h-10 flex justify-center items-center">
-                            {element.name}
-                          </span>
-                          <span className="flex w-16 h-10 justify-center items-center">
-                            {element.unit}
-                          </span>
-                        </div>
-                      ),
-                    )}
-                </div>
-                <div className="flex-col">
-                  {apartmantData.neighbors &&
-                    Object.keys(apartmantData.neighbors).length > 0 &&
-                    Object.values(apartmantData.neighbors).map(
-                      (element, index) => (
-                        // <span
-                        //   key={index}
-                        //   className="w-14 h-20 flex justify-center items-center"
-                        // >
-                        <span
-                          key={index}
-                          className="w-16 h-10 flex justify-center items-center"
-                        >
-                          {apartmantData?.neighbors &&
-                            Object.keys(apartmantData.neighbors).length > 0 &&
-                            floorToPersianWord(
-                              Math.ceil(
-                                element!.unit! /
-                                  (apartmantData.unitCount as number),
-                              ),
-                            )}
-                        </span>
-                      ),
-                    )}
-                </div>
-              </div>
-            </div>
-          </div>
+        <tbody className="[&>tr]:bg-result-secondary [&>tr]:even:bg-result-secondary/80">
+          {sumOfPaidFee !== undefined && (
+            <Tr>
+              <Th>جمع کل شارژ ماهایانه</Th>
+              <Th>{separateNumbers(sumOfPaidFee)}</Th>
+            </Tr>
+          )}
 
-          <div className="flex flex-col gap-7">
-            {apartmantData.costs &&
-              Object.keys(apartmantData.costs).length > 0 && (
-                <div className="rounded-md bg-result-secondary max-h-fit w-fit border-2 border-white border-solid">
-                  <div className="text-result-secondary-foreground flex">
-                    <span className="p-4 w-36 h-14 text-center">
-                      مبلغ (تومان)
-                    </span>
-                    <span className="p-4 w-40 h-14 text-center">
-                      لیست هزینه ها
-                    </span>
-                    <span className="p-4 w-20 h-14 text-center">شماره</span>
-                  </div>
-                  <div className="text-result-secondary-foreground w-fit h-fit flex">
-                    <div>
-                      {apartmantData.costs &&
-                        Object.keys(apartmantData.costs).length > 0 &&
-                        Object.values(apartmantData.costs).map(
-                          (element: any, index: number) => {
-                            if (element.title && element.cost) {
-                              return (
-                                <div className="flex" key={index}>
-                                  <span
-                                    dir="rtl"
-                                    className="w-36 h-14 text-center flex justify-center items-center"
-                                  >
-                                    {element.cost}
-                                  </span>
-                                  <span className="w-40 h-14 text-right flex justify-end p-4 items-center">
-                                    {element.title}
-                                  </span>
-                                  <span className="w-20 h-14 flex justify-end p-4 items-center">
-                                    {index + 1}
-                                  </span>
-                                </div>
-                              );
-                            }
-                          },
-                        )}
-                    </div>
-                  </div>
-                </div>
-              )}
-
-            <div className="rounded-md bg-result-secondary text-result-secondary-foreground max-h-fit ml-auto w-fit border-2 border-white border-solid">
-              <div className="flex">
-                <span className="min-w-48 flex justify-center items-center min-h-14">
-                  {sumOfPaidFee && separateNumbers(sumOfPaidFee)}
-                </span>
-                <span className="min-w-48 flex justify-center items-center min-h-14">
-                  جمع کل شارژ ماهایانه
-                </span>
-              </div>
-
-              {apartmantData.costs &&
-                Object.keys(apartmantData.costs).length > 0 && (
-                  <div className="flex">
-                    <span className="min-w-48 flex justify-center items-center min-h-14">
-                      {sumOfCosts && separateNumbers(sumOfCosts)}
-                    </span>
-                    <span className="min-w-48 flex justify-center items-center min-h-14">
-                      جمع کل هزینه ها
-                    </span>
-                  </div>
-                )}
-
-              {apartmantData.moneyLeft &&
-                Object.keys(apartmantData.moneyLeft).length > 0 &&
-                Object.values(apartmantData.moneyLeft).map(
-                  (element: any, index: number) => {
-                    if (element.title && element.cost) {
-                      return (
-                        <div className="flex ml-auto" key={index}>
-                          <span className="min-w-48 flex justify-center items-center min-h-14">
-                            {element.cost}
-
-                            {/* {element.price} */}
-                          </span>
-                          <span className="min-w-48 flex justify-center items-center min-h-14">
-                            {element.title}
-                          </span>
-                        </div>
-                      );
-                    }
-                  },
-                )}
-
-              <div className="flex">
-                <span className="min-w-48 flex justify-center items-center min-h-14">
-                  {/* {sumOfPaidFee + 0 - sumOfCosts} */}
-
-                  {sumOfPaidFee != undefined &&
-                    sumOfCosts != undefined &&
-                    sumOfMoneyLeft != undefined &&
-                    separateNumbers(sumOfPaidFee + sumOfMoneyLeft - sumOfCosts)}
-                </span>
-                <span className="min-w-48 flex justify-center items-center min-h-14">
-                  مانده صندوق
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </>
-      <span className="absolute left-4 bottom-4 text-[0.6rem]">
-        ساخته شده با حسابتمان
-      </span>
+          <MoneyLeftTableRows
+            sumOfPaidFee={sumOfPaidFee}
+            sumOfCosts={sumOfCosts}
+            sumOfMoneyLeft={sumOfMoneyLeft}
+          />
+        </tbody>
+      </table>
     </div>
   );
+};
+
+interface MoneyLeftTableRowsProps {
+  sumOfPaidFee: number | undefined;
+  sumOfCosts: number | undefined;
+  sumOfMoneyLeft: number | undefined;
 }
+
+const MoneyLeftTableRows = ({
+  sumOfPaidFee,
+  sumOfCosts,
+  sumOfMoneyLeft,
+}: MoneyLeftTableRowsProps) => {
+  const apartmantContext = useContext(ApartmantContext);
+  const { apartmantData } = apartmantContext;
+
+  return (
+    <>
+      {apartmantData.costs && Object.keys(apartmantData.costs).length > 0 && (
+        <Tr>
+          <Th>جمع کل هزینه ها</Th>
+          <Th>{sumOfCosts && separateNumbers(sumOfCosts)}</Th>
+        </Tr>
+      )}
+
+      {apartmantData.moneyLeft &&
+        Object.keys(apartmantData.moneyLeft).length > 0 &&
+        Object.values(apartmantData.moneyLeft).map(
+          (element: any, index: number) => {
+            if (element.title && element.cost) {
+              return (
+                <Tr key={index}>
+                  <Th>{element.title}</Th>
+                  <Th>{element.cost}</Th>
+                </Tr>
+              );
+            }
+          },
+        )}
+
+      {sumOfPaidFee !== undefined &&
+        sumOfCosts !== undefined &&
+        sumOfMoneyLeft !== undefined && (
+          <Tr>
+            <Th>مانده صندوق</Th>
+            <Th>
+              {separateNumbers(sumOfPaidFee + sumOfMoneyLeft - sumOfCosts)}
+            </Th>
+          </Tr>
+        )}
+    </>
+  );
+};
+
+const Thead = ({
+  children,
+  className,
+}: {
+  children: ReactNode;
+  className?: string;
+}) => {
+  return (
+    <thead className={cn("bg-result-secondary/60", className)}>
+      {children}
+    </thead>
+  );
+};
+
+const Tr = ({
+  children,
+  className,
+}: {
+  children: ReactNode;
+  className?: string;
+}) => {
+  return <tr className={cn(className)}>{children}</tr>;
+};
+
+const Th = ({
+  children,
+  className,
+}: {
+  children: ReactNode;
+  className?: string;
+}) => {
+  return (
+    <th className={cn("p-4 border-l border-r border-black/5", className)}>
+      {children}
+    </th>
+  );
+};
