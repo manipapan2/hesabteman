@@ -1,7 +1,7 @@
-import { Moon, Sun } from "lucide";
+import { Moon, Sun } from "lucide-react";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
-import { MorphIcon } from "morphicons/react";
 import AppLogo from "@/assets/images/app-logo.webp";
+import IconToggle from "./icon-toggle.tsx";
 
 export default function Header() {
   const [theme, setTheme] = useState<"dark" | "light">(() => {
@@ -51,7 +51,12 @@ export default function Header() {
       <button
         onClick={() => setTheme(() => (theme === "dark" ? "light" : "dark"))}
       >
-        <MorphIcon icon={theme === "dark" ? Sun : Moon} />
+        <IconToggle
+          className="h-full aspect-square"
+          isActive={theme === "dark"}
+          activeIcon={<Sun />}
+          notActiveIcon={<Moon />}
+        />
       </button>
     </header>
   );

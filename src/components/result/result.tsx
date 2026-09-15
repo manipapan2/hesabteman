@@ -1,12 +1,11 @@
 import { cn } from "@/lib/utils.ts";
-import { Eye, EyeOff } from "lucide";
-import { Download } from "lucide-react";
-import { MorphIcon } from "morphicons/react";
+import { Download, Eye, EyeOff } from "lucide-react";
 import { useContext, useEffect, useId, useRef, useState } from "react";
 import * as htmlToImage from "html-to-image";
 import SelectColors from "./select-colors.tsx";
 import Render from "./render.tsx";
 import ApartmantContext from "@/Context/ApartmantData/ApartmantContext.ts";
+import IconToggle from "../icon-toggle.tsx";
 
 export default function Result() {
   const apartmantContext = useContext(ApartmantContext);
@@ -112,9 +111,14 @@ export default function Result() {
       </div>
       <button
         onClick={() => setIsShown((prev) => !prev)}
-        className="bg-muted text-muted-foreground z-10 rounded-full p-4 fixed left-2 bottom-2 lg:hidden"
+        className="bg-muted size-12 text-muted-foreground z-10 rounded-full p-4 fixed left-2 bottom-2 lg:hidden"
       >
-        <MorphIcon icon={isShown ? EyeOff : Eye} />
+        <IconToggle
+          className="w-full h-full"
+          isActive={isShown}
+          activeIcon={<EyeOff />}
+          notActiveIcon={<Eye />}
+        />
       </button>
     </>
   );
