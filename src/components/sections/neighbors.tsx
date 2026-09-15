@@ -166,7 +166,7 @@ const Field = ({ neighborId, fieldIndex }: FiledProps) => {
               })
             }
           >
-            <SelectTrigger className="w-full max-w-48">
+            <SelectTrigger className="w-full">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
@@ -203,7 +203,7 @@ const Field = ({ neighborId, fieldIndex }: FiledProps) => {
               })
             }
           >
-            <SelectTrigger className="w-full max-w-48">
+            <SelectTrigger className="w-full">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>

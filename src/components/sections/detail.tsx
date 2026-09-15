@@ -92,7 +92,7 @@ export default function DetailSection() {
               })
             }
           >
-            <SelectTrigger className="w-full max-w-48">
+            <SelectTrigger className="w-full">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
@@ -117,7 +117,7 @@ export default function DetailSection() {
               })
             }
           >
-            <SelectTrigger className="w-full max-w-48">
+            <SelectTrigger className="w-full">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
