@@ -20,7 +20,7 @@ const IconToggle = ({
         <i
           className={cn(
             "absolute left-1/2 top-1/2 -translate-1/2 transition-all",
-            isActive ? "opacity-100 scale-100" : "opacity-0 scale-50 -z-10",
+            isActive ? "opacity-100 scale-100" : "opacity-0 scale-0 -z-10",
           )}
         >
           {activeIcon}
@@ -28,7 +28,7 @@ const IconToggle = ({
         <i
           className={cn(
             "absolute left-1/2 top-1/2 -translate-1/2 transition-all",
-            isActive ? "opacity-0 scale-50 -z-10" : "opacity-100 scale-100",
+            isActive ? "opacity-0 scale-0 -z-10" : "opacity-100 scale-100",
           )}
         >
           {notActiveIcon}
