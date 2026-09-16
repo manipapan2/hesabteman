@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils.ts";
 import { Eye, EyeOff } from "lucide-react";
-import { useEffect, useId, useState } from "react";
+import { useEffect, useState } from "react";
 import SheetThemeSelector from "./SheetThemeSelector.tsx";
 import Sheet from "./Sheet.tsx";
 import IconToggle from "../../IconToggle.tsx";
@@ -21,6 +21,27 @@ export default function SheetPreviewSection() {
     };
   }, [isShown]);
 
+  const Themes = [
+    {
+      background: "#1C283B",
+      backgroundForeground: "white",
+      secondary: "#2347a9",
+      secondaryForeground: "white",
+    },
+    {
+      background: "#0a0a0a",
+      backgroundForeground: "#fafafa",
+      secondary: "#262626",
+      secondaryForeground: "#fafafa",
+    },
+    {
+      background: "#ffffff",
+      backgroundForeground: "#0a0a0a",
+      secondary: "#f5f5f5",
+      secondaryForeground: "#171717",
+    },
+  ];
+
   return (
     <>
       {/* <Render ref={sheetRef} /> */}
@@ -34,16 +55,7 @@ export default function SheetPreviewSection() {
         <div className="relative flex h-full w-fit flex-col items-center justify-center rounded-md">
           {/* <img alt="test" src={imageUrl} className="w-full rounded-md" /> */}
           <div className="mb-2 w-full max-w-full">
-            <SheetThemeSelector
-              colors={[
-                {
-                  background: "#1C283B",
-                  backgroundForeground: "white",
-                  secondary: "#2347a9",
-                  secondaryForeground: "white",
-                },
-              ]}
-            />
+            <SheetThemeSelector themes={Themes} />
           </div>
           <div className="max-h-4/6 w-full">
             <Sheet />

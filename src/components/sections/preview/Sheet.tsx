@@ -26,9 +26,9 @@ export default function Sheet() {
       <div
         ref={sheetRef}
         dir="ltr"
-        className="bg-result-background relative m-auto h-fit max-h-full w-fit min-w-210 zoom-40 overflow-y-auto p-8 lg:zoom-70 xl:zoom-90"
+        className="relative m-auto h-fit max-h-full w-fit min-w-210 zoom-40 overflow-y-auto bg-(--sheet-background) p-8 lg:zoom-70 xl:zoom-90"
       >
-        <h2 className="text-result- mb-5 text-center text-xl">
+        <h2 className="mb-5 text-center text-xl text-(--sheet-background-foreground)">
           صورت وضعیت شارژ {apartmantData?.month} {apartmantData?.year}
         </h2>
 
@@ -61,10 +61,10 @@ const FeeTable = () => {
       <table dir="rtl" className="w-full">
         <Thead>
           <Tr>
-            <Th className="px-6 py-4">طبقه</Th>
-            <Th className="px-6 py-4">واحد</Th>
-            <Th className="px-6 py-4">نام خانوادگی</Th>
-            <Th className="px-6 py-4">وضعیت شارژ</Th>
+            <Th>طبقه</Th>
+            <Th>واحد</Th>
+            <Th>نام خانوادگی</Th>
+            <Th>وضعیت شارژ</Th>
           </Tr>
         </Thead>
 
@@ -86,10 +86,7 @@ const FeeTableRows = () => {
   ) {
     return Object.values(apartmantData.neighbors).map(
       (neighbor: any, index: number) => (
-        <Tr
-          key={index}
-          className="bg-result-secondary even:bg-result-secondary/80"
-        >
+        <Tr key={index}>
           <Th>{floorToPersianWord(neighbor.floor)}</Th>
           <Th>{neighbor.unit}</Th>
           <Th>{neighbor.name}</Th>
@@ -112,8 +109,8 @@ const CostsTable = () => {
       <table dir="rtl" className="w-full">
         <Thead>
           <Tr>
-            <Th className="px-6 py-4">عنوان هزینه</Th>
-            <Th className="px-6 py-4">مبلغ (تومان)</Th>
+            <Th>عنوان هزینه</Th>
+            <Th>مبلغ (تومان)</Th>
           </Tr>
         </Thead>
 
@@ -134,10 +131,7 @@ const CostsTableRows = () => {
       (element: any, index: number) => {
         if (element.title && element.cost) {
           return (
-            <Tr
-              key={index}
-              className="bg-result-secondary even:bg-result-secondary/80"
-            >
+            <Tr key={index}>
               <Th>{element.title}</Th>
               <Th>{separateNumbers(element.cost)}</Th>
             </Tr>
@@ -199,7 +193,7 @@ const ProfitTable = () => {
           </Tr>
         </Thead>
 
-        <tbody className="[&>tr]:bg-result-secondary [&>tr]:even:bg-result-secondary/80">
+        <tbody className="[&>tr]:bg-(--sheet-secondary) [&>tr]:even:bg-(--sheet-secondary)/80">
           {sumOfPaidFee !== undefined && (
             <Tr>
               <Th>جمع کل شارژ ماهایانه</Th>
@@ -276,7 +270,7 @@ const Thead = ({
   className?: string;
 }) => {
   return (
-    <thead className={cn("bg-result-secondary/60", className)}>
+    <thead className={cn("bg-(--sheet-secondary)/60", className)}>
       {children}
     </thead>
   );
@@ -289,7 +283,16 @@ const Tr = ({
   children: ReactNode;
   className?: string;
 }) => {
-  return <tr className={cn(className)}>{children}</tr>;
+  return (
+    <tr
+      className={cn(
+        "bg-(--sheet-secondary) text-(--sheet-secondary-foreground) even:bg-(--sheet-secondary)/80",
+        className,
+      )}
+    >
+      {children}
+    </tr>
+  );
 };
 
 const Th = ({
@@ -300,7 +303,12 @@ const Th = ({
   className?: string;
 }) => {
   return (
-    <th className={cn("border-r border-l border-black/5 p-4", className)}>
+    <th
+      className={cn(
+        "border-r border-l border-black/5 p-4 px-6 py-4",
+        className,
+      )}
+    >
       {children}
     </th>
   );
