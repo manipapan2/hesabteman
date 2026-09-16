@@ -16,19 +16,19 @@ const IconToggle = ({
 }: props) => {
   return (
     <div className={className}>
-      <div className="w-full h-full relative">
+      <div className="relative h-full w-full">
         <i
           className={cn(
-            "absolute left-1/2 top-1/2 -translate-1/2 transition-all",
-            isActive ? "opacity-100 scale-100" : "opacity-0 scale-0 -z-10",
+            "absolute top-1/2 left-1/2 -translate-1/2 transition-all",
+            isActive ? "scale-100 opacity-100" : "-z-10 scale-0 opacity-0",
           )}
         >
           {activeIcon}
         </i>
         <i
           className={cn(
-            "absolute left-1/2 top-1/2 -translate-1/2 transition-all",
-            isActive ? "opacity-0 scale-0 -z-10" : "opacity-100 scale-100",
+            "absolute top-1/2 left-1/2 -translate-1/2 transition-all",
+            isActive ? "-z-10 scale-0 opacity-0" : "scale-100 opacity-100",
           )}
         >
           {notActiveIcon}

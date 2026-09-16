@@ -53,7 +53,7 @@ export default function CostSection() {
     return (
       <section
         ref={wrapperRef}
-        className="rounded-md p-3 bg-accent flex flex-col gap-4"
+        className="bg-accent flex flex-col gap-4 rounded-md p-3"
       >
         {apartmantData?.costs &&
           Object.keys(apartmantData.costs).map((costId) => (
@@ -62,7 +62,7 @@ export default function CostSection() {
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: "auto" }}
             >
-              <div className="bg-secondary p-3 border-b border-foreground/40 flex flex-col gap-2 rounded-md">
+              <div className="bg-secondary border-foreground/40 flex flex-col gap-2 rounded-md border-b p-3">
                 <div className="flex flex-col gap-2">
                   <div className="flex items-center justify-between">
                     <Title>عنوان هزینه</Title>
@@ -130,7 +130,7 @@ export default function CostSection() {
     );
 
   return (
-    <section className="rounded-md bg-secondary p-4 flex flex-col gap-4 items-center justify-center">
+    <section className="bg-secondary flex flex-col items-center justify-center gap-4 rounded-md p-4">
       <CircleDollarSign className="text-foreground/40" size={30} />
       <h2 className="text-foreground/40">هزینه ای وحود ندارد</h2>
       <Button onClick={() => addNewCost()}>

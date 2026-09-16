@@ -37,13 +37,13 @@ export default function Header() {
   }, [theme]);
 
   return (
-    <header className="p-4 bg-secondary flex justify-between">
-      <div className="flex h-full max-h-full gap-3 items-center">
+    <header className="bg-secondary flex justify-between p-4">
+      <div className="flex h-full max-h-full items-center gap-3">
         <div className="h-8">
           <img
             alt="app logo"
             src={AppLogo}
-            className="max-h-full h-full  scale-125 aspect-square"
+            className="aspect-square h-full max-h-full scale-125"
           />
         </div>
         <h1>حسابتمان</h1>
@@ -52,7 +52,7 @@ export default function Header() {
         onClick={() => setTheme(() => (theme === "dark" ? "light" : "dark"))}
       >
         <IconToggle
-          className="h-full aspect-square"
+          className="aspect-square h-full"
           isActive={theme === "dark"}
           activeIcon={<Sun />}
           notActiveIcon={<Moon />}

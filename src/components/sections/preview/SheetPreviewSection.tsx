@@ -31,15 +31,15 @@ export default function SheetPreviewSection() {
 
       <div
         className={cn(
-          "fixed top-0 left-0 z-10 w-full h-full bg-transparent backdrop-blur-3xl flex flex-col gap-3 justify-center items-center transition-all opacity-0 pointer-events-none lg:relative lg:opacity-100 lg:pointer-events-auto",
-          isShown && "opacity-100 pointer-events-auto",
+          "pointer-events-none fixed top-0 left-0 z-10 flex h-full w-full flex-col items-center justify-center gap-3 bg-transparent opacity-0 backdrop-blur-3xl transition-all lg:pointer-events-auto lg:relative lg:opacity-100",
+          isShown && "pointer-events-auto opacity-100",
         )}
       >
-        <div className="rounded-md flex-col w-fit h-full relative flex justify-center items-center">
+        <div className="relative flex h-full w-fit flex-col items-center justify-center rounded-md">
           {/* <img alt="test" src={imageUrl} className="w-full rounded-md" /> */}
           <span id={darkSpanId} className="dark hidden" />
           <span id={lighSpanId} className="light hidden" />
-          <div className="w-full max-w-full mb-2">
+          <div className="mb-2 w-full max-w-full">
             {darkSpan && lightSpan && (
               <ColorSelector
                 colors={[
@@ -81,17 +81,17 @@ export default function SheetPreviewSection() {
               />
             )}
           </div>
-          <div className="w-full max-h-4/6">
+          <div className="max-h-4/6 w-full">
             <Sheet />
           </div>
         </div>
       </div>
       <button
         onClick={() => setIsShown((prev) => !prev)}
-        className="bg-muted size-12 text-muted-foreground z-10 rounded-full p-4 fixed left-2 bottom-2 lg:hidden"
+        className="bg-muted text-muted-foreground fixed bottom-2 left-2 z-10 size-12 rounded-full p-4 lg:hidden"
       >
         <IconToggle
-          className="w-full h-full"
+          className="h-full w-full"
           isActive={isShown}
           activeIcon={<EyeOff />}
           notActiveIcon={<Eye />}

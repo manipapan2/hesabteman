@@ -41,7 +41,7 @@ export default function ColorSelector({ colors }: props) {
   return (
     <div
       dir="ltr"
-      className="flex gap-4 justify-start max-w-full overflow-hidden overflow-x-auto"
+      className="flex max-w-full justify-start gap-4 overflow-hidden overflow-x-auto"
     >
       {colors.map((element, index) => (
         <Item
@@ -66,18 +66,18 @@ const Item = ({ colors, selectedColors, onClick }: ItemProps) => {
     <button aria-label="select theme" className="p-1" onClick={onClick}>
       <div
         className={cn(
-          "relative overflow-hidden m-1 min-w-9 aspect-square rounded-full outline-3 outline-muted outline-offset-3 lg:outline-offset-4",
+          "outline-muted relative m-1 aspect-square min-w-9 overflow-hidden rounded-full outline-3 outline-offset-3 lg:outline-offset-4",
           JSON.stringify(selectedColors) === JSON.stringify(colors) &&
             "outline-primary",
         )}
       >
-        <div className="flex justify-center items-center absolute w-full h-full left-1/2 top-1/2 -translate-1/2 -rotate-45">
+        <div className="absolute top-1/2 left-1/2 flex h-full w-full -translate-1/2 -rotate-45 items-center justify-center">
           <div
-            className="min-w-[200%] flex aspect-square"
+            className="flex aspect-square min-w-[200%]"
             style={{ backgroundColor: colors.background }}
           />
           <div
-            className="min-w-[200%] flex aspect-square"
+            className="flex aspect-square min-w-[200%]"
             style={{ backgroundColor: colors.secondary }}
           />
         </div>

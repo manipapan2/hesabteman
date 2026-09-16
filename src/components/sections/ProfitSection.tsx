@@ -56,7 +56,7 @@ export default function ProfitSection() {
     return (
       <section
         ref={wrapperRef}
-        className="rounded-md p-3 bg-accent flex flex-col gap-4"
+        className="bg-accent flex flex-col gap-4 rounded-md p-3"
       >
         {apartmantData?.profit &&
           Object.keys(apartmantData.profit).map((profitId) => (
@@ -65,7 +65,7 @@ export default function ProfitSection() {
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: "auto" }}
             >
-              <div className="bg-secondary p-3 flex flex-col gap-2 rounded-md">
+              <div className="bg-secondary flex flex-col gap-2 rounded-md p-3">
                 <div className="flex flex-col gap-2">
                   <div className="flex items-center justify-between">
                     <Title>عنوان سود</Title>
@@ -135,7 +135,7 @@ export default function ProfitSection() {
     );
 
   return (
-    <section className="rounded-md bg-secondary p-4 flex flex-col gap-4 items-center justify-center">
+    <section className="bg-secondary flex flex-col items-center justify-center gap-4 rounded-md p-4">
       <TrendingUp className="text-foreground/40" size={30} />
       <h2 className="text-foreground/40">سودی وجود ندارد</h2>
       <Button onClick={() => addNewProfit()}>

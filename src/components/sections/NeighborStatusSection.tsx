@@ -92,7 +92,7 @@ export default function NeighborStatusSection() {
   )
     return (
       <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-        <section className="rounded-md bg-accent p-2 flex flex-col gap-4">
+        <section className="bg-accent flex flex-col gap-4 rounded-md p-2">
           {Object.keys(apartmantData.neighbors).map((neighborId, index) => (
             <Field key={index} fieldIndex={index} neighborId={neighborId} />
           ))}
@@ -101,7 +101,7 @@ export default function NeighborStatusSection() {
     );
 
   return (
-    <section className="rounded-md bg-secondary p-2 flex flex-col gap-4 h-32 items-center justify-center">
+    <section className="bg-secondary flex h-32 flex-col items-center justify-center gap-4 rounded-md p-2">
       <User className="text-foreground/40" size={30} />
       <h2 className="text-foreground/40">طبقه و واحد را وارد کنید</h2>
     </section>
@@ -136,7 +136,7 @@ const Field = ({ neighborId, fieldIndex }: FiledProps) => {
   }));
 
   return (
-    <div key={neighborId} className="p-3 bg-secondary rounded-sm">
+    <div key={neighborId} className="bg-secondary rounded-sm p-3">
       <div className="flex flex-col gap-5">
         <div>
           <Title>نام همسایه</Title>

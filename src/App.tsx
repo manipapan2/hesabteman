@@ -10,13 +10,13 @@ import ApartmantDataProvider from "./contexts/ApartmantData/ApartmantDataProvide
 function App() {
   return (
     <ApartmantDataProvider>
-      <div className="flex flex-col w-full h-full max-h-full">
+      <div className="flex h-full max-h-full w-full flex-col">
         <Header />
         <main className="flex grow overflow-y-auto">
           <div className="max-w-3/5 lg:w-full lg:p-4">
             <SheetPreviewSection />
           </div>
-          <div className="w-fit flex flex-col p-4 max-h-full h-full gap-4 flex-1 overflow-y-auto">
+          <div className="flex h-full max-h-full w-fit flex-1 flex-col gap-4 overflow-y-auto p-4">
             <BaseInfoSection />
             <NeighborStatusSection />
             <CostSection />

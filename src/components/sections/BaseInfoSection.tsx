@@ -61,7 +61,7 @@ export default function BaseInfoSection() {
   }, []);
 
   return (
-    <section className="rounded-md bg-secondary p-3 flex flex-col gap-5">
+    <section className="bg-secondary flex flex-col gap-5 rounded-md p-3">
       <div>
         <Title>مبلغ شارژ</Title>
         <Input
