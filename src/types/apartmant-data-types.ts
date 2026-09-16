@@ -12,8 +12,8 @@ export interface ApartmantProps {
 export interface NeighborProps {
   id: number;
   name: string | null;
-  floor: number | null;
-  unit: number | null;
+  floor: number;
+  unit: number;
   hasPaidFee: boolean;
 }
 
