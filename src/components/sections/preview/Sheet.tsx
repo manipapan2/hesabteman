@@ -68,9 +68,9 @@ const FeeTable = () => {
           </Tr>
         </Thead>
 
-        <tbody>
+        <Tbody>
           <FeeTableRows />
-        </tbody>
+        </Tbody>
       </table>
     </div>
   );
@@ -116,9 +116,9 @@ const CostsTable = () => {
           </Tr>
         </Thead>
 
-        <tbody>
+        <Tbody>
           <CostsTableRows />
-        </tbody>
+        </Tbody>
       </table>
     </div>
   );
@@ -195,7 +195,7 @@ const ProfitTable = () => {
           </Tr>
         </Thead>
 
-        <tbody className="[&>tr]:bg-(--sheet-secondary) [&>tr]:even:bg-(--sheet-secondary)/80">
+        <Tbody>
           {sumOfPaidFee !== undefined && (
             <Tr>
               <Th>جمع کل شارژ ماهایانه</Th>
@@ -208,7 +208,7 @@ const ProfitTable = () => {
             sumOfCosts={sumOfCosts}
             sumOfProfit={sumOfProfit}
           />
-        </tbody>
+        </Tbody>
       </table>
     </div>
   );
@@ -278,6 +278,25 @@ const Thead = ({
   );
 };
 
+const Tbody = ({
+  children,
+  className,
+}: {
+  children: ReactNode;
+  className?: string;
+}) => {
+  return (
+    <tbody
+      className={cn(
+        "[&>tr]:bg-(--sheet-secondary) [&>tr]:even:bg-(--sheet-secondary)/80",
+        className,
+      )}
+    >
+      {children}
+    </tbody>
+  );
+};
+
 const Tr = ({
   children,
   className,
@@ -286,12 +305,7 @@ const Tr = ({
   className?: string;
 }) => {
   return (
-    <tr
-      className={cn(
-        "bg-(--sheet-secondary) text-(--sheet-secondary-foreground) even:bg-(--sheet-secondary)/80",
-        className,
-      )}
-    >
+    <tr className={cn("text-(--sheet-secondary-foreground)", className)}>
       {children}
     </tr>
   );
