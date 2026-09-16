@@ -1,7 +1,7 @@
 import { cn } from "@/lib/utils.ts";
 import { Eye, EyeOff } from "lucide-react";
 import { useEffect, useId, useState } from "react";
-import ColorSelector from "./ColorSelector.tsx";
+import SheetThemeSelector from "./SheetThemeSelector.tsx";
 import Sheet from "./Sheet.tsx";
 import IconToggle from "../../IconToggle.tsx";
 
@@ -41,7 +41,7 @@ export default function SheetPreviewSection() {
           <span id={lighSpanId} className="light hidden" />
           <div className="mb-2 w-full max-w-full">
             {darkSpan && lightSpan && (
-              <ColorSelector
+              <SheetThemeSelector
                 colors={[
                   {
                     background: window
