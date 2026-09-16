@@ -16,7 +16,7 @@ export default defineConfig({
         name: "حسابتمان",
         short_name: "حسابتمان",
         start_url: "/",
-        description: "An app for creating an apartmant balance sheet",
+        description: "با حسابتمان دیگه نگران حساب کتاب ساختمان نباش",
         theme_color: "#262626",
         background_color: "#262626",
         display: "standalone",
