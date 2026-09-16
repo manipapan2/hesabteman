@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils.ts";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
 interface props {
   themes: ThemeProps[];
@@ -13,29 +13,24 @@ interface ThemeProps {
 }
 const SheetThemeSelector = ({ themes }: props) => {
   const [selectedTheme, setSelectedTheme] = useState<ThemeProps>(themes[0]);
-  const isFirstTimeRef = useRef(true);
 
   useEffect(() => {
-    if (isFirstTimeRef.current) {
-      isFirstTimeRef.current = false;
-    } else {
-      document.documentElement.style.setProperty(
-        "--sheet-background",
-        selectedTheme.background,
-      );
-      document.documentElement.style.setProperty(
-        "--sheet-background-foreground",
-        selectedTheme.backgroundForeground,
-      );
-      document.documentElement.style.setProperty(
-        "--sheet-secondary",
-        selectedTheme.secondary,
-      );
-      document.documentElement.style.setProperty(
-        "--sheet-secondary-foreground",
-        selectedTheme.secondaryForeground,
-      );
-    }
+    document.documentElement.style.setProperty(
+      "--sheet-background",
+      selectedTheme.background,
+    );
+    document.documentElement.style.setProperty(
+      "--sheet-background-foreground",
+      selectedTheme.backgroundForeground,
+    );
+    document.documentElement.style.setProperty(
+      "--sheet-secondary",
+      selectedTheme.secondary,
+    );
+    document.documentElement.style.setProperty(
+      "--sheet-secondary-foreground",
+      selectedTheme.secondaryForeground,
+    );
   }, [selectedTheme]);
 
   return (
