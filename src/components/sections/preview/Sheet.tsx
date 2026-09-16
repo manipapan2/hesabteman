@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils.ts";
 import * as htmlToImage from "html-to-image";
 import { Download } from "lucide-react";
 import { isEmpty } from "@fullstacksjs/toolbox";
+import type { NeighborProps, ProfitProps } from "@/types/apartmant-data-types";
 
 const Sheet = () => {
   const apartmantContext = useContext(ApartmantContext);
@@ -82,22 +83,24 @@ const FeeTableRows = () => {
   const { apartmantData } = apartmantContext;
 
   if (!isEmpty(apartmantData.neighbors)) {
-    return apartmantData.neighbors.map((neighbor: any, index: number) => (
-      <Tr key={index}>
-        <Th>{floorToPersianWord(neighbor.floor)}</Th>
-        <Th>{neighbor.unit}</Th>
-        <Th>{neighbor.name}</Th>
-        <Th
-          className={cn(
-            neighbor.hasPaidFee
-              ? "text-green-500"
-              : "text-(--sheet-secondary-foreground)/60",
-          )}
-        >
-          {neighbor.hasPaidFee ? "پرداخت شده" : "در دست پرداخت"}
-        </Th>
-      </Tr>
-    ));
+    return apartmantData.neighbors.map(
+      (neighbor: NeighborProps, index: number) => (
+        <Tr key={index}>
+          <Th>{floorToPersianWord(neighbor.floor)}</Th>
+          <Th>{neighbor.unit}</Th>
+          <Th>{neighbor.name}</Th>
+          <Th
+            className={cn(
+              neighbor.hasPaidFee
+                ? "text-green-500"
+                : "text-(--sheet-secondary-foreground)/60",
+            )}
+          >
+            {neighbor.hasPaidFee ? "پرداخت شده" : "در دست پرداخت"}
+          </Th>
+        </Tr>
+      ),
+    );
   }
 };
 
@@ -125,12 +128,12 @@ const CostsTableRows = () => {
   const { apartmantData } = apartmantContext;
 
   if (!isEmpty(apartmantData.costs)) {
-    return apartmantData.costs.map((element: any, index: number) => {
-      if (element.title && element.cost) {
+    return apartmantData.costs.map((profit: ProfitProps, index: number) => {
+      if (profit.title && profit.cost) {
         return (
           <Tr key={index}>
-            <Th>{element.title}</Th>
-            <Th>{separateNumbers(element.cost)}</Th>
+            <Th>{profit.title}</Th>
+            <Th>{separateNumbers(profit.cost)}</Th>
           </Tr>
         );
       }
@@ -232,12 +235,12 @@ const ProfitTableRows = ({
       )}
 
       {!isEmpty(apartmantData.profit) &&
-        apartmantData.profit.map((element: any, index: number) => {
-          if (element.title && element.cost) {
+        apartmantData.profit.map((profit: ProfitProps, index: number) => {
+          if (profit.title && profit.cost) {
             return (
               <Tr key={index}>
-                <Th>{element.title}</Th>
-                <Th>{element.cost}</Th>
+                <Th>{profit.title}</Th>
+                <Th>{profit.cost}</Th>
               </Tr>
             );
           }
