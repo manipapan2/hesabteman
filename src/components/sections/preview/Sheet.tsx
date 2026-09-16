@@ -47,7 +47,7 @@ const Sheet = () => {
 
       <button
         onClick={() => convertToImage()}
-        className="bg-primary text-primary-foreground absolute -top-4 -right-4 rounded-full p-3 hover:cursor-pointer"
+        className="outline-primary/40 bg-primary text-primary-foreground absolute -top-4 -right-4 rounded-full p-3 outline-2 hover:cursor-pointer"
       >
         <Download />
       </button>
