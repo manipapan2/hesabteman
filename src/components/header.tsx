@@ -1,7 +1,7 @@
 import { Moon, Sun } from "lucide-react";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import AppLogo from "@/assets/images/app-logo.webp";
-import IconToggle from "./icon-toggle.tsx";
+import IconToggle from "./IconToggle.tsx";
 
 export default function Header() {
   const [theme, setTheme] = useState<"dark" | "light">(() => {

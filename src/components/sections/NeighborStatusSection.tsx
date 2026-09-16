@@ -1,5 +1,5 @@
 import { useContext, useEffect, useRef } from "react";
-import Title from "../title.tsx";
+import Title from "../Title.tsx";
 import { Input } from "../ui/input.tsx";
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group.tsx";
 import { Label } from "@/components/ui/label.tsx";
@@ -20,7 +20,7 @@ import type {
 } from "@/types/apartmant-data-types.ts";
 import ApartmantContext from "@/Context/ApartmantData/ApartmantContext.ts";
 
-export default function NeighborsSection() {
+export default function NeighborStatusSection() {
   const apartmantContext = useContext(ApartmantContext);
   const { apartmantData, setApartmantData } = apartmantContext;
 

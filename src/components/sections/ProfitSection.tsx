@@ -1,35 +1,37 @@
-import { useContext, useRef } from "react";
-import Title from "../title.tsx";
-import { Input } from "../ui/input.tsx";
+import { CircleMinus, PlusCircle, TrendingUp } from "lucide-react";
 import { Button } from "../ui/button/button.tsx";
-import { CircleDollarSign, CircleMinus, PlusCircle } from "lucide-react";
+import { useContext, useRef } from "react";
+
 import { motion } from "motion/react";
+import Title from "../Title.tsx";
+import { Input } from "../ui/input.tsx";
 import type {
   ApartmantProps,
-  CostProps,
+  ProfitProps,
 } from "@/types/apartmant-data-types.ts";
 import ApartmantContext from "@/Context/ApartmantData/ApartmantContext.ts";
 
-export default function CostSection() {
+export default function ProfitSection() {
   const apartmantContext = useContext(ApartmantContext);
   const { apartmantData, setApartmantData } = apartmantContext;
   const wrapperRef = useRef<HTMLDivElement>(null);
 
-  const addNewCost = () => {
-    const lastCostId =
-      apartmantData.costs &&
+  const addNewProfit = () => {
+    const lastProfitId =
+      apartmantData.profit &&
       parseInt(
-        Object.keys(apartmantData.costs)[
-          Object.keys(apartmantData.costs).length - 1
+        Object.keys(apartmantData.profit)[
+          Object.keys(apartmantData.profit).length - 1
         ],
         10,
       );
-    const newCostId = lastCostId || lastCostId === 0 ? lastCostId + 1 : 0;
+    const newprofitId =
+      lastProfitId || lastProfitId === 0 ? lastProfitId + 1 : 0;
 
-    if (!apartmantData?.costs) {
-      setApartmantData((prevState) => {
+    if (!apartmantData?.profit) {
+      setApartmantData((prevState: ApartmantProps) => {
         const clonedObj = { ...prevState };
-        clonedObj["costs"] = {};
+        clonedObj["profit"] = {};
         return clonedObj;
       });
     }
@@ -37,10 +39,11 @@ export default function CostSection() {
     setApartmantData((prevState) => {
       const clonedObj = { ...prevState };
 
-      clonedObj!["costs"]![newCostId] = { title: "", cost: null };
+      clonedObj!["profit"]![newprofitId] = { title: "", cost: null };
 
       return clonedObj;
     });
+
     setTimeout(() => {
       wrapperRef.current!.scrollIntoView({
         behavior: "smooth",
@@ -49,38 +52,39 @@ export default function CostSection() {
     }, 400);
   };
 
-  if (apartmantData?.costs && Object.keys(apartmantData.costs).length > 0)
+  if (apartmantData?.profit && Object.keys(apartmantData.profit).length > 0)
     return (
       <section
         ref={wrapperRef}
         className="rounded-md p-3 bg-accent flex flex-col gap-4"
       >
-        {apartmantData?.costs &&
-          Object.keys(apartmantData.costs).map((costId) => (
+        {apartmantData?.profit &&
+          Object.keys(apartmantData.profit).map((profitId) => (
             <motion.div
-              key={costId}
+              key={profitId}
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: "auto" }}
             >
-              <div className="bg-secondary p-3 border-b border-foreground/40 flex flex-col gap-2 rounded-md">
+              <div className="bg-secondary p-3 flex flex-col gap-2 rounded-md">
                 <div className="flex flex-col gap-2">
                   <div className="flex items-center justify-between">
-                    <Title>عنوان هزینه</Title>
+                    <Title>عنوان سود</Title>
                     <button
                       className="text-red-500"
                       onClick={() =>
                         setApartmantData((prevState: ApartmantProps) => {
                           const clonedObject = { ...prevState };
 
-                          const newCostsValue = Object.keys(
-                            clonedObject.costs!,
-                          ).reduce((obj: CostProps, key) => {
-                            if (key !== costId) {
-                              obj[key] = clonedObject["costs"]![key];
+                          const newprofitValue = Object.keys(
+                            clonedObject.profit!,
+                          ).reduce((obj: ProfitProps, key) => {
+                            if (key !== profitId) {
+                              obj[key] = clonedObject["profit"]![key];
                             }
                             return obj;
                           }, {});
-                          clonedObject.costs = newCostsValue;
+                          // clonedObject.costs.filter(value => value != profitId)
+                          clonedObject.profit = newprofitValue;
                           return clonedObject;
                         })
                       }
@@ -90,40 +94,41 @@ export default function CostSection() {
                   </div>
                   <Input
                     type="text"
-                    placeholder="مثلا: آسانسور"
+                    placeholder="مثلا: مانده صندوق از ماه قبل"
                     onValue={(value) =>
                       setApartmantData((prevState: ApartmantProps) => {
                         const clonedObj = { ...prevState };
-                        clonedObj["costs"]![costId]["title"] = value;
+                        clonedObj["profit"]![profitId]["title"] = value;
                         return clonedObj;
                       })
                     }
                   />
                 </div>
                 <div className="flex flex-col gap-2">
-                  <Title>مبلغ هزینه</Title>
+                  <Title>مبلغ سود</Title>
                   <Input
+                    type="number"
                     unit="تومان"
                     isSeparateNumbers
                     onValue={(value) =>
                       setApartmantData((prevState: ApartmantProps) => {
                         const clonedObj = { ...prevState };
-                        clonedObj["costs"]![costId]["cost"] = parseInt(
-                          value,
+                        clonedObj["profit"]![profitId]["cost"] = parseInt(
+                          value.replace(",", ""),
                           10,
                         );
                         return clonedObj;
                       })
                     }
-                    placeholder="مثلا: 100,000"
+                    placeholder="مثلا: 20,000"
                   />
                 </div>
               </div>
             </motion.div>
           ))}
 
-        <Button onClick={() => addNewCost()}>
-          اضافه کردن هزینه
+        <Button onClick={() => addNewProfit()}>
+          اضافه کردن سود
           <PlusCircle size={40} />
         </Button>
       </section>
@@ -131,10 +136,10 @@ export default function CostSection() {
 
   return (
     <section className="rounded-md bg-secondary p-4 flex flex-col gap-4 items-center justify-center">
-      <CircleDollarSign className="text-foreground/40" size={30} />
-      <h2 className="text-foreground/40">هزینه ای وحود ندارد</h2>
-      <Button onClick={() => addNewCost()}>
-        اضافه کردن هزینه
+      <TrendingUp className="text-foreground/40" size={30} />
+      <h2 className="text-foreground/40">سودی وجود ندارد</h2>
+      <Button onClick={() => addNewProfit()}>
+        اضافه کردن سود
         <PlusCircle size={30} />
       </Button>
     </section>

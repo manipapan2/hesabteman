@@ -4,7 +4,7 @@ import { useContext, useEffect, useState, type ReactNode } from "react";
 import ApartmantContext from "@/Context/ApartmantData/ApartmantContext.ts";
 import { cn } from "@/lib/utils.ts";
 
-export default function Render({ ref }: { ref: React.Ref<HTMLDivElement> }) {
+export default function Sheet({ ref }: { ref: React.Ref<HTMLDivElement> }) {
   const apartmantContext = useContext(ApartmantContext);
   const { apartmantData } = apartmantContext;
 
@@ -22,7 +22,7 @@ export default function Render({ ref }: { ref: React.Ref<HTMLDivElement> }) {
         <FeeTable />
         <div className="flex flex-col gap-10">
           <CostsTable />
-          <MoneyLeftTable />
+          <ProfitTable />
         </div>
       </div>
 
@@ -126,17 +126,17 @@ const CostsTableRows = () => {
   }
 };
 
-const MoneyLeftTable = () => {
+const ProfitTable = () => {
   const apartmantContext = useContext(ApartmantContext);
   const { apartmantData } = apartmantContext;
   const [sumOfPaidFee, setSumOfPaidFee] = useState<number>();
   const [sumOfCosts, setSumOfCosts] = useState<number>();
-  const [sumOfMoneyLeft, setSumOfMoneyLeft] = useState<number>();
+  const [sumOfProfit, setSumOfProfit] = useState<number>();
 
   useEffect(() => {
     let paidFeeSum = 0;
     let costsSum = 0;
-    let moneyLeftSum = 0;
+    let profitSum = 0;
 
     if (apartmantData.neighbors && apartmantData.fee) {
       for (const element of Object.values(apartmantData.neighbors)) {
@@ -154,17 +154,17 @@ const MoneyLeftTable = () => {
       }
     }
 
-    if (apartmantData.moneyLeft) {
-      for (const element of Object.values(apartmantData.moneyLeft)) {
+    if (apartmantData.profit) {
+      for (const element of Object.values(apartmantData.profit)) {
         if (element.title && element.cost) {
-          moneyLeftSum += element.cost;
+          profitSum += element.cost;
         }
       }
     }
 
     setSumOfPaidFee(paidFeeSum);
     setSumOfCosts(costsSum);
-    setSumOfMoneyLeft(moneyLeftSum);
+    setSumOfProfit(profitSum);
   }, [apartmantData]);
 
   return (
@@ -185,10 +185,10 @@ const MoneyLeftTable = () => {
             </Tr>
           )}
 
-          <MoneyLeftTableRows
+          <ProfitTableRows
             sumOfPaidFee={sumOfPaidFee}
             sumOfCosts={sumOfCosts}
-            sumOfMoneyLeft={sumOfMoneyLeft}
+            sumOfProfit={sumOfProfit}
           />
         </tbody>
       </table>
@@ -196,17 +196,17 @@ const MoneyLeftTable = () => {
   );
 };
 
-interface MoneyLeftTableRowsProps {
+interface ProfitTableRowsProps {
   sumOfPaidFee: number | undefined;
   sumOfCosts: number | undefined;
-  sumOfMoneyLeft: number | undefined;
+  sumOfProfit: number | undefined;
 }
 
-const MoneyLeftTableRows = ({
+const ProfitTableRows = ({
   sumOfPaidFee,
   sumOfCosts,
-  sumOfMoneyLeft,
-}: MoneyLeftTableRowsProps) => {
+  sumOfProfit,
+}: ProfitTableRowsProps) => {
   const apartmantContext = useContext(ApartmantContext);
   const { apartmantData } = apartmantContext;
 
@@ -219,9 +219,9 @@ const MoneyLeftTableRows = ({
         </Tr>
       )}
 
-      {apartmantData.moneyLeft &&
-        Object.keys(apartmantData.moneyLeft).length > 0 &&
-        Object.values(apartmantData.moneyLeft).map(
+      {apartmantData.profit &&
+        Object.keys(apartmantData.profit).length > 0 &&
+        Object.values(apartmantData.profit).map(
           (element: any, index: number) => {
             if (element.title && element.cost) {
               return (
@@ -236,12 +236,10 @@ const MoneyLeftTableRows = ({
 
       {sumOfPaidFee !== undefined &&
         sumOfCosts !== undefined &&
-        sumOfMoneyLeft !== undefined && (
+        sumOfProfit !== undefined && (
           <Tr>
             <Th>مانده صندوق</Th>
-            <Th>
-              {separateNumbers(sumOfPaidFee + sumOfMoneyLeft - sumOfCosts)}
-            </Th>
+            <Th>{separateNumbers(sumOfPaidFee + sumOfProfit - sumOfCosts)}</Th>
           </Tr>
         )}
     </>

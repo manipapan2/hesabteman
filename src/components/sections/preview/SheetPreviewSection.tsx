@@ -2,23 +2,23 @@ import { cn } from "@/lib/utils.ts";
 import { Download, Eye, EyeOff } from "lucide-react";
 import { useContext, useEffect, useId, useRef, useState } from "react";
 import * as htmlToImage from "html-to-image";
-import SelectColors from "./select-colors.tsx";
-import Render from "./render.tsx";
+import ColorSelector from "./ColorSelector.tsx";
+import Sheet from "./Sheet.tsx";
 import ApartmantContext from "@/Context/ApartmantData/ApartmantContext.ts";
-import IconToggle from "../icon-toggle.tsx";
+import IconToggle from "../../IconToggle.tsx";
 
-export default function Result() {
+export default function SheetPreviewSection() {
   const apartmantContext = useContext(ApartmantContext);
   const { apartmantData } = apartmantContext;
   const [isShown, setIsShown] = useState(false);
-  const renderDivRef = useRef<HTMLDivElement>(null);
+  const sheetRef = useRef<HTMLDivElement>(null);
   const darkSpanId = useId();
   const lighSpanId = useId();
   const darkSpan = document.getElementById(darkSpanId);
   const lightSpan = document.getElementById(lighSpanId);
 
   const convertToImage = () => {
-    htmlToImage.toPng(renderDivRef.current!).then((imageURL: string) => {
+    htmlToImage.toPng(sheetRef.current!).then((imageURL: string) => {
       const link = document.createElement("a");
       link.href = imageURL;
       link.download = `فاکتور ساختمان ${apartmantData.month} ${apartmantData.year}`;
@@ -41,7 +41,7 @@ export default function Result() {
 
   return (
     <>
-      {/* <Render ref={renderDivRef} /> */}
+      {/* <Render ref={sheetRef} /> */}
 
       <div
         className={cn(
@@ -55,7 +55,7 @@ export default function Result() {
           <span id={lighSpanId} className="light hidden" />
           <div className="absolute left-0 -top-36 lg:-top-28 max-w-11/12 w-11/12 p-2">
             {darkSpan && lightSpan && (
-              <SelectColors
+              <ColorSelector
                 colors={[
                   {
                     background: window
@@ -95,7 +95,7 @@ export default function Result() {
               />
             )}
           </div>
-          <Render ref={renderDivRef} />
+          <Sheet ref={sheetRef} />
           <button
             onClick={() => convertToImage()}
             className="p-3 rounded-full bg-primary text-primary-foreground absolute top-0 right-0 scale-200 lg:scale-170 lg:right-5 lg:top-5 hover:cursor-pointer"

@@ -6,7 +6,7 @@ export interface ApartmantProps {
   unitCount?: number | null;
   neighbors?: NeighborProps;
   costs?: CostProps;
-  moneyLeft?: MoneyLeftProps;
+  profit?: ProfitProps;
 }
 
 export interface NeighborProps {
@@ -25,4 +25,4 @@ export interface CostProps {
   };
 }
 
-export type MoneyLeftProps = CostProps;
+export type ProfitProps = CostProps;

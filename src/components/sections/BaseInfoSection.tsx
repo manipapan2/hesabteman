@@ -1,6 +1,5 @@
 import { useContext, useEffect } from "react";
 import { Input } from "../ui/input.tsx";
-import Title from "../title.tsx";
 import {
   Select,
   SelectContent,
@@ -12,6 +11,7 @@ import {
 } from "@/components/ui/select.tsx";
 import type { ApartmantProps } from "@/types/apartmant-data-types.ts";
 import ApartmantContext from "@/Context/ApartmantData/ApartmantContext.ts";
+import Title from "@/components/Title.tsx";
 
 const persianMonthItems = [
   { label: "فروردین", value: "فروردین" },
@@ -47,7 +47,7 @@ const persianYearItems: {
 });
 // persianYearItems.unshift({ label: "انتخاب ماه", value: null });
 
-export default function DetailSection() {
+export default function BaseInfoSection() {
   const apartmantContext = useContext(ApartmantContext);
   const { setApartmantData } = apartmantContext;
 
