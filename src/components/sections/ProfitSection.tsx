@@ -17,31 +17,19 @@ const ProfitSection = () => {
   const wrapperRef = useRef<HTMLDivElement>(null);
 
   const addNewProfit = () => {
-    const lastProfitId =
-      apartmantData.profit &&
-      parseInt(
-        Object.keys(apartmantData.profit)[
-          Object.keys(apartmantData.profit).length - 1
-        ],
-        10,
-      );
-    const newprofitId =
-      lastProfitId || lastProfitId === 0 ? lastProfitId + 1 : 0;
-
-    if (!apartmantData?.profit) {
-      setApartmantData((prevState: ApartmantProps) => {
-        const clonedObj = { ...prevState };
-        clonedObj["profit"] = {};
-        return clonedObj;
-      });
-    }
+    const newProfitId: number =
+      apartmantData.profit.length > 0
+        ? apartmantData.profit[apartmantData.profit.length - 1].id + 1
+        : 0;
 
     setApartmantData((prevState) => {
-      const clonedObj = { ...prevState };
-
-      clonedObj!["profit"]![newprofitId] = { title: "", cost: null };
-
-      return clonedObj;
+      return {
+        ...prevState,
+        profit: [
+          ...prevState.profit,
+          { id: newProfitId, title: "", cost: null },
+        ],
+      };
     });
 
     setTimeout(() => {
@@ -52,80 +40,75 @@ const ProfitSection = () => {
     }, 400);
   };
 
-  if (apartmantData?.profit && Object.keys(apartmantData.profit).length > 0)
+  if (apartmantData.profit.length > 0)
     return (
       <section
         ref={wrapperRef}
         className="bg-accent flex flex-col gap-4 rounded-md p-3"
       >
-        {apartmantData?.profit &&
-          Object.keys(apartmantData.profit).map((profitId) => (
-            <motion.div
-              key={profitId}
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
-            >
-              <div className="bg-secondary flex flex-col gap-2 rounded-md p-3">
-                <div className="flex flex-col gap-2">
-                  <div className="flex items-center justify-between">
-                    <Title>عنوان سود</Title>
-                    <button
-                      className="text-red-500"
-                      onClick={() =>
-                        setApartmantData((prevState: ApartmantProps) => {
-                          const clonedObject = { ...prevState };
+        {apartmantData.profit.map((profit: ProfitProps, profitIndex) => (
+          <motion.div
+            key={profit.id}
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+          >
+            <div className="bg-secondary flex flex-col gap-2 rounded-md p-3">
+              <div className="flex flex-col gap-2">
+                <div className="flex items-center justify-between">
+                  <Title>عنوان سود</Title>
+                  <button
+                    className="text-red-500"
+                    onClick={() =>
+                      setApartmantData((prevState: ApartmantProps) => {
+                        const clonedObject = { ...prevState };
 
-                          const newprofitValue = Object.keys(
-                            clonedObject.profit!,
-                          ).reduce((obj: ProfitProps, key) => {
-                            if (key !== profitId) {
-                              obj[key] = clonedObject["profit"]![key];
-                            }
-                            return obj;
-                          }, {});
-                          // clonedObject.costs.filter(value => value != profitId)
-                          clonedObject.profit = newprofitValue;
-                          return clonedObject;
-                        })
-                      }
-                    >
-                      <CircleMinus />
-                    </button>
-                  </div>
-                  <Input
-                    type="text"
-                    placeholder="مثلا: مانده صندوق از ماه قبل"
-                    onValue={(value) =>
-                      setApartmantData((prevState: ApartmantProps) => {
-                        const clonedObj = { ...prevState };
-                        clonedObj["profit"]![profitId]["title"] = value;
-                        return clonedObj;
-                      })
-                    }
-                  />
-                </div>
-                <div className="flex flex-col gap-2">
-                  <Title>مبلغ سود</Title>
-                  <Input
-                    type="number"
-                    unit="تومان"
-                    isSeparateNumbers
-                    onValue={(value) =>
-                      setApartmantData((prevState: ApartmantProps) => {
-                        const clonedObj = { ...prevState };
-                        clonedObj["profit"]![profitId]["cost"] = parseInt(
-                          value.replace(",", ""),
-                          10,
+                        const newprofitValue = clonedObject.profit.filter(
+                          (element: ProfitProps) => element.id !== profit.id,
                         );
-                        return clonedObj;
+
+                        // clonedObject.costs.filter(value => value != profitId)
+                        clonedObject.profit = newprofitValue;
+                        return clonedObject;
                       })
                     }
-                    placeholder="مثلا: 20,000"
-                  />
+                  >
+                    <CircleMinus />
+                  </button>
                 </div>
+                <Input
+                  type="text"
+                  placeholder="مثلا: مانده صندوق از ماه قبل"
+                  onValue={(value) =>
+                    setApartmantData((prevState: ApartmantProps) => {
+                      const clonedObj = { ...prevState };
+                      clonedObj.profit[profitIndex].title = value;
+                      return clonedObj;
+                    })
+                  }
+                />
               </div>
-            </motion.div>
-          ))}
+              <div className="flex flex-col gap-2">
+                <Title>مبلغ سود</Title>
+                <Input
+                  type="number"
+                  unit="تومان"
+                  isSeparateNumbers
+                  onValue={(value) =>
+                    setApartmantData((prevState: ApartmantProps) => {
+                      const clonedObj = { ...prevState };
+                      clonedObj.profit[profitIndex].cost = parseInt(
+                        value.replace(",", ""),
+                        10,
+                      );
+                      return clonedObj;
+                    })
+                  }
+                  placeholder="مثلا: 20,000"
+                />
+              </div>
+            </div>
+          </motion.div>
+        ))}
 
         <Button onClick={() => addNewProfit()}>
           اضافه کردن سود

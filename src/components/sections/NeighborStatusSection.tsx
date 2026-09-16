@@ -29,18 +29,6 @@ const NeighborStatusSection = () => {
 
   const calculateNeighbors = () => {
     if (!apartmantData?.floorCount || !apartmantData?.unitCount) {
-      if (
-        apartmantData.neighbors &&
-        Object.keys(apartmantData.neighbors).length > 0
-      ) {
-        setApartmantData((prevState: ApartmantProps) => {
-          const clonedObj = { ...prevState };
-
-          clonedObj["neighbors"] = {};
-          return clonedObj;
-        });
-      }
-
       floorRef.current = apartmantData.floorCount;
       unitRef.current = apartmantData.unitCount;
       return;
@@ -53,9 +41,8 @@ const NeighborStatusSection = () => {
       return;
     }
 
-    setApartmantData((prevState) => {
-      const clonedObj = { ...prevState };
-      const neighborsObj: NeighborProps = {};
+    setApartmantData((prevState: ApartmantProps) => {
+      const neighborArray: NeighborProps[] = [];
 
       for (
         let index = 0;
@@ -64,16 +51,19 @@ const NeighborStatusSection = () => {
           (apartmantData.unitCount as number);
         index++
       ) {
-        neighborsObj[index] = {
+        neighborArray.push({
+          id: index,
           name: "",
           floor: null,
           unit: null,
           hasPaidFee: true,
-        };
+        });
       }
 
-      clonedObj["neighbors"] = neighborsObj;
-      return clonedObj;
+      return {
+        ...prevState,
+        neighbors: neighborArray,
+      };
     });
 
     floorRef.current = apartmantData.floorCount;
@@ -88,13 +78,17 @@ const NeighborStatusSection = () => {
     apartmantData?.unitCount &&
     apartmantData?.floorCount &&
     apartmantData?.neighbors &&
-    Object.keys(apartmantData?.neighbors).length > 0
+    apartmantData.neighbors.length > 0
   )
     return (
       <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
         <section className="bg-accent flex flex-col gap-4 rounded-md p-2">
-          {Object.keys(apartmantData.neighbors).map((neighborId, index) => (
-            <Field key={index} fieldIndex={index} neighborId={neighborId} />
+          {apartmantData.neighbors.map((neighbor: NeighborProps, index) => (
+            <Field
+              key={neighbor.id}
+              fieldIndex={index}
+              neighborId={neighbor.id}
+            />
           ))}
         </section>
       </motion.div>
@@ -109,7 +103,7 @@ const NeighborStatusSection = () => {
 };
 
 interface FiledProps {
-  neighborId: string;
+  neighborId: number;
   fieldIndex: number;
 }
 
@@ -146,7 +140,7 @@ const Field = ({ neighborId, fieldIndex }: FiledProps) => {
             onValue={(value: string) =>
               setApartmantData((prevState: ApartmantProps) => {
                 const clonedObj = { ...prevState };
-                clonedObj["neighbors"]![neighborId]["name"] = value;
+                clonedObj.neighbors[fieldIndex].name = value;
                 return clonedObj;
               })
             }
@@ -161,7 +155,7 @@ const Field = ({ neighborId, fieldIndex }: FiledProps) => {
             onValueChange={(value: any) =>
               setApartmantData((prevValue: ApartmantProps) => {
                 const clonedObject = { ...prevValue };
-                clonedObject["neighbors"]![neighborId]["floor"] = value;
+                clonedObject.neighbors[fieldIndex].floor = value;
                 return clonedObject;
               })
             }
@@ -185,9 +179,9 @@ const Field = ({ neighborId, fieldIndex }: FiledProps) => {
             defaultValue={() => {
               setApartmantData((prevState: ApartmantProps) => {
                 const clonedObj = { ...prevState };
-                clonedObj["neighbors"]![neighborId]["unit"] =
+                clonedObj.neighbors[fieldIndex].unit =
                   unitItems[fieldIndex].value;
-                clonedObj["neighbors"]![neighborId]["floor"] = Math.ceil(
+                clonedObj.neighbors[fieldIndex].floor = Math.ceil(
                   unitItems[fieldIndex].value /
                     (apartmantData.unitCount as number),
                 );
@@ -198,7 +192,7 @@ const Field = ({ neighborId, fieldIndex }: FiledProps) => {
             onValueChange={(value: any) =>
               setApartmantData((prevValue: ApartmantProps) => {
                 const clonedObject = { ...prevValue };
-                clonedObject["neighbors"]![neighborId]["unit"] = value;
+                clonedObject.neighbors[fieldIndex].unit = value;
                 return clonedObject;
               })
             }
@@ -226,7 +220,7 @@ const Field = ({ neighborId, fieldIndex }: FiledProps) => {
             onValueChange={(value) =>
               setApartmantData((prevState: ApartmantProps) => {
                 const clonedObj = { ...prevState };
-                clonedObj["neighbors"]![neighborId]["hasPaidFee"] = value;
+                clonedObj.neighbors[fieldIndex].hasPaidFee = value;
                 return clonedObj;
               })
             }
@@ -235,7 +229,7 @@ const Field = ({ neighborId, fieldIndex }: FiledProps) => {
               <RadioGroupItem value id={`option-one-${neighborId}`} />
               <Label
                 className={
-                  apartmantData["neighbors"]![neighborId]["hasPaidFee"]
+                  apartmantData.neighbors[fieldIndex].hasPaidFee
                     ? "text-green-500"
                     : "text-gray-500"
                 }
@@ -248,7 +242,7 @@ const Field = ({ neighborId, fieldIndex }: FiledProps) => {
               <RadioGroupItem value={false} id={`option-two-${neighborId}`} />
               <Label
                 className={
-                  !apartmantData["neighbors"]![neighborId]["hasPaidFee"]
+                  !apartmantData.neighbors[fieldIndex].hasPaidFee
                     ? "text-red-500"
                     : "text-gray-500"
                 }

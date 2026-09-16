@@ -16,30 +16,23 @@ const CostSection = () => {
   const wrapperRef = useRef<HTMLDivElement>(null);
 
   const addNewCost = () => {
-    const lastCostId =
-      apartmantData.costs &&
-      parseInt(
-        Object.keys(apartmantData.costs)[
-          Object.keys(apartmantData.costs).length - 1
-        ],
-        10,
-      );
-    const newCostId = lastCostId || lastCostId === 0 ? lastCostId + 1 : 0;
-
-    if (!apartmantData?.costs) {
-      setApartmantData((prevState) => {
-        const clonedObj = { ...prevState };
-        clonedObj["costs"] = {};
-        return clonedObj;
-      });
-    }
+    const newCostId: number =
+      apartmantData.costs.length > 0
+        ? apartmantData.costs[apartmantData.costs.length - 1].id + 1
+        : 0;
 
     setApartmantData((prevState) => {
-      const clonedObj = { ...prevState };
-
-      clonedObj!["costs"]![newCostId] = { title: "", cost: null };
-
-      return clonedObj;
+      return {
+        ...prevState,
+        costs: [
+          ...prevState.costs,
+          {
+            id: newCostId,
+            title: "",
+            cost: null,
+          },
+        ],
+      };
     });
     setTimeout(() => {
       wrapperRef.current!.scrollIntoView({
@@ -49,78 +42,70 @@ const CostSection = () => {
     }, 400);
   };
 
-  if (apartmantData?.costs && Object.keys(apartmantData.costs).length > 0)
+  if (apartmantData.costs.length > 0)
     return (
       <section
         ref={wrapperRef}
         className="bg-accent flex flex-col gap-4 rounded-md p-3"
       >
-        {apartmantData?.costs &&
-          Object.keys(apartmantData.costs).map((costId) => (
-            <motion.div
-              key={costId}
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
-            >
-              <div className="bg-secondary border-foreground/40 flex flex-col gap-2 rounded-md border-b p-3">
-                <div className="flex flex-col gap-2">
-                  <div className="flex items-center justify-between">
-                    <Title>عنوان هزینه</Title>
-                    <button
-                      className="text-red-500"
-                      onClick={() =>
-                        setApartmantData((prevState: ApartmantProps) => {
-                          const clonedObject = { ...prevState };
+        {apartmantData.costs.map((cost: CostProps, costIndex) => (
+          <motion.div
+            key={cost.id}
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+          >
+            <div className="bg-secondary border-foreground/40 flex flex-col gap-2 rounded-md border-b p-3">
+              <div className="flex flex-col gap-2">
+                <div className="flex items-center justify-between">
+                  <Title>عنوان هزینه</Title>
+                  <button
+                    className="text-red-500"
+                    onClick={() =>
+                      setApartmantData((prevState: ApartmantProps) => {
+                        const clonedObject = { ...prevState };
 
-                          const newCostsValue = Object.keys(
-                            clonedObject.costs!,
-                          ).reduce((obj: CostProps, key) => {
-                            if (key !== costId) {
-                              obj[key] = clonedObject["costs"]![key];
-                            }
-                            return obj;
-                          }, {});
-                          clonedObject.costs = newCostsValue;
-                          return clonedObject;
-                        })
-                      }
-                    >
-                      <CircleMinus />
-                    </button>
-                  </div>
-                  <Input
-                    type="text"
-                    placeholder="مثلا: آسانسور"
-                    onValue={(value) =>
-                      setApartmantData((prevState: ApartmantProps) => {
-                        const clonedObj = { ...prevState };
-                        clonedObj["costs"]![costId]["title"] = value;
-                        return clonedObj;
-                      })
-                    }
-                  />
-                </div>
-                <div className="flex flex-col gap-2">
-                  <Title>مبلغ هزینه</Title>
-                  <Input
-                    unit="تومان"
-                    isSeparateNumbers
-                    onValue={(value) =>
-                      setApartmantData((prevState: ApartmantProps) => {
-                        const clonedObj = { ...prevState };
-                        clonedObj["costs"]![costId]["cost"] = parseInt(
-                          value,
-                          10,
+                        const newCostsValue = clonedObject.costs.filter(
+                          (element: CostProps) => element.id !== cost.id,
                         );
-                        return clonedObj;
+
+                        clonedObject.costs = newCostsValue;
+                        return clonedObject;
                       })
                     }
-                    placeholder="مثلا: 100,000"
-                  />
+                  >
+                    <CircleMinus />
+                  </button>
                 </div>
+                <Input
+                  type="text"
+                  placeholder="مثلا: آسانسور"
+                  onValue={(value) =>
+                    setApartmantData((prevState: ApartmantProps) => {
+                      const clonedObj = { ...prevState };
+                      clonedObj.costs[costIndex].title = value;
+                      return clonedObj;
+                    })
+                  }
+                />
               </div>
-            </motion.div>
-          ))}
+              <div className="flex flex-col gap-2">
+                <Title>مبلغ هزینه</Title>
+                <Input
+                  unit="تومان"
+                  isSeparateNumbers
+                  onValue={(value) =>
+                    setApartmantData((prevState: ApartmantProps) => {
+                      const clonedObj = { ...prevState };
+                      clonedObj.costs[costIndex].cost = parseInt(value, 10);
+                      return clonedObj;
+                    })
+                  }
+                  placeholder="مثلا: 100,000"
+                />
+              </div>
+            </div>
+          </motion.div>
+        ))}
 
         <Button onClick={() => addNewCost()}>
           اضافه کردن هزینه

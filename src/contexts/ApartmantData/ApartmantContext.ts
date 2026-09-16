@@ -1,13 +1,10 @@
 import type { ApartmantProps } from "@/types/apartmant-data-types";
 import { createContext } from "react";
 
-export const initialData = {
-  costs: {
-    0: {
-      title: "",
-      cost: null,
-    },
-  },
+export const initialData: ApartmantProps = {
+  neighbors: [],
+  costs: [{ id: 0, title: "", cost: null }],
+  profit: [],
 };
 
 interface ApartmantContextProps {
