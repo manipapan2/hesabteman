@@ -1,6 +1,13 @@
 import separateNumbers from "@/utils/separateNumbers.ts";
 import floorToPersianWord from "@/utils/floorToPersianWord.ts";
-import { useContext, useEffect, useRef, useState, type ReactNode } from "react";
+import {
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+  type ComponentProps,
+  type ReactNode,
+} from "react";
 import ApartmantContext from "@/contexts/ApartmantData/ApartmantContext.ts";
 import { cn } from "@/lib/utils.ts";
 import * as htmlToImage from "html-to-image";
@@ -261,12 +268,13 @@ const ProfitTableRows = ({
 const Thead = ({
   children,
   className,
+  ...props
 }: {
   children: ReactNode;
   className?: string;
-}) => {
+} & ComponentProps<"thead">) => {
   return (
-    <thead className={cn("bg-(--sheet-secondary)/60", className)}>
+    <thead className={cn("bg-(--sheet-secondary)/60", className)} {...props}>
       {children}
     </thead>
   );
@@ -275,16 +283,18 @@ const Thead = ({
 const Tbody = ({
   children,
   className,
+  ...props
 }: {
   children: ReactNode;
   className?: string;
-}) => {
+} & ComponentProps<"tbody">) => {
   return (
     <tbody
       className={cn(
         "[&>tr]:bg-(--sheet-secondary) [&>tr]:even:bg-(--sheet-secondary)/80",
         className,
       )}
+      {...props}
     >
       {children}
     </tbody>
@@ -294,12 +304,16 @@ const Tbody = ({
 const Tr = ({
   children,
   className,
+  ...props
 }: {
   children: ReactNode;
   className?: string;
-}) => {
+} & ComponentProps<"tr">) => {
   return (
-    <tr className={cn("text-(--sheet-secondary-foreground)", className)}>
+    <tr
+      className={cn("text-(--sheet-secondary-foreground)", className)}
+      {...props}
+    >
       {children}
     </tr>
   );
@@ -308,16 +322,18 @@ const Tr = ({
 const Th = ({
   children,
   className,
+  ...props
 }: {
   children: ReactNode;
   className?: string;
-}) => {
+} & ComponentProps<"th">) => {
   return (
     <th
       className={cn(
         "border-r border-l border-black/5 p-4 px-6 py-4",
         className,
       )}
+      {...props}
     >
       {children}
     </th>
