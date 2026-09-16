@@ -46,7 +46,7 @@ const SheetPreviewSection = () => {
     <>
       {/* <Render ref={sheetRef} /> */}
 
-      <div
+      <section
         className={cn(
           "pointer-events-none fixed top-0 left-0 z-10 flex h-full w-full flex-col items-center justify-center gap-3 bg-transparent opacity-0 backdrop-blur-3xl transition-all lg:pointer-events-auto lg:relative lg:opacity-100",
           isShown && "pointer-events-auto opacity-100",
@@ -61,7 +61,7 @@ const SheetPreviewSection = () => {
             <Sheet />
           </div>
         </div>
-      </div>
+      </section>
       <button
         onClick={() => setIsShown((prev) => !prev)}
         className="bg-muted text-muted-foreground fixed bottom-2 left-2 z-10 size-12 rounded-full p-4 lg:hidden"
