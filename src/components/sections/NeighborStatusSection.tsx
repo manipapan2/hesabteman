@@ -55,8 +55,8 @@ const NeighborStatusSection = () => {
         neighborArray.push({
           id: index,
           name: "",
-          floor: null,
-          unit: null,
+          floor: Math.ceil(index + 1 / (apartmantData.unitCount as number)),
+          unit: index + 1,
           hasPaidFee: true,
         });
       }
