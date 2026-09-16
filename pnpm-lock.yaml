@@ -63,6 +63,9 @@ importers:
       '@fullstacksjs/oxlint-config':
         specifier: ^1.1.0
         version: 1.1.0(eslint@10.10.0(jiti@2.7.0))
+      '@fullstacksjs/toolbox':
+        specifier: ^4.25.1
+        version: 4.25.1
       '@types/node':
         specifier: ^24.13.3
         version: 24.13.4
@@ -717,6 +720,10 @@ packages:
 
   '@fullstacksjs/oxlint-config@1.1.0':
     resolution: {integrity: sha512-7nHx+fXu8BeNHkHi36SkOC+r2kswEGhf62kHpaLnaJv6HSLE5jYGprqNjeF5nF1GazcqyiK16hi+otoWgUc9AA==}
+
+  '@fullstacksjs/toolbox@4.25.1':
+    resolution: {integrity: sha512-gG5hrrKU0O5DQrLE4UsANIPZ3MR21tY5jLb/PPy6Cl7bthhtTzGa/Vo3u3EkN5USjiccMETZbXvGoUXYEBBT9Q==}
+    engines: {node: '>=20'}
 
   '@hono/node-server@2.1.1':
     resolution: {integrity: sha512-ELuehkj5VCBdgEw9zs+ivkKwyzzUCSQuE96YmiPvn1ECBoZCczbFXJLeEGMTYjphP6gydh4pHMqEYPVMYUVgQg==}
@@ -4478,6 +4485,8 @@ snapshots:
       local-pkg: 1.2.1
     transitivePeerDependencies:
       - eslint
+
+  '@fullstacksjs/toolbox@4.25.1': {}
 
   '@hono/node-server@2.1.1(hono@4.13.7)':
     dependencies:
