@@ -14,7 +14,7 @@ const Sheet = () => {
 
   const sheetRef = useRef<HTMLDivElement>(null);
 
-  const convertToImage = () => {
+  const downloadAsImage = () => {
     htmlToImage.toPng(sheetRef.current!).then((imageURL: string) => {
       const link = document.createElement("a");
       link.href = imageURL;
@@ -48,7 +48,7 @@ const Sheet = () => {
       </div>
 
       <button
-        onClick={() => convertToImage()}
+        onClick={() => downloadAsImage()}
         className="outline-primary/40 bg-primary text-primary-foreground absolute -top-4 -right-4 rounded-full p-3 outline-2 hover:cursor-pointer"
       >
         <Download />
