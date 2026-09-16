@@ -40,7 +40,7 @@ export default function Sheet() {
           </div>
         </div>
 
-        <span className="mt-4 mb-2 flex w-full justify-end text-[0.7rem]">
+        <span className="flex w-full translate-y-5 justify-end text-[0.7rem]">
           ساخته شده با حسابتمان
         </span>
       </div>
