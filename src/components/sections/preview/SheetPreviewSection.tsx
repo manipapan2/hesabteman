@@ -4,7 +4,7 @@ import { useContext, useEffect, useId, useRef, useState } from "react";
 import * as htmlToImage from "html-to-image";
 import ColorSelector from "./ColorSelector.tsx";
 import Sheet from "./Sheet.tsx";
-import ApartmantContext from "@/Context/ApartmantData/ApartmantContext.ts";
+import ApartmantContext from "@/contexts/ApartmantData/ApartmantContext.ts";
 import IconToggle from "../../IconToggle.tsx";
 
 export default function SheetPreviewSection() {

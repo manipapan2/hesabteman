@@ -9,7 +9,7 @@ import type {
   ApartmantProps,
   ProfitProps,
 } from "@/types/apartmant-data-types.ts";
-import ApartmantContext from "@/Context/ApartmantData/ApartmantContext.ts";
+import ApartmantContext from "@/contexts/ApartmantData/ApartmantContext.ts";
 
 export default function ProfitSection() {
   const apartmantContext = useContext(ApartmantContext);

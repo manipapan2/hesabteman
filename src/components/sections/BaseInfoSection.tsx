@@ -10,7 +10,7 @@ import {
   SelectValue,
 } from "@/components/ui/select.tsx";
 import type { ApartmantProps } from "@/types/apartmant-data-types.ts";
-import ApartmantContext from "@/Context/ApartmantData/ApartmantContext.ts";
+import ApartmantContext from "@/contexts/ApartmantData/ApartmantContext.ts";
 import Title from "@/components/Title.tsx";
 
 const persianMonthItems = [

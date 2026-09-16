@@ -18,7 +18,7 @@ import type {
   ApartmantProps,
   NeighborProps,
 } from "@/types/apartmant-data-types.ts";
-import ApartmantContext from "@/Context/ApartmantData/ApartmantContext.ts";
+import ApartmantContext from "@/contexts/ApartmantData/ApartmantContext.ts";
 
 export default function NeighborStatusSection() {
   const apartmantContext = useContext(ApartmantContext);

@@ -5,7 +5,7 @@ import CostSection from "./components/sections/CostSection.tsx";
 import SheetPreviewSection from "./components/sections/preview/SheetPreviewSection.tsx";
 import ProfitSection from "./components/sections/ProfitSection.tsx";
 import Header from "./components/Header.tsx";
-import ApartmantDataProvider from "./Context/ApartmantData/ApartmantDataProvider.tsx";
+import ApartmantDataProvider from "./contexts/ApartmantData/ApartmantDataProvider.tsx";
 
 function App() {
   return (
