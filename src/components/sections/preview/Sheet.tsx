@@ -5,6 +5,7 @@ import ApartmantContext from "@/contexts/ApartmantData/ApartmantContext.ts";
 import { cn } from "@/lib/utils.ts";
 import * as htmlToImage from "html-to-image";
 import { Download } from "lucide-react";
+import { isEmpty } from "@fullstacksjs/toolbox";
 
 const Sheet = () => {
   const apartmantContext = useContext(ApartmantContext);
@@ -80,28 +81,23 @@ const FeeTableRows = () => {
   const apartmantContext = useContext(ApartmantContext);
   const { apartmantData } = apartmantContext;
 
-  if (
-    apartmantData.neighbors &&
-    Object.keys(apartmantData.neighbors).length > 0
-  ) {
-    return Object.values(apartmantData.neighbors).map(
-      (neighbor: any, index: number) => (
-        <Tr key={index}>
-          <Th>{floorToPersianWord(neighbor.floor)}</Th>
-          <Th>{neighbor.unit}</Th>
-          <Th>{neighbor.name}</Th>
-          <Th
-            className={cn(
-              neighbor.hasPaidFee
-                ? "text-green-500"
-                : "text-(--sheet-secondary-foreground)/60",
-            )}
-          >
-            {neighbor.hasPaidFee ? "پرداخت شده" : "در دست پرداخت"}
-          </Th>
-        </Tr>
-      ),
-    );
+  if (!isEmpty(apartmantData.neighbors)) {
+    return apartmantData.neighbors.map((neighbor: any, index: number) => (
+      <Tr key={index}>
+        <Th>{floorToPersianWord(neighbor.floor)}</Th>
+        <Th>{neighbor.unit}</Th>
+        <Th>{neighbor.name}</Th>
+        <Th
+          className={cn(
+            neighbor.hasPaidFee
+              ? "text-green-500"
+              : "text-(--sheet-secondary-foreground)/60",
+          )}
+        >
+          {neighbor.hasPaidFee ? "پرداخت شده" : "در دست پرداخت"}
+        </Th>
+      </Tr>
+    ));
   }
 };
 
@@ -128,19 +124,17 @@ const CostsTableRows = () => {
   const apartmantContext = useContext(ApartmantContext);
   const { apartmantData } = apartmantContext;
 
-  if (apartmantData.costs && Object.keys(apartmantData.costs).length > 0) {
-    return Object.values(apartmantData.costs).map(
-      (element: any, index: number) => {
-        if (element.title && element.cost) {
-          return (
-            <Tr key={index}>
-              <Th>{element.title}</Th>
-              <Th>{separateNumbers(element.cost)}</Th>
-            </Tr>
-          );
-        }
-      },
-    );
+  if (!isEmpty(apartmantData.costs)) {
+    return apartmantData.costs.map((element: any, index: number) => {
+      if (element.title && element.cost) {
+        return (
+          <Tr key={index}>
+            <Th>{element.title}</Th>
+            <Th>{separateNumbers(element.cost)}</Th>
+          </Tr>
+        );
+      }
+    });
   }
 };
 
@@ -230,27 +224,24 @@ const ProfitTableRows = ({
 
   return (
     <>
-      {apartmantData.costs && Object.keys(apartmantData.costs).length > 0 && (
+      {!isEmpty(apartmantData.costs) && (
         <Tr>
           <Th>جمع کل هزینه ها</Th>
           <Th>{sumOfCosts && separateNumbers(sumOfCosts)}</Th>
         </Tr>
       )}
 
-      {apartmantData.profit &&
-        Object.keys(apartmantData.profit).length > 0 &&
-        Object.values(apartmantData.profit).map(
-          (element: any, index: number) => {
-            if (element.title && element.cost) {
-              return (
-                <Tr key={index}>
-                  <Th>{element.title}</Th>
-                  <Th>{element.cost}</Th>
-                </Tr>
-              );
-            }
-          },
-        )}
+      {!isEmpty(apartmantData.profit) &&
+        apartmantData.profit.map((element: any, index: number) => {
+          if (element.title && element.cost) {
+            return (
+              <Tr key={index}>
+                <Th>{element.title}</Th>
+                <Th>{element.cost}</Th>
+              </Tr>
+            );
+          }
+        })}
 
       {sumOfPaidFee !== undefined &&
         sumOfCosts !== undefined &&

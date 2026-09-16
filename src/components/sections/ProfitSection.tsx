@@ -10,6 +10,7 @@ import type {
   ProfitProps,
 } from "@/types/apartmant-data-types.ts";
 import ApartmantContext from "@/contexts/ApartmantData/ApartmantContext.ts";
+import { isEmpty } from "@fullstacksjs/toolbox";
 
 const ProfitSection = () => {
   const apartmantContext = useContext(ApartmantContext);
@@ -17,10 +18,9 @@ const ProfitSection = () => {
   const wrapperRef = useRef<HTMLDivElement>(null);
 
   const addNewProfit = () => {
-    const newProfitId: number =
-      apartmantData.profit.length > 0
-        ? apartmantData.profit[apartmantData.profit.length - 1].id + 1
-        : 0;
+    const newProfitId: number = isEmpty(apartmantData.profit)
+      ? 0
+      : apartmantData.profit[apartmantData.profit.length - 1].id + 1;
 
     setApartmantData((prevState) => {
       return {
@@ -40,7 +40,7 @@ const ProfitSection = () => {
     }, 400);
   };
 
-  if (apartmantData.profit.length > 0)
+  if (!isEmpty(apartmantData.profit))
     return (
       <section
         ref={wrapperRef}

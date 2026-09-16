@@ -9,6 +9,7 @@ import type {
   CostProps,
 } from "@/types/apartmant-data-types.ts";
 import ApartmantContext from "@/contexts/ApartmantData/ApartmantContext.ts";
+import { isEmpty } from "@fullstacksjs/toolbox";
 
 const CostSection = () => {
   const apartmantContext = useContext(ApartmantContext);
@@ -16,10 +17,9 @@ const CostSection = () => {
   const wrapperRef = useRef<HTMLDivElement>(null);
 
   const addNewCost = () => {
-    const newCostId: number =
-      apartmantData.costs.length > 0
-        ? apartmantData.costs[apartmantData.costs.length - 1].id + 1
-        : 0;
+    const newCostId: number = isEmpty(apartmantData.costs)
+      ? 0
+      : apartmantData.costs[apartmantData.costs.length - 1].id + 1;
 
     setApartmantData((prevState) => {
       return {
@@ -42,7 +42,7 @@ const CostSection = () => {
     }, 400);
   };
 
-  if (apartmantData.costs.length > 0)
+  if (!isEmpty(apartmantData.costs))
     return (
       <section
         ref={wrapperRef}

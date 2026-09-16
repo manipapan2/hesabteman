@@ -19,6 +19,7 @@ import type {
   NeighborProps,
 } from "@/types/apartmant-data-types.ts";
 import ApartmantContext from "@/contexts/ApartmantData/ApartmantContext.ts";
+import { isEmpty } from "@fullstacksjs/toolbox";
 
 const NeighborStatusSection = () => {
   const apartmantContext = useContext(ApartmantContext);
@@ -78,7 +79,7 @@ const NeighborStatusSection = () => {
     apartmantData?.unitCount &&
     apartmantData?.floorCount &&
     apartmantData?.neighbors &&
-    apartmantData.neighbors.length > 0
+    !isEmpty(apartmantData.neighbors)
   )
     return (
       <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
