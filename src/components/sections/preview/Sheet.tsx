@@ -1,34 +1,56 @@
 import separateNumbers from "@/utils/separateNumbers.ts";
 import floorToPersianWord from "@/utils/floorToPersianWord.ts";
-import { useContext, useEffect, useState, type ReactNode } from "react";
+import { useContext, useEffect, useRef, useState, type ReactNode } from "react";
 import ApartmantContext from "@/contexts/ApartmantData/ApartmantContext.ts";
 import { cn } from "@/lib/utils.ts";
+import * as htmlToImage from "html-to-image";
+import { Download } from "lucide-react";
 
-export default function Sheet({ ref }: { ref: React.Ref<HTMLDivElement> }) {
+export default function Sheet() {
   const apartmantContext = useContext(ApartmantContext);
   const { apartmantData } = apartmantContext;
 
-  return (
-    <div
-      ref={ref}
-      dir="ltr"
-      className="bg-result-background relative p-8 pb-16 w-fit h-fit min-w-210"
-    >
-      <h2 className="text-xl text-result- mb-5 text-center">
-        صورت وضعیت شارژ {apartmantData?.month} {apartmantData?.year}
-      </h2>
+  const sheetRef = useRef<HTMLDivElement>(null);
 
-      <div className="flex gap-10 w-fit m-auto">
-        <FeeTable />
-        <div className="flex flex-col gap-10">
-          <CostsTable />
-          <ProfitTable />
+  const convertToImage = () => {
+    htmlToImage.toPng(sheetRef.current!).then((imageURL: string) => {
+      const link = document.createElement("a");
+      link.href = imageURL;
+      link.download = `فاکتور ساختمان ${apartmantData.month} ${apartmantData.year}`;
+      link.click();
+    });
+  };
+
+  return (
+    <div className="relative h-full">
+      <div
+        ref={sheetRef}
+        dir="ltr"
+        className="bg-result-background max-h-full overflow-y-auto zoom-40 lg:zoom-90 m-auto relative p-8 w-fit h-fit min-w-210"
+      >
+        <h2 className="text-xl text-result- mb-5 text-center">
+          صورت وضعیت شارژ {apartmantData?.month} {apartmantData?.year}
+        </h2>
+
+        <div className="flex gap-10 w-fit m-auto">
+          <FeeTable />
+          <div className="flex flex-col gap-10">
+            <CostsTable />
+            <ProfitTable />
+          </div>
         </div>
+
+        <span className="w-full justify-end flex mt-4 mb-2 text-[0.7rem]">
+          ساخته شده با حسابتمان
+        </span>
       </div>
 
-      <span className="absolute right-4 bottom-4 text-[0.7rem]">
-        ساخته شده با حسابتمان
-      </span>
+      <button
+        onClick={() => convertToImage()}
+        className="p-3 rounded-full bg-primary text-primary-foreground absolute -top-4 -right-4  hover:cursor-pointer"
+      >
+        <Download />
+      </button>
     </div>
   );
 }

@@ -41,7 +41,7 @@ export default function ColorSelector({ colors }: props) {
   return (
     <div
       dir="ltr"
-      className="flex gap-12 lg:gap-6 justify-start p-2 max-w-full overflow-hidden overflow-x-auto"
+      className="flex gap-4 justify-start max-w-full overflow-hidden overflow-x-auto"
     >
       {colors.map((element, index) => (
         <Item
@@ -66,7 +66,7 @@ const Item = ({ colors, selectedColors, onClick }: ItemProps) => {
     <button aria-label="select theme" className="p-1" onClick={onClick}>
       <div
         className={cn(
-          "relative overflow-hidden min-w-23 lg:min-w-16 aspect-square rounded-full outline-6 outline-muted outline-offset-6 lg:outline-4 lg:outline-offset-4",
+          "relative overflow-hidden m-1 min-w-9 aspect-square rounded-full outline-3 outline-muted outline-offset-3 lg:outline-offset-4",
           JSON.stringify(selectedColors) === JSON.stringify(colors) &&
             "outline-primary",
         )}
