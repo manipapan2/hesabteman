@@ -92,7 +92,9 @@ const FeeTableRows = () => {
           <Th>{neighbor.name}</Th>
           <Th
             className={cn(
-              neighbor.hasPaidFee ? "text-green-500" : "text-gray-500",
+              neighbor.hasPaidFee
+                ? "text-green-500"
+                : "text-(--sheet-secondary-foreground)/60",
             )}
           >
             {neighbor.hasPaidFee ? "پرداخت شده" : "در دست پرداخت"}
