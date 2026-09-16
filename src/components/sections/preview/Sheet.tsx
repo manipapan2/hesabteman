@@ -26,7 +26,7 @@ export default function Sheet() {
       <div
         ref={sheetRef}
         dir="ltr"
-        className="bg-result-background relative m-auto h-fit max-h-full w-fit min-w-210 zoom-40 overflow-y-auto p-8 lg:zoom-90"
+        className="bg-result-background relative m-auto h-fit max-h-full w-fit min-w-210 zoom-40 overflow-y-auto p-8 lg:zoom-70 xl:zoom-90"
       >
         <h2 className="text-result- mb-5 text-center text-xl">
           صورت وضعیت شارژ {apartmantData?.month} {apartmantData?.year}
