@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils.ts";
 import * as htmlToImage from "html-to-image";
 import { Download } from "lucide-react";
 
-export default function Sheet() {
+const Sheet = () => {
   const apartmantContext = useContext(ApartmantContext);
   const { apartmantData } = apartmantContext;
 
@@ -53,7 +53,7 @@ export default function Sheet() {
       </button>
     </div>
   );
-}
+};
 
 const FeeTable = () => {
   return (
@@ -315,3 +315,5 @@ const Th = ({
     </th>
   );
 };
+
+export default Sheet;

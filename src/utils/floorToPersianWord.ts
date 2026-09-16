@@ -1,4 +1,4 @@
-export default function floorToPersianWord(number: string | number) {
+const floorToPersianWord = (number: string | number) => {
   switch (number) {
     case 1:
       return "اول";
@@ -18,4 +18,6 @@ export default function floorToPersianWord(number: string | number) {
     default:
       break;
   }
-}
+};
+
+export default floorToPersianWord;

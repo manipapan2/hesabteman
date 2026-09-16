@@ -47,7 +47,7 @@ const persianYearItems: {
 });
 // persianYearItems.unshift({ label: "انتخاب ماه", value: null });
 
-export default function BaseInfoSection() {
+const BaseInfoSection = () => {
   const apartmantContext = useContext(ApartmantContext);
   const { setApartmantData } = apartmantContext;
 
@@ -164,4 +164,6 @@ export default function BaseInfoSection() {
       </div>
     </section>
   );
-}
+};
+
+export default BaseInfoSection;

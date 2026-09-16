@@ -3,7 +3,7 @@ import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import AppLogo from "@/assets/images/app-logo.webp";
 import IconToggle from "./IconToggle.tsx";
 
-export default function Header() {
+const Header = () => {
   const [theme, setTheme] = useState<"dark" | "light">(() => {
     const savedTheme = localStorage.getItem("theme");
 
@@ -60,4 +60,6 @@ export default function Header() {
       </button>
     </header>
   );
-}
+};
+
+export default Header;

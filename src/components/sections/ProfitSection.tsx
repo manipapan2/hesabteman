@@ -11,7 +11,7 @@ import type {
 } from "@/types/apartmant-data-types.ts";
 import ApartmantContext from "@/contexts/ApartmantData/ApartmantContext.ts";
 
-export default function ProfitSection() {
+const ProfitSection = () => {
   const apartmantContext = useContext(ApartmantContext);
   const { apartmantData, setApartmantData } = apartmantContext;
   const wrapperRef = useRef<HTMLDivElement>(null);
@@ -144,4 +144,6 @@ export default function ProfitSection() {
       </Button>
     </section>
   );
-}
+};
+
+export default ProfitSection;

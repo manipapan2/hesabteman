@@ -10,7 +10,7 @@ import type {
 } from "@/types/apartmant-data-types.ts";
 import ApartmantContext from "@/contexts/ApartmantData/ApartmantContext.ts";
 
-export default function CostSection() {
+const CostSection = () => {
   const apartmantContext = useContext(ApartmantContext);
   const { apartmantData, setApartmantData } = apartmantContext;
   const wrapperRef = useRef<HTMLDivElement>(null);
@@ -139,4 +139,6 @@ export default function CostSection() {
       </Button>
     </section>
   );
-}
+};
+
+export default CostSection;

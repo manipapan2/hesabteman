@@ -11,7 +11,7 @@ interface ThemeProps {
   secondary: string;
   secondaryForeground: string;
 }
-export default function SheetThemeSelector({ themes }: props) {
+const SheetThemeSelector = ({ themes }: props) => {
   const [selectedTheme, setSelectedTheme] = useState<ThemeProps>(themes[0]);
   const isFirstTimeRef = useRef(true);
 
@@ -53,7 +53,7 @@ export default function SheetThemeSelector({ themes }: props) {
       ))}
     </div>
   );
-}
+};
 
 interface ItemProps {
   colors: ThemeProps;
@@ -85,3 +85,5 @@ const Item = ({ colors, selectedTheme, onClick }: ItemProps) => {
     </button>
   );
 };
+
+export default SheetThemeSelector;

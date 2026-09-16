@@ -5,7 +5,7 @@ import SheetThemeSelector from "./SheetThemeSelector.tsx";
 import Sheet from "./Sheet.tsx";
 import IconToggle from "../../IconToggle.tsx";
 
-export default function SheetPreviewSection() {
+const SheetPreviewSection = () => {
   const [isShown, setIsShown] = useState(false);
 
   useEffect(() => {
@@ -75,4 +75,6 @@ export default function SheetPreviewSection() {
       </button>
     </>
   );
-}
+};
+
+export default SheetPreviewSection;

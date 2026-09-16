@@ -20,7 +20,7 @@ import type {
 } from "@/types/apartmant-data-types.ts";
 import ApartmantContext from "@/contexts/ApartmantData/ApartmantContext.ts";
 
-export default function NeighborStatusSection() {
+const NeighborStatusSection = () => {
   const apartmantContext = useContext(ApartmantContext);
   const { apartmantData, setApartmantData } = apartmantContext;
 
@@ -106,7 +106,7 @@ export default function NeighborStatusSection() {
       <h2 className="text-foreground/40">طبقه و واحد را وارد کنید</h2>
     </section>
   );
-}
+};
 
 interface FiledProps {
   neighborId: string;
@@ -263,3 +263,5 @@ const Field = ({ neighborId, fieldIndex }: FiledProps) => {
     </div>
   );
 };
+
+export default NeighborStatusSection;
