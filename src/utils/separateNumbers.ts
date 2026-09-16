@@ -1,14 +1,25 @@
-const separateNumbers = (number: string | number): string => {
-  const numbersReg = /^\d+$/;
+const separateNumbers = (number: number | string): string => {
+  const numbersReg = /^-?\d+$/;
+  const positiveNumbersReg = /^\d+$/;
   const stringifiedNumber = number.toString();
-  if (stringifiedNumber.length > 0 && numbersReg.test(stringifiedNumber)) {
-    const seperatedNumbers = stringifiedNumber.replace(
-      /\B(?=(?:\d{3})+(?!\d))/g,
-      ",",
-    );
-    return seperatedNumbers;
+
+  if (!numbersReg.test(stringifiedNumber)) {
+    return "";
   }
-  return "";
+
+  if (positiveNumbersReg.test(stringifiedNumber)) {
+    return formatNumbersBy3(stringifiedNumber);
+  }
+
+  const stringifiedPositiveNumber = stringifiedNumber.replace("-", "");
+  const formattedNumber = formatNumbersBy3(stringifiedPositiveNumber);
+  const negativedFormattedNumber = `-${formattedNumber}`;
+
+  return negativedFormattedNumber;
+};
+
+const formatNumbersBy3 = (number: string): string => {
+  return number.replace(/\B(?=(?:\d{3})+(?!\d))/g, ",");
 };
 
 export default separateNumbers;
