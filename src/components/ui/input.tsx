@@ -49,7 +49,7 @@ function Input({
   };
 
   return (
-    <div className="relative">
+    <div className="relative w-full">
       <InputPrimitive
         type={isSeparateNumbers ? "text" : type}
         data-slot="input"
