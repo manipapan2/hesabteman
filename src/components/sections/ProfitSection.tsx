@@ -46,6 +46,7 @@ const ProfitSection = () => {
         ref={wrapperRef}
         className="bg-accent flex flex-col gap-4 rounded-md p-3"
       >
+        <Title>سود ها</Title>
         {apartmantData.profit.map((profit: ProfitProps, profitIndex) => (
           <motion.div
             key={profit.id}

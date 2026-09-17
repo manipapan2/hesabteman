@@ -48,6 +48,7 @@ const CostSection = () => {
         ref={wrapperRef}
         className="bg-accent flex flex-col gap-4 rounded-md p-3"
       >
+        <Title>هزینه ها</Title>
         {apartmantData.costs.map((cost: CostProps, costIndex) => (
           <motion.div
             key={cost.id}

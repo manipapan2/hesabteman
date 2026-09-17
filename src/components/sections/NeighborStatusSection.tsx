@@ -84,6 +84,7 @@ const NeighborStatusSection = () => {
     return (
       <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
         <section className="bg-accent flex flex-col gap-4 rounded-md p-2">
+          <Title>وضعیت همسایه ها</Title>
           {apartmantData.neighbors.map((neighbor: NeighborProps, index) => (
             <Field
               key={neighbor.id}
