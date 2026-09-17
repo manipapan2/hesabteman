@@ -60,13 +60,13 @@ const SheetPreviewSection = () => {
       </section>
       <button
         onClick={() => setIsShown((prev) => !prev)}
-        className="bg-muted text-muted-foreground fixed bottom-2 left-2 z-10 size-12 rounded-full p-4 lg:hidden"
+        className="bg-muted text-muted-foreground fixed bottom-3 left-3 z-10 size-14 rounded-full p-4 lg:hidden"
       >
         <IconToggle
           className="h-full w-full"
           isActive={isShown}
-          activeIcon={<EyeOff />}
-          notActiveIcon={<Eye />}
+          activeIcon={<EyeOff size={28} />}
+          notActiveIcon={<Eye size={28} />}
         />
       </button>
     </>
