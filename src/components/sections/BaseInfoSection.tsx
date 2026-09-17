@@ -9,9 +9,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select.tsx";
-import type { ApartmantProps } from "@/types/apartmant-data-types.ts";
 import ApartmantContext from "@/contexts/ApartmantData/ApartmantContext.ts";
 import Title from "@/components/Title.tsx";
+import { clone } from "@fullstacksjs/toolbox";
 
 const persianMonthItems = [
   { label: "فروردین", value: "فروردین" },
@@ -50,8 +50,8 @@ const BaseInfoSection = () => {
   const { setApartmantData } = apartmantContext;
 
   useEffect(() => {
-    setApartmantData((prevState: ApartmantProps) => {
-      const clonedObj = { ...prevState };
+    setApartmantData((prevState) => {
+      const clonedObj = clone(prevState);
       clonedObj["year"] = persianYearItems[0].value;
       clonedObj["month"] = currentPersianMonth;
       return clonedObj;
@@ -66,8 +66,8 @@ const BaseInfoSection = () => {
           unit="تومان"
           isSeparateNumbers
           onValue={(value) =>
-            setApartmantData((prevState: ApartmantProps) => {
-              const clonedObj = { ...prevState };
+            setApartmantData((prevState) => {
+              const clonedObj = clone(prevState);
               clonedObj["fee"] = parseInt(value, 10);
               return clonedObj;
             })
@@ -82,8 +82,8 @@ const BaseInfoSection = () => {
             items={persianMonthItems}
             defaultValue={currentPersianMonth}
             onValueChange={(value) =>
-              setApartmantData((prevValue: ApartmantProps) => {
-                const clonedArray = { ...prevValue };
+              setApartmantData((prevState) => {
+                const clonedArray = clone(prevState);
                 clonedArray["month"] = value;
                 return clonedArray;
               })
@@ -107,8 +107,8 @@ const BaseInfoSection = () => {
             items={persianYearItems}
             defaultValue={persianYearItems[0].value}
             onValueChange={(value) =>
-              setApartmantData((prevValue: ApartmantProps) => {
-                const clonedObject = { ...prevValue };
+              setApartmantData((prevState) => {
+                const clonedObject = clone(prevState);
                 clonedObject["year"] = value;
                 return clonedObject;
               })
@@ -138,8 +138,8 @@ const BaseInfoSection = () => {
             placeholder="تعداد طبقه ها"
             maxLength={1}
             onValue={(value) =>
-              setApartmantData((prevState: ApartmantProps) => {
-                const clonedObj = { ...prevState };
+              setApartmantData((prevState) => {
+                const clonedObj = clone(prevState);
                 clonedObj["floorCount"] = parseInt(value, 10);
                 return clonedObj;
               })
@@ -150,8 +150,8 @@ const BaseInfoSection = () => {
             placeholder="تعداد واحد هر طبقه"
             maxLength={1}
             onValue={(value) =>
-              setApartmantData((prevState: ApartmantProps) => {
-                const clonedObj = { ...prevState };
+              setApartmantData((prevState) => {
+                const clonedObj = clone(prevState);
                 clonedObj["unitCount"] = parseInt(value, 10);
                 return clonedObj;
               })

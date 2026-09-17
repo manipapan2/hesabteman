@@ -5,12 +5,9 @@ import { useContext, useRef } from "react";
 import { motion } from "motion/react";
 import Title from "../Title.tsx";
 import { Input } from "../ui/input.tsx";
-import type {
-  ApartmantProps,
-  ProfitProps,
-} from "@/types/apartmant-data-types.ts";
+import type { ProfitProps } from "@/types/apartmant-data-types.ts";
 import ApartmantContext from "@/contexts/ApartmantData/ApartmantContext.ts";
-import { isEmpty } from "@fullstacksjs/toolbox";
+import { clone, isEmpty } from "@fullstacksjs/toolbox";
 
 const ProfitSection = () => {
   const apartmantContext = useContext(ApartmantContext);
@@ -60,8 +57,8 @@ const ProfitSection = () => {
                   <button
                     className="text-red-500"
                     onClick={() =>
-                      setApartmantData((prevState: ApartmantProps) => {
-                        const clonedObject = { ...prevState };
+                      setApartmantData((prevState) => {
+                        const clonedObject = clone(prevState);
 
                         const newprofitValue = clonedObject.profit.filter(
                           (element: ProfitProps) => element.id !== profit.id,
@@ -79,8 +76,8 @@ const ProfitSection = () => {
                   type="text"
                   placeholder="مثلا: مانده صندوق از ماه قبل"
                   onValue={(value) =>
-                    setApartmantData((prevState: ApartmantProps) => {
-                      const clonedObj = { ...prevState };
+                    setApartmantData((prevState) => {
+                      const clonedObj = clone(prevState);
                       clonedObj.profit[profitIndex].title = value;
                       return clonedObj;
                     })
@@ -94,8 +91,8 @@ const ProfitSection = () => {
                   unit="تومان"
                   isSeparateNumbers
                   onValue={(value) =>
-                    setApartmantData((prevState: ApartmantProps) => {
-                      const clonedObj = { ...prevState };
+                    setApartmantData((prevState) => {
+                      const clonedObj = clone(prevState);
                       clonedObj.profit[profitIndex].cost = parseInt(
                         value.replace(",", ""),
                         10,

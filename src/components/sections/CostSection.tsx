@@ -4,12 +4,9 @@ import { Input } from "../ui/input.tsx";
 import { Button } from "../ui/button/button.tsx";
 import { CircleDollarSign, CircleMinus, PlusCircle } from "lucide-react";
 import { motion } from "motion/react";
-import type {
-  ApartmantProps,
-  CostProps,
-} from "@/types/apartmant-data-types.ts";
+import type { CostProps } from "@/types/apartmant-data-types.ts";
 import ApartmantContext from "@/contexts/ApartmantData/ApartmantContext.ts";
-import { isEmpty } from "@fullstacksjs/toolbox";
+import { clone, isEmpty } from "@fullstacksjs/toolbox";
 
 const CostSection = () => {
   const apartmantContext = useContext(ApartmantContext);
@@ -62,8 +59,8 @@ const CostSection = () => {
                   <button
                     className="text-red-500"
                     onClick={() =>
-                      setApartmantData((prevState: ApartmantProps) => {
-                        const clonedObject = { ...prevState };
+                      setApartmantData((prevState) => {
+                        const clonedObject = clone(prevState);
 
                         const newCostsValue = clonedObject.costs.filter(
                           (element: CostProps) => element.id !== cost.id,
@@ -81,8 +78,8 @@ const CostSection = () => {
                   type="text"
                   placeholder="مثلا: آسانسور"
                   onValue={(value) =>
-                    setApartmantData((prevState: ApartmantProps) => {
-                      const clonedObj = { ...prevState };
+                    setApartmantData((prevState) => {
+                      const clonedObj = clone(prevState);
                       clonedObj.costs[costIndex].title = value;
                       return clonedObj;
                     })
@@ -95,8 +92,8 @@ const CostSection = () => {
                   unit="تومان"
                   isSeparateNumbers
                   onValue={(value) =>
-                    setApartmantData((prevState: ApartmantProps) => {
-                      const clonedObj = { ...prevState };
+                    setApartmantData((prevState) => {
+                      const clonedObj = clone(prevState);
                       clonedObj.costs[costIndex].cost = parseInt(value, 10);
                       return clonedObj;
                     })

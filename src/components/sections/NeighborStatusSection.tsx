@@ -14,12 +14,9 @@ import {
   SelectValue,
 } from "@/components/ui/select.tsx";
 import { User } from "lucide-react";
-import type {
-  ApartmantProps,
-  NeighborProps,
-} from "@/types/apartmant-data-types.ts";
+import type { NeighborProps } from "@/types/apartmant-data-types.ts";
 import ApartmantContext from "@/contexts/ApartmantData/ApartmantContext.ts";
-import { isEmpty } from "@fullstacksjs/toolbox";
+import { clone, isEmpty } from "@fullstacksjs/toolbox";
 
 const NeighborStatusSection = () => {
   const apartmantContext = useContext(ApartmantContext);
@@ -42,7 +39,7 @@ const NeighborStatusSection = () => {
       return;
     }
 
-    setApartmantData((prevState: ApartmantProps) => {
+    setApartmantData((prevState) => {
       const neighborArray: NeighborProps[] = [];
 
       for (
@@ -140,8 +137,8 @@ const Field = ({ neighborId, fieldIndex }: FiledProps) => {
             type="text"
             placeholder="مثلا: آقای غلامی"
             onValue={(value: string) =>
-              setApartmantData((prevState: ApartmantProps) => {
-                const clonedObj = { ...prevState };
+              setApartmantData((prevState) => {
+                const clonedObj = clone(prevState);
                 clonedObj.neighbors[fieldIndex].name = value;
                 return clonedObj;
               })
@@ -155,8 +152,8 @@ const Field = ({ neighborId, fieldIndex }: FiledProps) => {
               unitItems[fieldIndex].value / (apartmantData.unitCount as number),
             )}
             onValueChange={(value: any) =>
-              setApartmantData((prevValue: ApartmantProps) => {
-                const clonedObject = { ...prevValue };
+              setApartmantData((prevState) => {
+                const clonedObject = clone(prevState);
                 clonedObject.neighbors[fieldIndex].floor = value;
                 return clonedObject;
               })
@@ -179,8 +176,8 @@ const Field = ({ neighborId, fieldIndex }: FiledProps) => {
           <Select
             items={unitItems}
             defaultValue={() => {
-              setApartmantData((prevState: ApartmantProps) => {
-                const clonedObj = { ...prevState };
+              setApartmantData((prevState) => {
+                const clonedObj = clone(prevState);
                 clonedObj.neighbors[fieldIndex].unit =
                   unitItems[fieldIndex].value;
                 clonedObj.neighbors[fieldIndex].floor = Math.ceil(
@@ -192,8 +189,8 @@ const Field = ({ neighborId, fieldIndex }: FiledProps) => {
               return unitItems[fieldIndex].value;
             }}
             onValueChange={(value: any) =>
-              setApartmantData((prevValue: ApartmantProps) => {
-                const clonedObject = { ...prevValue };
+              setApartmantData((prevState) => {
+                const clonedObject = clone(prevState);
                 clonedObject.neighbors[fieldIndex].unit = value;
                 return clonedObject;
               })
@@ -220,8 +217,8 @@ const Field = ({ neighborId, fieldIndex }: FiledProps) => {
             defaultValue
             className="flex"
             onValueChange={(value) =>
-              setApartmantData((prevState: ApartmantProps) => {
-                const clonedObj = { ...prevState };
+              setApartmantData((prevState) => {
+                const clonedObj = clone(prevState);
                 clonedObj.neighbors[fieldIndex].hasPaidFee = value;
                 return clonedObj;
               })
