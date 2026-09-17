@@ -66,7 +66,6 @@ const ProfitSection = () => {
                           (element: ProfitProps) => element.id !== profit.id,
                         );
 
-                        // clonedObject.costs.filter(value => value != profitId)
                         clonedObject.profit = newprofitValue;
                         return clonedObject;
                       })

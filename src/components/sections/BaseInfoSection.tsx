@@ -40,12 +40,10 @@ const currentPersianYear = convertPersianNumberToEnglish(
 const persianYearItems: {
   label: string;
   value: null | string;
-  // change
 }[] = Array.from({ length: 6 }).map((_, index) => {
   const calculatedYear = (parseInt(currentPersianYear, 10) - index).toString();
   return { label: calculatedYear, value: calculatedYear };
 });
-// persianYearItems.unshift({ label: "انتخاب ماه", value: null });
 
 const BaseInfoSection = () => {
   const apartmantContext = useContext(ApartmantContext);
@@ -76,7 +74,6 @@ const BaseInfoSection = () => {
           }
           placeholder="مثلا: 400,000"
         />
-        {/* <input type="text" onChange={() => console.log('ttttt')} value={''} /> */}
       </div>
       <div>
         <Title>تاریخ</Title>

@@ -12,7 +12,6 @@ const SheetPreviewSection = () => {
     if (isShown) {
       document.body.style.overflow = "hidden";
     } else {
-      // change
       document.body.style.overflow = "auto";
     }
 
@@ -44,8 +43,6 @@ const SheetPreviewSection = () => {
 
   return (
     <>
-      {/* <Render ref={sheetRef} /> */}
-
       <section
         className={cn(
           "pointer-events-none fixed top-0 left-0 z-10 flex h-full w-full flex-col items-center justify-center gap-3 bg-transparent opacity-0 backdrop-blur-3xl transition-all lg:pointer-events-auto lg:relative lg:opacity-100",
@@ -53,7 +50,6 @@ const SheetPreviewSection = () => {
         )}
       >
         <div className="relative flex h-full w-fit flex-col items-center justify-center rounded-md">
-          {/* <img alt="test" src={imageUrl} className="w-full rounded-md" /> */}
           <div className="mb-2 w-full max-w-full">
             <SheetThemeSelector themes={Themes} />
           </div>
