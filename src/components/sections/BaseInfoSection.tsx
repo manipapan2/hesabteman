@@ -147,7 +147,7 @@ const BaseInfoSection = () => {
           />
           <Input
             type="number"
-            placeholder="تعداد واحد ها"
+            placeholder="تعداد واحد هر طبقه"
             maxLength={1}
             onValue={(value) =>
               setApartmantData((prevState: ApartmantProps) => {
