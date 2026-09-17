@@ -1,6 +1,6 @@
 import { Moon, Sun } from "lucide-react";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
-import AppLogo from "@/assets/images/app-logo.webp";
+import AppLogo from "@/../public/images/app-logo.webp";
 import IconToggle from "./IconToggle.tsx";
 
 const Header = () => {
