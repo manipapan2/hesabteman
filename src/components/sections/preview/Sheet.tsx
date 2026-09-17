@@ -258,7 +258,9 @@ const ProfitTableRows = ({
         sumOfProfit !== undefined && (
           <Tr>
             <Th>مانده صندوق</Th>
-            <Th>{separateNumbers(sumOfPaidFee + sumOfProfit - sumOfCosts)}</Th>
+            <Th dir="ltr">
+              {separateNumbers(sumOfPaidFee + sumOfProfit - sumOfCosts)}
+            </Th>
           </Tr>
         )}
     </>
