@@ -35,7 +35,7 @@ const Sheet = () => {
       <div
         ref={sheetRef}
         dir="ltr"
-        className="relative m-auto h-fit max-h-full w-fit min-w-210 zoom-40 overflow-y-auto bg-(--sheet-background) p-8 lg:zoom-70 xl:zoom-90"
+        className="relative m-auto h-fit max-h-full w-fit min-w-210 zoom-40 overflow-y-auto bg-(--sheet-background) p-8 md:zoom-80 lg:zoom-70 xl:zoom-90"
       >
         <h2 className="mb-5 text-center text-xl text-(--sheet-background-foreground)">
           صورت وضعیت شارژ {apartmantData?.month} {apartmantData?.year}
