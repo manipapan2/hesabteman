@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef } from "react";
+import { useContext, useEffect } from "react";
 import Title from "../Title.tsx";
 import { Input } from "../ui/input.tsx";
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group.tsx";
@@ -22,54 +22,51 @@ const NeighborStatusSection = () => {
   const apartmantContext = useContext(ApartmantContext);
   const { apartmantData, setApartmantData } = apartmantContext;
 
-  const floorRef = useRef<number | undefined | null>(undefined);
-  const unitRef = useRef<number | undefined | null>(undefined);
+  // const calculateNeighbors = () => {
 
-  const calculateNeighbors = () => {
-    if (!apartmantData?.floorCount || !apartmantData?.unitCount) {
-      floorRef.current = apartmantData.floorCount;
-      unitRef.current = apartmantData.unitCount;
-      return;
-    }
-
-    if (
-      apartmantData.floorCount === floorRef.current &&
-      apartmantData.unitCount === unitRef.current
-    ) {
-      return;
-    }
-
-    setApartmantData((prevState) => {
-      const neighborArray: NeighborProps[] = [];
-
-      for (
-        let index = 0;
-        index <
-        (apartmantData.floorCount as number) *
-          (apartmantData.unitCount as number);
-        index++
-      ) {
-        neighborArray.push({
-          id: index,
-          name: "",
-          floor: Math.ceil(index + 1 / (apartmantData.unitCount as number)),
-          unit: index + 1,
-          hasPaidFee: true,
-        });
-      }
-
-      return {
-        ...prevState,
-        neighbors: neighborArray,
-      };
-    });
-
-    floorRef.current = apartmantData.floorCount;
-    unitRef.current = apartmantData.unitCount;
-  };
+  // };
 
   useEffect(() => {
-    calculateNeighbors();
+    if (
+      apartmantData.floorCount &&
+      apartmantData.unitCount &&
+      isEmpty(apartmantData.neighbors)
+    ) {
+      setApartmantData((prevState) => {
+        const neighborArray: NeighborProps[] = [];
+
+        for (
+          let index = 0;
+          index <
+          (apartmantData.floorCount as number) *
+            (apartmantData.unitCount as number);
+          index++
+        ) {
+          neighborArray.push({
+            id: index,
+            name: "",
+            floor: Math.ceil(index + 1 / (apartmantData.unitCount as number)),
+            unit: index + 1,
+            hasPaidFee: true,
+          });
+        }
+
+        return {
+          ...prevState,
+          neighbors: neighborArray,
+        };
+      });
+    } else if (
+      apartmantData.floorCount === undefined ||
+      apartmantData.unitCount === undefined
+    ) {
+      setApartmantData((prevState) => {
+        return {
+          ...prevState,
+          neighbors: [],
+        };
+      });
+    }
   }, [apartmantData]);
 
   if (
