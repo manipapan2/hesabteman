@@ -57,8 +57,8 @@ const NeighborStatusSection = () => {
         };
       });
     } else if (
-      (apartmantData.floorCount === undefined ||
-        apartmantData.unitCount === undefined) &&
+      (typeof apartmantData.floorCount !== "number" ||
+        typeof apartmantData.unitCount !== "number") &&
       !isEmpty(apartmantData.neighbors)
     ) {
       setApartmantData((prevState) => {

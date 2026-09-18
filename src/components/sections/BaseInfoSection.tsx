@@ -140,7 +140,10 @@ const BaseInfoSection = () => {
             onValue={(value) =>
               setApartmantData((prevState) => {
                 const clonedObj = clone(prevState);
-                clonedObj["floorCount"] = parseInt(value, 10);
+                const isValidNumber = parseInt(value, 10);
+                clonedObj["floorCount"] = isValidNumber
+                  ? parseInt(value, 10)
+                  : undefined;
                 return clonedObj;
               })
             }
@@ -152,7 +155,10 @@ const BaseInfoSection = () => {
             onValue={(value) =>
               setApartmantData((prevState) => {
                 const clonedObj = clone(prevState);
-                clonedObj["unitCount"] = parseInt(value, 10);
+                const isValidNumber = parseInt(value, 10);
+                clonedObj["unitCount"] = isValidNumber
+                  ? parseInt(value, 10)
+                  : undefined;
                 return clonedObj;
               })
             }
