@@ -8,4 +8,4 @@ A web app for creating a balance sheet for apartmants and downloading it as an i
 
 ## Features
 
-* Offline accessibility
+* Offline support
