@@ -34,10 +34,12 @@
   "devDependencies": {
     "@fullstacksjs/oxlint-config": "^1.1.0",
     "@fullstacksjs/toolbox": "^4.25.1",
+    "@rolldown/plugin-babel": "^0.2.4",
     "@types/node": "^24.13.3",
     "@types/react": "^19.2.17",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^6.0.4",
+    "babel-plugin-react-compiler": "^1.0.0",
     "globals": "^17.7.0",
     "husky": "^9.1.7",
     "oxlint": "^1.82.0",
