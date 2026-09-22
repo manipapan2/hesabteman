@@ -1,7 +1,7 @@
 # Hesabteman
 
 <div align="center">
-<img src="./hesabteman-banner.png" alt="app banner"
+<img src="./hesabteman-preview.png" alt="app banner"
 width="70%"
 >
 </div>
