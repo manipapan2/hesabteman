@@ -2,7 +2,7 @@
 
 <div align="center">
 <img src="./hesabteman-banner.png" alt="app banner"
-width="50%"
+width="70%"
 >
 </div>
 
