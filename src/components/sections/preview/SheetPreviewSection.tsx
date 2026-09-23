@@ -60,7 +60,7 @@ const SheetPreviewSection = () => {
       </section>
       <button
         onClick={() => setIsShown((prev) => !prev)}
-        className="bg-muted text-muted-foreground fixed bottom-3 left-3 z-10 size-14 rounded-full p-4 lg:hidden"
+        className="bg-muted text-muted-foreground fixed bottom-4 left-4 z-10 size-14 rounded-full p-4 lg:hidden"
       >
         <IconToggle
           className="h-full w-full"
