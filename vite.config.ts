@@ -16,9 +16,9 @@ export default defineConfig({
     VitePWA({
       registerType: "autoUpdate",
       injectRegister: "script",
-      includeAssets: [
-        "**/*.{js,css,html,ico,jpg,png,webp,woff,ttf,svg,webmanifest}",
-      ],
+      strategies: "injectManifest",
+      srcDir: "src",
+      filename: "sw.ts",
       manifest: {
         name: "حسابتمان",
         short_name: "حسابتمان",
@@ -39,12 +39,6 @@ export default defineConfig({
             type: "image/png",
             purpose: "maskable",
           },
-        ],
-      },
-      workbox: {
-        skipWaiting: true,
-        globPatterns: [
-          "**/*.{js,css,html,ico,jpg,png,webp,woff,ttf,svg,webmanifest}",
         ],
       },
     }),

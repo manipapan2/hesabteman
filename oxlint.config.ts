@@ -6,5 +6,7 @@ export default defineConfig({
     "array-callback-return": "off",
     "react/exhaustive-deps": "off",
     "react/no-array-index-key": "off",
+    "max-nested-callbacks": "off",
+    "no-unused-expressions": "off"
   },
 });

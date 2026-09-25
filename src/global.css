@@ -9,7 +9,7 @@
 
 @font-face {
   font-family: Vazirmatn;
-  src: url(@/../public/fonts/Vazirmatn/Vazirmatn-VariableFont_wght.woff);
+  src: url(@/assets/fonts/Vazirmatn/Vazirmatn-VariableFont_wght.woff);
 }
 
 @theme inline {
