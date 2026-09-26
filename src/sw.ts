@@ -6,7 +6,6 @@ import {
 import type { ManifestEntry } from "workbox-build";
 import { clientsClaim } from "workbox-core";
 import { NetworkFirst, NetworkOnly } from "workbox-strategies";
-import { ExpirationPlugin } from "workbox-expiration";
 import { CacheableResponsePlugin } from "workbox-cacheable-response";
 
 // Give TypeScript the correct global.
@@ -73,6 +72,24 @@ self.addEventListener("activate", (event: ExtendableEvent) => {
   );
 });
 
+self.addEventListener("fetch", (event: any) => {
+  const oneMonthToMilliSecond = 1000 * 60 * 60 * 24 * 30;
+
+  // Delete all caches if one was expired
+  caches.open(cacheName).then((cache) =>
+    cache.match(event.request.url).then((request) => {
+      if (!request) {
+        return;
+      }
+      const date = new Date(request.headers.get("date") as string);
+      if (Date.now() > date.getTime() + oneMonthToMilliSecond) {
+        console.log("expired: ", request.url);
+        caches.delete(cacheName);
+      }
+    }),
+  );
+});
+
 const isRouteAllowedForNetworkFirst = (request: any) => {
   const url = new URL(request.url);
 
@@ -91,16 +108,11 @@ const isRouteAllowedForNetworkFirst = (request: any) => {
   return false;
 };
 
-const oneMonthToSeconds = 60 * 60 * 24 * 30;
-
 registerRoute(
   ({ request }) => isRouteAllowedForNetworkFirst(request),
   new NetworkFirst({
     cacheName,
     plugins: [
-      new ExpirationPlugin({
-        maxAgeSeconds: oneMonthToSeconds,
-      }),
       new CacheableResponsePlugin({
         statuses: [200],
       }),
