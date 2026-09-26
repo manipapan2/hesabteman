@@ -59,6 +59,9 @@ importers:
       tw-animate-css:
         specifier: ^1.4.0
         version: 1.4.0
+      workbox-cacheable-response:
+        specifier: ^7.4.1
+        version: 7.4.1
     devDependencies:
       '@fullstacksjs/oxlint-config':
         specifier: ^1.1.0

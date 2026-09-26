@@ -7,6 +7,7 @@ import type { ManifestEntry } from "workbox-build";
 import { clientsClaim } from "workbox-core";
 import { NetworkFirst, NetworkOnly } from "workbox-strategies";
 import { ExpirationPlugin } from "workbox-expiration";
+import { CacheableResponsePlugin } from "workbox-cacheable-response";
 
 // Give TypeScript the correct global.
 declare let self: ServiceWorkerGlobalScope;
@@ -75,8 +76,11 @@ self.addEventListener("activate", (event: ExtendableEvent) => {
 const isRouteAllowedForNetworkFirst = (request: any) => {
   const url = new URL(request.url);
 
+  if (request?.destination === "document" && url.host === self.location.host) {
+    return true;
+  }
+
   if (
-    request?.destination === "document" ||
     manifestURLs.includes(url.href) ||
     url.pathname.startsWith("/assets") ||
     url.pathname === "/favicon.ico"
@@ -96,6 +100,9 @@ registerRoute(
     plugins: [
       new ExpirationPlugin({
         maxAgeSeconds: oneMonthToSeconds,
+      }),
+      new CacheableResponsePlugin({
+        statuses: [200],
       }),
     ],
   }),
