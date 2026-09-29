@@ -17,6 +17,9 @@ export default defineConfig({
       registerType: "autoUpdate",
       injectRegister: "script",
       strategies: "injectManifest",
+      injectManifest: {
+        injectionPoint: undefined,
+      },
       srcDir: "src",
       filename: "sw.ts",
       manifest: {
