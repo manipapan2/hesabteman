@@ -30,6 +30,7 @@ function Input({
 
     if (isSeparateNumbers) {
       if (value === "") {
+        onValue("");
         setInputValue("");
         return;
       }
