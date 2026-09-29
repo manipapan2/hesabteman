@@ -156,11 +156,11 @@ const ProfitTable = () => {
   const [sumOfProfit, setSumOfProfit] = useState<number>();
 
   useEffect(() => {
-    let paidFeeSum = 0;
-    let costsSum = 0;
-    let profitSum = 0;
+    let paidFeeSum: undefined | 0 = undefined;
 
     if (apartmantData.neighbors && apartmantData.fee) {
+      paidFeeSum = 0;
+
       for (const element of Object.values(apartmantData.neighbors)) {
         if (element.hasPaidFee) {
           paidFeeSum += apartmantData.fee;
@@ -168,26 +168,42 @@ const ProfitTable = () => {
       }
     }
 
+    setSumOfPaidFee(paidFeeSum);
+  }, [apartmantData.fee]);
+
+  useEffect(() => {
+    let costsSum: undefined | 0 = undefined;
+
     if (apartmantData.costs) {
       for (const element of Object.values(apartmantData.costs)) {
         if (element.title && element.cost) {
+          if (!costsSum) {
+            costsSum = 0;
+          }
           costsSum += element.cost;
         }
       }
     }
 
+    setSumOfCosts(costsSum);
+  }, [apartmantData.costs]);
+
+  useEffect(() => {
+    let profitSum: undefined | 0 = undefined;
+
     if (apartmantData.profit) {
       for (const element of Object.values(apartmantData.profit)) {
         if (element.title && element.cost) {
+          if (!profitSum) {
+            profitSum = 0;
+          }
           profitSum += element.cost;
         }
       }
     }
 
-    setSumOfPaidFee(paidFeeSum);
-    setSumOfCosts(costsSum);
     setSumOfProfit(profitSum);
-  }, [apartmantData]);
+  }, [apartmantData.profit]);
 
   return (
     <div className="overflow-hidden rounded-md">
@@ -234,10 +250,10 @@ const ProfitTableRows = ({
 
   return (
     <>
-      {!isEmpty(apartmantData.costs) && (
+      {sumOfCosts !== undefined && (
         <Tr>
           <Th>جمع کل هزینه ها</Th>
-          <Th>{sumOfCosts && separateNumbers(sumOfCosts)}</Th>
+          <Th>{separateNumbers(sumOfCosts)}</Th>
         </Tr>
       )}
 
@@ -253,16 +269,14 @@ const ProfitTableRows = ({
           }
         })}
 
-      {sumOfPaidFee !== undefined &&
-        sumOfCosts !== undefined &&
-        sumOfProfit !== undefined && (
-          <Tr>
-            <Th>مانده صندوق</Th>
-            <Th dir="ltr">
-              {separateNumbers(sumOfPaidFee + sumOfProfit - sumOfCosts)}
-            </Th>
-          </Tr>
-        )}
+      <Tr>
+        <Th>مانده صندوق</Th>
+        <Th dir="ltr">
+          {separateNumbers(
+            (sumOfPaidFee || 0) + (sumOfProfit || 0) - (sumOfCosts || 0),
+          )}
+        </Th>
+      </Tr>
     </>
   );
 };
