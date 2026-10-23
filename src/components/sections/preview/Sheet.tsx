@@ -23,7 +23,7 @@ const Sheet = () => {
 
   const handleCapture = () => {
     sheetRef.current!.style.zoom = "1";
-    sheetRef.current!.style.maxHeight = "auto";
+    sheetRef.current!.style.maxHeight = "none";
 
     htmlToImage.toPng(sheetRef.current!).then((imageURL: string) => {
       const link = document.createElement("a");
@@ -268,7 +268,7 @@ const ProfitTableRows = ({
             return (
               <Tr key={index}>
                 <Th>{profit.title}</Th>
-                <Th>{profit.cost}</Th>
+                <Th>{separateNumbers(profit.cost)}</Th>
               </Tr>
             );
           }
