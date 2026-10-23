@@ -169,7 +169,8 @@ const ProfitTable = () => {
     }
 
     setSumOfPaidFee(paidFeeSum);
-  }, [apartmantData.fee]);
+    console.log("changed to", paidFeeSum);
+  }, [apartmantData.fee, apartmantData.neighbors]);
 
   useEffect(() => {
     let costsSum: undefined | 0 = undefined;
