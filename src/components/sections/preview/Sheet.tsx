@@ -21,12 +21,17 @@ const Sheet = () => {
 
   const sheetRef = useRef<HTMLDivElement>(null);
 
-  const downloadAsImage = () => {
+  const handleCapture = () => {
+    sheetRef.current!.style.zoom = "1";
+    sheetRef.current!.style.maxHeight = "auto";
+
     htmlToImage.toPng(sheetRef.current!).then((imageURL: string) => {
       const link = document.createElement("a");
       link.href = imageURL;
       link.download = `فاکتور ساختمان ${apartmantData.month} ${apartmantData.year}`;
       link.click();
+      sheetRef.current!.style.removeProperty("zoom");
+      sheetRef.current!.style.removeProperty("max-height");
     });
   };
 
@@ -55,7 +60,7 @@ const Sheet = () => {
       </div>
 
       <button
-        onClick={() => downloadAsImage()}
+        onClick={handleCapture}
         className="outline-primary/40 bg-primary text-primary-foreground absolute -top-4 -right-4 rounded-full p-3 outline-2 hover:cursor-pointer"
       >
         <Download />
@@ -169,7 +174,6 @@ const ProfitTable = () => {
     }
 
     setSumOfPaidFee(paidFeeSum);
-    console.log("changed to", paidFeeSum);
   }, [apartmantData.fee, apartmantData.neighbors]);
 
   useEffect(() => {
