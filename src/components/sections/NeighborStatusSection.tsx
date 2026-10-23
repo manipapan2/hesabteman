@@ -104,6 +104,7 @@ interface FiledProps {
   fieldIndex: number;
 }
 
+// oxlint-disable-next-line max-lines-per-function
 const Field = ({ neighborId, fieldIndex }: FiledProps) => {
   const apartmantContext = useContext(ApartmantContext);
   const { apartmantData, setApartmantData } = apartmantContext;
@@ -125,6 +126,17 @@ const Field = ({ neighborId, fieldIndex }: FiledProps) => {
     label: index + 1,
     value: index + 1,
   }));
+
+  useEffect(() => {
+    setApartmantData((prevState) => {
+      const clonedObj = clone(prevState);
+      clonedObj.neighbors[fieldIndex].unit = unitItems[fieldIndex].value;
+      clonedObj.neighbors[fieldIndex].floor = Math.ceil(
+        unitItems[fieldIndex].value / (apartmantData.unitCount as number),
+      );
+      return clonedObj;
+    });
+  }, [unitItems]);
 
   return (
     <div key={neighborId} className="bg-secondary rounded-sm p-3">
@@ -174,16 +186,6 @@ const Field = ({ neighborId, fieldIndex }: FiledProps) => {
           <Select
             items={unitItems}
             defaultValue={() => {
-              setApartmantData((prevState) => {
-                const clonedObj = clone(prevState);
-                clonedObj.neighbors[fieldIndex].unit =
-                  unitItems[fieldIndex].value;
-                clonedObj.neighbors[fieldIndex].floor = Math.ceil(
-                  unitItems[fieldIndex].value /
-                    (apartmantData.unitCount as number),
-                );
-                return clonedObj;
-              });
               return unitItems[fieldIndex].value;
             }}
             onValueChange={(value: any) =>
