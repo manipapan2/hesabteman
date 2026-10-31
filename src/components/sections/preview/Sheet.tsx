@@ -1,5 +1,4 @@
 import separateNumbers from "@/utils/separateNumbers.ts";
-import floorToPersianWord from "@/utils/floorToPersianWord.ts";
 import {
   useContext,
   useEffect,
@@ -87,7 +86,6 @@ const FeeTable = () => {
       <table dir="rtl" className="w-full">
         <Thead>
           <Tr>
-            <Th>طبقه</Th>
             <Th>
               <ColumnTitle title="واحد" Icon={Building} />
             </Th>
@@ -116,7 +114,6 @@ const FeeTableRows = () => {
     return apartmantData.neighbors.map(
       (neighbor: NeighborProps, index: number) => (
         <Tr key={index}>
-          <Th>{floorToPersianWord(neighbor.floor)}</Th>
           <Th>{neighbor.unit}</Th>
           <Th>{neighbor.name}</Th>
           <Th

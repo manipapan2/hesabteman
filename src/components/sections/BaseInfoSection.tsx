@@ -131,26 +131,11 @@ const BaseInfoSection = () => {
         </div>
       </div>
       <div>
-        <Title>طبقات</Title>
+        <Title>واحدها</Title>
         <div className="flex gap-2">
           <Input
             type="number"
-            placeholder="تعداد طبقه ها"
-            maxLength={1}
-            onValue={(value) =>
-              setApartmantData((prevState) => {
-                const clonedObj = clone(prevState);
-                const isValidNumber = parseInt(value, 10);
-                clonedObj["floorCount"] = isValidNumber
-                  ? parseInt(value, 10)
-                  : undefined;
-                return clonedObj;
-              })
-            }
-          />
-          <Input
-            type="number"
-            placeholder="تعداد واحد هر طبقه"
+            placeholder="تعداد واحد ها"
             maxLength={1}
             onValue={(value) =>
               setApartmantData((prevState) => {

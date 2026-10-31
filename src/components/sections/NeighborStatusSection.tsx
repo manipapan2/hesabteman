@@ -4,15 +4,6 @@ import { Input } from "../ui/input.tsx";
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group.tsx";
 import { Label } from "@/components/ui/label.tsx";
 import { motion } from "motion/react";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select.tsx";
 import { User } from "lucide-react";
 import type { NeighborProps } from "@/types/apartmant-data-types.ts";
 import ApartmantContext from "@/contexts/ApartmantData/ApartmantContext.ts";
@@ -22,30 +13,19 @@ const NeighborStatusSection = () => {
   const apartmantContext = useContext(ApartmantContext);
   const { apartmantData, setApartmantData } = apartmantContext;
 
-  // const calculateNeighbors = () => {
-
-  // };
-
   useEffect(() => {
-    if (
-      apartmantData.floorCount &&
-      apartmantData.unitCount &&
-      isEmpty(apartmantData.neighbors)
-    ) {
+    if (apartmantData.unitCount && isEmpty(apartmantData.neighbors)) {
       setApartmantData((prevState) => {
         const neighborArray: NeighborProps[] = [];
 
         for (
           let index = 0;
-          index <
-          (apartmantData.floorCount as number) *
-            (apartmantData.unitCount as number);
+          index < (apartmantData.unitCount as number);
           index++
         ) {
           neighborArray.push({
             id: index,
             name: "",
-            floor: Math.ceil(index + 1 / (apartmantData.unitCount as number)),
             unit: index + 1,
             hasPaidFee: true,
           });
@@ -57,8 +37,7 @@ const NeighborStatusSection = () => {
         };
       });
     } else if (
-      (typeof apartmantData.floorCount !== "number" ||
-        typeof apartmantData.unitCount !== "number") &&
+      typeof apartmantData.unitCount !== "number" &&
       !isEmpty(apartmantData.neighbors)
     ) {
       setApartmantData((prevState) => {
@@ -72,7 +51,6 @@ const NeighborStatusSection = () => {
 
   if (
     apartmantData?.unitCount &&
-    apartmantData?.floorCount &&
     apartmantData?.neighbors &&
     !isEmpty(apartmantData.neighbors)
   )
@@ -109,19 +87,8 @@ const Field = ({ neighborId, fieldIndex }: FiledProps) => {
   const apartmantContext = useContext(ApartmantContext);
   const { apartmantData, setApartmantData } = apartmantContext;
 
-  const floorItems = Array.from({
-    length: apartmantData.floorCount as number,
-  }).map((_, index) => {
-    return {
-      label: index + 1,
-      value: index + 1,
-    };
-  });
-
   const unitItems = Array.from({
-    length:
-      (apartmantData.floorCount as number) *
-      (apartmantData.unitCount as number),
+    length: apartmantData.unitCount as number,
   }).map((_, index) => ({
     label: index + 1,
     value: index + 1,
@@ -131,9 +98,7 @@ const Field = ({ neighborId, fieldIndex }: FiledProps) => {
     setApartmantData((prevState) => {
       const clonedObj = clone(prevState);
       clonedObj.neighbors[fieldIndex].unit = unitItems[fieldIndex].value;
-      clonedObj.neighbors[fieldIndex].floor = Math.ceil(
-        unitItems[fieldIndex].value / (apartmantData.unitCount as number),
-      );
+
       return clonedObj;
     });
   }, [unitItems]);
@@ -142,6 +107,7 @@ const Field = ({ neighborId, fieldIndex }: FiledProps) => {
     <div key={neighborId} className="bg-secondary rounded-sm p-3">
       <div className="flex flex-col gap-5">
         <div>
+          <Title>واحد {apartmantData.neighbors[neighborId].unit}</Title>
           <Title>نام همسایه</Title>
           <Input
             type="text"
@@ -154,62 +120,6 @@ const Field = ({ neighborId, fieldIndex }: FiledProps) => {
               })
             }
           />
-        </div>
-        <div className="flex gap-2">
-          <Select
-            items={floorItems}
-            defaultValue={Math.ceil(
-              unitItems[fieldIndex].value / (apartmantData.unitCount as number),
-            )}
-            onValueChange={(value: any) =>
-              setApartmantData((prevState) => {
-                const clonedObject = clone(prevState);
-                clonedObject.neighbors[fieldIndex].floor = value;
-                return clonedObject;
-              })
-            }
-          >
-            <SelectTrigger className="w-full">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectGroup>
-                <SelectLabel>طبقات</SelectLabel>
-                {floorItems.map((item) => (
-                  <SelectItem key={item.value} value={item.value}>
-                    {item.label}
-                  </SelectItem>
-                ))}
-              </SelectGroup>
-            </SelectContent>
-          </Select>
-          <Select
-            items={unitItems}
-            defaultValue={() => {
-              return unitItems[fieldIndex].value;
-            }}
-            onValueChange={(value: any) =>
-              setApartmantData((prevState) => {
-                const clonedObject = clone(prevState);
-                clonedObject.neighbors[fieldIndex].unit = value;
-                return clonedObject;
-              })
-            }
-          >
-            <SelectTrigger className="w-full">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectGroup>
-                <SelectLabel>واحد ها</SelectLabel>
-                {unitItems.map((item) => (
-                  <SelectItem key={item.value} value={item.value}>
-                    {item.label}
-                  </SelectItem>
-                ))}
-              </SelectGroup>
-            </SelectContent>
-          </Select>
         </div>
         <div>
           <Title>وضعیت پرداخت</Title>
