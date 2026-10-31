@@ -2,6 +2,7 @@ import { defineConfig } from "@fullstacksjs/oxlint-config";
 
 export default defineConfig({
   rules: {
+    "import/extensions": "off",
     "import/no-cycle": "off",
     "array-callback-return": "off",
     "react/exhaustive-deps": "off",
