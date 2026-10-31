@@ -11,7 +11,14 @@ import {
 import ApartmantContext from "@/contexts/ApartmantData/ApartmantContext.ts";
 import { cn } from "@/lib/utils.ts";
 import * as htmlToImage from "html-to-image";
-import { Download } from "lucide-react";
+import {
+  Building,
+  CircleDollarSign,
+  Download,
+  Info,
+  TextAlignEnd,
+  User,
+} from "lucide-react";
 import { isEmpty } from "@fullstacksjs/toolbox";
 import type { NeighborProps, ProfitProps } from "@/types/apartmant-data-types";
 
@@ -26,10 +33,11 @@ const Sheet = () => {
     sheetRef.current!.style.maxHeight = "auto";
 
     htmlToImage.toPng(sheetRef.current!).then((imageURL: string) => {
-      const link = document.createElement("a");
-      link.href = imageURL;
-      link.download = `فاکتور ساختمان ${apartmantData.month} ${apartmantData.year}`;
-      link.click();
+      // sheetRef.current!.contentWindow.print()
+      // const link = document.createElement("a");
+      // link.href = imageURL;
+      // link.download = `فاکتور ساختمان ${apartmantData.month} ${apartmantData.year}`;
+      // link.click();
       sheetRef.current!.style.removeProperty("zoom");
       sheetRef.current!.style.removeProperty("max-height");
     });
@@ -76,9 +84,15 @@ const FeeTable = () => {
         <Thead>
           <Tr>
             <Th>طبقه</Th>
-            <Th>واحد</Th>
-            <Th>نام خانوادگی</Th>
-            <Th>وضعیت شارژ</Th>
+            <Th>
+              <ColumnTitle title="واحد" Icon={Building} />
+            </Th>
+            <Th>
+              <ColumnTitle title="نام" Icon={User} />
+            </Th>
+            <Th>
+              <ColumnTitle title="وضعیت شارژ" Icon={Info} />
+            </Th>
           </Tr>
         </Thead>
 
@@ -122,8 +136,12 @@ const CostsTable = () => {
       <table dir="rtl" className="w-full">
         <Thead>
           <Tr>
-            <Th>عنوان هزینه</Th>
-            <Th>مبلغ (تومان)</Th>
+            <Th>
+              <ColumnTitle title="عنوان هزینه" Icon={TextAlignEnd} />
+            </Th>
+            <Th>
+              <ColumnTitle title="مبلغ (تومان)" Icon={CircleDollarSign} />
+            </Th>
           </Tr>
         </Thead>
 
@@ -215,8 +233,12 @@ const ProfitTable = () => {
       <table dir="rtl" className="w-full">
         <Thead>
           <Tr>
-            <Th>عنوان</Th>
-            <Th>مبلغ (تومان)</Th>
+            <Th>
+              <ColumnTitle title="عنوان" Icon={TextAlignEnd} />
+            </Th>
+            <Th>
+              <ColumnTitle title="مبلغ (تومان)" Icon={CircleDollarSign} />
+            </Th>
           </Tr>
         </Thead>
 
@@ -283,6 +305,20 @@ const ProfitTableRows = ({
         </Th>
       </Tr>
     </>
+  );
+};
+
+interface ColumnTitleProps {
+  title: string;
+  Icon: any;
+}
+
+const ColumnTitle = ({ title, Icon }: ColumnTitleProps) => {
+  return (
+    <div className="flex gap-2">
+      <Icon />
+      <span>{title}</span>
+    </div>
   );
 };
 
