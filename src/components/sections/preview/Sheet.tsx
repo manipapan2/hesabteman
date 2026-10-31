@@ -28,19 +28,23 @@ const Sheet = () => {
 
   const sheetRef = useRef<HTMLDivElement>(null);
 
-  const handleCapture = () => {
-    sheetRef.current!.style.zoom = "1";
-    sheetRef.current!.style.maxHeight = "auto";
+  const handleCapture = async () => {
+    const element = sheetRef.current;
 
-    htmlToImage.toPng(sheetRef.current!).then((imageURL: string) => {
-      // sheetRef.current!.contentWindow.print()
-      // const link = document.createElement("a");
-      // link.href = imageURL;
-      // link.download = `فاکتور ساختمان ${apartmantData.month} ${apartmantData.year}`;
-      // link.click();
-      sheetRef.current!.style.removeProperty("zoom");
-      sheetRef.current!.style.removeProperty("max-height");
-    });
+    if (!element) return;
+
+    element.style.zoom = "1";
+    element.style.maxHeight = "initial";
+
+    const imageBlob = await htmlToImage.toPng(element);
+
+    const link = document.createElement("a");
+    link.href = imageBlob;
+    link.download = `فاکتور ساختمان ${apartmantData.month} ${apartmantData.year}`;
+    link.click();
+
+    element.style.removeProperty("zoom");
+    element.style.removeProperty("max-height");
   };
 
   return (
