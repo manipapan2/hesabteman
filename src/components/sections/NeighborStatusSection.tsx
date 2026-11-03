@@ -1,5 +1,5 @@
 import { useContext, useEffect } from "react";
-import Title from "../Title.tsx";
+import SectionTitle from "../SectionTitle.tsx";
 import { Input } from "../ui/input.tsx";
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group.tsx";
 import { Label } from "@/components/ui/label.tsx";
@@ -8,6 +8,8 @@ import { User } from "lucide-react";
 import type { NeighborProps } from "@/types/apartmant-data-types.ts";
 import ApartmantContext from "@/contexts/ApartmantData/ApartmantContext.ts";
 import { clone, isEmpty } from "@fullstacksjs/toolbox";
+import InputTitle from "../InputTitle.tsx";
+import Section from "../Section.tsx";
 
 const NeighborStatusSection = () => {
   const apartmantContext = useContext(ApartmantContext);
@@ -56,8 +58,8 @@ const NeighborStatusSection = () => {
   )
     return (
       <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-        <section className="bg-accent flex flex-col gap-4 rounded-md p-2">
-          <Title>وضعیت همسایه ها</Title>
+        <Section>
+          <SectionTitle>وضعیت همسایه ها</SectionTitle>
           {apartmantData.neighbors.map((neighbor: NeighborProps, index) => (
             <Field
               key={neighbor.id}
@@ -65,15 +67,15 @@ const NeighborStatusSection = () => {
               neighborId={neighbor.id}
             />
           ))}
-        </section>
+        </Section>
       </motion.div>
     );
 
   return (
-    <section className="bg-secondary flex h-32 flex-col items-center justify-center gap-4 rounded-md p-2">
+    <Section className="bg-secondary flex h-32 flex-col items-center justify-center gap-4 rounded-md p-2">
       <User className="text-foreground/40" size={30} />
       <h2 className="text-foreground/40">طبقه و واحد را وارد کنید</h2>
-    </section>
+    </Section>
   );
 };
 
@@ -104,11 +106,13 @@ const Field = ({ neighborId, fieldIndex }: FiledProps) => {
   }, [unitItems]);
 
   return (
-    <div key={neighborId} className="bg-secondary rounded-sm p-3">
+    <div key={neighborId} className="bg-secondary rounded-md p-3">
       <div className="flex flex-col gap-5">
         <div>
-          <Title>واحد {apartmantData.neighbors[neighborId].unit}</Title>
-          <Title>نام همسایه</Title>
+          <SectionTitle>
+            واحد {apartmantData.neighbors[neighborId].unit}
+          </SectionTitle>
+          <InputTitle>نام همسایه</InputTitle>
           <Input
             type="text"
             placeholder="مثلا: آقای غلامی"
@@ -122,7 +126,7 @@ const Field = ({ neighborId, fieldIndex }: FiledProps) => {
           />
         </div>
         <div>
-          <Title>وضعیت پرداخت</Title>
+          <InputTitle>وضعیت پرداخت</InputTitle>
           <RadioGroup
             defaultValue
             className="flex"

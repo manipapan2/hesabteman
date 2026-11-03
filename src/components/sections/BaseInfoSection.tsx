@@ -10,8 +10,9 @@ import {
   SelectValue,
 } from "@/components/ui/select.tsx";
 import ApartmantContext from "@/contexts/ApartmantData/ApartmantContext.ts";
-import Title from "@/components/Title.tsx";
+import InputTitle from "@/components/InputTitle.tsx";
 import { clone } from "@fullstacksjs/toolbox";
+import Section from "../Section.tsx";
 
 const persianMonthItems = [
   { label: "فروردین", value: "فروردین" },
@@ -59,9 +60,9 @@ const BaseInfoSection = () => {
   }, []);
 
   return (
-    <section className="bg-secondary flex flex-col gap-5 rounded-md p-3">
+    <Section className="bg-secondary">
       <div>
-        <Title>مبلغ شارژ</Title>
+        <InputTitle>مبلغ شارژ</InputTitle>
         <Input
           unit="تومان"
           isSeparateNumbers
@@ -76,7 +77,7 @@ const BaseInfoSection = () => {
         />
       </div>
       <div>
-        <Title>تاریخ</Title>
+        <InputTitle>تاریخ</InputTitle>
         <div className="flex gap-2">
           <Select
             items={persianMonthItems}
@@ -131,7 +132,7 @@ const BaseInfoSection = () => {
         </div>
       </div>
       <div>
-        <Title>واحدها</Title>
+        <InputTitle>واحدها</InputTitle>
         <div className="flex gap-2">
           <Input
             type="number"
@@ -150,7 +151,7 @@ const BaseInfoSection = () => {
           />
         </div>
       </div>
-    </section>
+    </Section>
   );
 };
 

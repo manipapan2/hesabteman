@@ -1,13 +1,13 @@
 import { CircleMinus, PlusCircle, TrendingUp } from "lucide-react";
 import { Button } from "../ui/button/button.tsx";
 import { useContext, useRef } from "react";
-
 import { motion } from "motion/react";
-import Title from "../Title.tsx";
+import SectionTitle from "../SectionTitle.tsx";
 import { Input } from "../ui/input.tsx";
 import type { ProfitProps } from "@/types/apartmant-data-types.ts";
 import ApartmantContext from "@/contexts/ApartmantData/ApartmantContext.ts";
 import { clone, isEmpty } from "@fullstacksjs/toolbox";
+import InputTitle from "../InputTitle.tsx";
 
 const ProfitSection = () => {
   const apartmantContext = useContext(ApartmantContext);
@@ -43,17 +43,17 @@ const ProfitSection = () => {
         ref={wrapperRef}
         className="bg-accent flex flex-col gap-4 rounded-md p-3"
       >
-        <Title>سود ها</Title>
+        <SectionTitle>سود ها</SectionTitle>
         {apartmantData.profit.map((profit: ProfitProps, profitIndex) => (
           <motion.div
             key={profit.id}
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
           >
-            <div className="bg-secondary flex flex-col gap-2 rounded-md p-3">
-              <div className="flex flex-col gap-2">
-                <div className="flex items-center justify-between">
-                  <Title>عنوان سود</Title>
+            <div className="bg-secondary flex flex-col gap-4 rounded-md p-3">
+              <div>
+                <div className="mb-2 flex items-center justify-between">
+                  <InputTitle hasDefaultMargin={false}>عنوان سود</InputTitle>
                   <button
                     className="text-red-500"
                     onClick={() =>
@@ -84,8 +84,8 @@ const ProfitSection = () => {
                   }
                 />
               </div>
-              <div className="flex flex-col gap-2">
-                <Title>مبلغ سود</Title>
+              <div>
+                <InputTitle>مبلغ سود</InputTitle>
                 <Input
                   type="number"
                   unit="تومان"
