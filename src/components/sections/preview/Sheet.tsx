@@ -20,10 +20,13 @@ import {
 } from "lucide-react";
 import { isEmpty } from "@fullstacksjs/toolbox";
 import type { NeighborProps, ProfitProps } from "@/types/apartmant-data-types";
+import SheetSettingContext from "@/contexts/SheetSetting/SheetSettingContext";
 
 const Sheet = () => {
   const apartmantContext = useContext(ApartmantContext);
   const { apartmantData } = apartmantContext;
+  const sheetSettingContext = useContext(SheetSettingContext);
+  const { sheetSetting } = sheetSettingContext;
 
   const sheetRef = useRef<HTMLDivElement>(null);
 
@@ -54,7 +57,7 @@ const Sheet = () => {
         className="relative m-auto h-fit max-h-full w-fit min-w-210 zoom-40 overflow-y-auto bg-(--sheet-background) p-8 md:zoom-80 lg:zoom-70 xl:zoom-90"
       >
         <h2 className="mb-5 text-center text-xl text-(--sheet-background-foreground)">
-          صورت وضعیت شارژ {apartmantData?.month} {apartmantData?.year}
+          {sheetSetting.showSheetTitle && apartmantData.sheetTitle}
         </h2>
 
         <div className="m-auto flex w-fit gap-10">

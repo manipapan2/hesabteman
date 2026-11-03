@@ -5,6 +5,7 @@ export const initialData: ApartmantProps = {
   neighbors: [],
   costs: [{ id: 0, title: "", cost: null }],
   profit: [],
+  sheetTitle: "",
 };
 
 interface ApartmantContextProps {

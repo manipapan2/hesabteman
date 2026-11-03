@@ -6,6 +6,7 @@ export interface ApartmantProps {
   neighbors: NeighborProps[] | [];
   costs: CostProps[] | [];
   profit: ProfitProps[] | [];
+  sheetTitle: string;
 }
 
 export interface NeighborProps {

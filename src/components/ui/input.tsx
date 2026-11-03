@@ -2,6 +2,7 @@ import * as React from "react";
 import { Input as InputPrimitive } from "@base-ui/react/input";
 import { cn } from "@/lib/utils.ts";
 import separateNumbers from "@/utils/separateNumbers.ts";
+import { RefreshCcw } from "lucide-react";
 
 type Props = {
   calssName?: string;
@@ -9,7 +10,9 @@ type Props = {
   inputMode?: string;
   unit?: string;
   isSeparateNumbers?: boolean;
+  hasReset?: boolean;
   onValue: (value: string) => void;
+  onReset?: () => void;
 } & React.ComponentProps<"input">;
 
 function Input({
@@ -18,7 +21,9 @@ function Input({
   inputMode,
   unit,
   isSeparateNumbers,
+  hasReset,
   onValue,
+  onReset,
   ...props
 }: Props) {
   const [inputValue, setInputValue] = React.useState("");
@@ -65,7 +70,7 @@ function Input({
         }
         className={cn(
           "border-input file:text-foreground placeholder:text-muted-foreground/50 focus-visible:border-ring focus-visible:ring-ring/50 aria-invalid:border-destructive aria-invalid:ring-destructive/20 bg-input/30 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 h-9 w-full min-w-0 rounded-md border px-2.5 py-1 text-lg shadow-xs transition-[color,box-shadow] outline-none file:inline-flex file:h-7 file:border-0 file:bg-transparent file:text-sm file:font-medium focus-visible:ring-3 disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:ring-3 md:text-sm",
-          unit && "pl-15",
+          (unit || hasReset) && "pl-15",
           className,
         )}
         onChange={(e) => {
@@ -74,6 +79,14 @@ function Input({
         value={inputValue}
         {...props}
       />
+
+      {hasReset && (
+        <button onClick={() => onReset && onReset()}>
+          <i className="text-foreground/80 absolute top-1/2 left-3 -translate-y-1/2">
+            <RefreshCcw size={20} />
+          </i>
+        </button>
+      )}
 
       {unit && (
         <span className="bg-muted text-muted-foreground absolute top-1/2 left-0 flex h-full -translate-y-1/2 items-center rounded-l-sm px-4">
