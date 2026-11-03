@@ -1,7 +1,7 @@
 import { useContext, useRef } from "react";
 import SectionTitle from "../SectionTitle.tsx";
 import { Input } from "../ui/input.tsx";
-import { Button } from "../ui/button/button.tsx";
+import { Button } from "../ui/button.tsx";
 import { CircleDollarSign, CircleMinus, PlusCircle } from "lucide-react";
 import { motion } from "motion/react";
 import type { CostProps } from "@/types/apartmant-data-types.ts";

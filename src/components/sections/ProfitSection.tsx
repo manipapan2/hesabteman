@@ -1,5 +1,5 @@
 import { CircleMinus, PlusCircle, TrendingUp } from "lucide-react";
-import { Button } from "../ui/button/button.tsx";
+import { Button } from "../ui/button.tsx";
 import { useContext, useRef } from "react";
 import { motion } from "motion/react";
 import SectionTitle from "../SectionTitle.tsx";
