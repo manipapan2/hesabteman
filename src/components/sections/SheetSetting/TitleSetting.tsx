@@ -25,7 +25,7 @@ const persianMonthItems = [
   { label: "شهریور", value: "شهریور" },
   { label: "مهر", value: "مهر" },
   { label: "آبان", value: "آبان" },
-  { label: "آذز", value: "آذز" },
+  { label: "آذر", value: "آذر" },
   { label: "دی", value: "دی" },
   { label: "بهمن", value: "بهمن" },
   { label: "اسفند", value: "اسفند" },
@@ -87,7 +87,8 @@ const TitleSetting = () => {
   const handleAutomaticSheetTitle = () => {
     setApartmantData((prevState) => {
       const clonedObj = clone(prevState);
-
+      console.log(clonedObj.month);
+      console.log(clonedObj.year);
       clonedObj.sheetTitle = `صورت وضعیت شارژ ${clonedObj.month} ${clonedObj.year}`;
 
       return clonedObj;
@@ -109,6 +110,7 @@ const TitleSetting = () => {
     }
 
     // Update last date
+    console.log("is", apartmantData.month);
     setLastDate(() => ({
       year: apartmantData.year,
       month: apartmantData.month,
@@ -145,7 +147,7 @@ const TitleSetting = () => {
           <Select
             items={persianMonthItems}
             defaultValue={currentPersianMonth}
-            onValueChange={(value) => changeYear(value)}
+            onValueChange={(value) => changeMonth(value)}
           >
             <SelectTrigger className="w-full">
               <SelectValue />
@@ -164,7 +166,7 @@ const TitleSetting = () => {
           <Select
             items={persianYearItems}
             defaultValue={persianYearItems[0].value}
-            onValueChange={(value) => changeMonth(value)}
+            onValueChange={(value) => changeYear(value)}
           >
             <SelectTrigger className="w-full">
               <SelectValue />
